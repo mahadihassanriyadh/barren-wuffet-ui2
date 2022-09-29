@@ -1,0 +1,407 @@
+.ellipseIcon,
+.ellipseIcon1,
+.rectangleDiv {
+  position: absolute;
+  top: 1861px;
+  left: 0;
+  width: 790px;
+  height: 1579px;
+  opacity: 0.5;
+}
+.ellipseIcon1,
+.rectangleDiv {
+  top: 0;
+  width: 1543px;
+  height: 1434px;
+}
+.rectangleDiv {
+  top: -317px;
+  left: 198px;
+  border-radius: 30px;
+  background-color: #1c1c25;
+  width: 1504px;
+  height: 645px;
+}
+.roundCubeIcon,
+.roundCubeIcon1 {
+  position: absolute;
+  top: 71px;
+  left: 360.6px;
+  width: 226.23px;
+  height: 215.88px;
+  object-fit: cover;
+  opacity: 0.35;
+}
+.roundCubeIcon1 {
+  top: 2552px;
+  left: 385px;
+  width: 245.88px;
+  height: 249.53px;
+}
+.ellipseIcon2 {
+  position: absolute;
+  top: 807px;
+  left: 813px;
+  width: 1087px;
+  height: 1209px;
+  opacity: 0.25;
+}
+.pieChartRound,
+.pieChartRound1 {
+  position: absolute;
+  top: 169.21px;
+  left: 1339.05px;
+  width: 120.07px;
+  height: 121.9px;
+  object-fit: cover;
+  opacity: 0.3;
+}
+.pieChartRound1 {
+  top: 2848.86px;
+  left: 1071.89px;
+  width: 126.79px;
+  height: 123.93px;
+}
+.forInvestorsAndDAOs,
+.forTradersMoneyManagers {
+  position: absolute;
+  font-weight: 500;
+  display: inline-block;
+}
+.forInvestorsAndDAOs {
+  top: 2429px;
+  left: 965px;
+  font-size: 40px;
+  text-align: left;
+  width: 540px;
+}
+.forTradersMoneyManagers {
+  top: 0;
+  left: 0;
+  width: 703px;
+}
+.ifYouAreARaiseCapitalEas {
+  position: absolute;
+  top: 115px;
+  left: 0;
+  font-size: 18px;
+  line-height: 200%;
+  display: inline-block;
+  width: 540px;
+}
+.groupDiv {
+  position: absolute;
+  top: 457px;
+  left: 395px;
+  width: 703px;
+  height: 259px;
+  text-align: left;
+  font-size: 40px;
+}
+.getAccessTo {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.getAccessToSomeOfTheBest {
+  top: 2590px;
+  left: 965px;
+  line-height: 200%;
+  text-align: left;
+  width: 475px;
+}
+.about,
+.getAccessToSomeOfTheBest,
+.haveAPeaceOfMindWithThe {
+  position: absolute;
+  display: inline-block;
+}
+.haveAPeaceOfMindWithThe {
+  top: 3007px;
+  left: 395px;
+  line-height: 200%;
+  text-align: left;
+  width: 540px;
+}
+.about {
+  top: 191px;
+  left: 467px;
+  font-size: 64px;
+  color: #fed519;
+  width: 966px;
+}
+.rectangleIcon {
+  position: absolute;
+  top: 1327px;
+  left: 0;
+  width: 1900px;
+  height: 828px;
+}
+.setupTradeAndInvestmentStr {
+  position: absolute;
+  top: 883px;
+  left: 681px;
+  font-size: 24px;
+  line-height: 160%;
+  font-weight: 500;
+  color: #fed519;
+  display: inline-block;
+  width: 539px;
+}
+.dOPEXIcon {
+  position: absolute;
+  top: 17px;
+  left: 84px;
+  width: 125px;
+  height: 34px;
+}
+.groupDiv1,
+.image107Icon {
+  position: absolute;
+  height: 67px;
+}
+.image107Icon {
+  top: 0;
+  left: 0;
+  width: 64px;
+  object-fit: cover;
+}
+.groupDiv1 {
+  top: 1044px;
+  left: 555px;
+  width: 209px;
+}
+.icGmxFootere7821eb21Icon {
+  position: absolute;
+  top: 1056px;
+  left: 860px;
+  width: 180px;
+  height: 43px;
+  overflow: hidden;
+}
+.groupIcon,
+.groupIcon1 {
+  position: absolute;
+  top: 1176px;
+  left: 650px;
+  width: 257px;
+  height: 62.91px;
+}
+.groupIcon1 {
+  top: 1041px;
+  left: 1122px;
+  width: 277px;
+  height: 73.04px;
+  object-fit: cover;
+}
+.curveFinanceIcon {
+  position: absolute;
+  top: 15.31px;
+  left: 88.38px;
+  width: 219.66px;
+  height: 31.38px;
+}
+.groupDiv2,
+.image109Icon {
+  position: absolute;
+  height: 62px;
+}
+.image109Icon {
+  top: 0;
+  left: 0;
+  width: 62px;
+  object-fit: cover;
+}
+.groupDiv2 {
+  top: 1176px;
+  left: 1015px;
+  width: 308.03px;
+}
+.ourAutomationToolsWillBrin {
+  position: absolute;
+  top: 1711px;
+  left: 622px;
+  line-height: 200%;
+  display: inline-block;
+  width: 656px;
+}
+.groupButton,
+.saly31Icon {
+  width: 228px;
+  position: absolute;
+  top: 1892px;
+  left: 836px;
+}
+.saly31Icon {
+  top: 1460px;
+  left: 832px;
+  width: 237px;
+  height: 237px;
+  object-fit: cover;
+}
+.investNOWB,
+.rectangleButton {
+  width: 228px;
+  position: absolute;
+  top: 3340px;
+  left: 847px;
+}
+.investNOWB {
+  top: 3353px;
+  left: 898px;
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 125px;
+}
+.ellipseIcon3 {
+  position: absolute;
+  top: 2698px;
+  left: 771px;
+  width: 1129px;
+  height: 2025px;
+  opacity: 0.5;
+}
+.rectangleDiv1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 30px;
+  background-color: #1c1c25;
+  width: 95vw;
+  height: 715px;
+}
+.nOKYCDiv {
+  position: absolute;
+  top: 501px;
+  left: 196px;
+  display: inline-block;
+  width: 253px;
+}
+.completelyDecentralisedWeA,
+.fundsAreInCustodyOfSmart {
+  position: absolute;
+  top: 499px;
+  left: 601px;
+  display: inline-block;
+  width: 288px;
+}
+.completelyDecentralisedWeA {
+  left: 973px;
+  width: 320px;
+}
+.rectangleDiv2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 30px;
+  background-color: #12131a;
+  width: 150px;
+  height: 150px;
+}
+.groupDiv4,
+.groupDiv5,
+.groupDiv6 {
+  position: absolute;
+  top: 295px;
+  left: 677px;
+  width: 150px;
+  height: 150px;
+}
+.groupDiv5,
+.groupDiv6 {
+  left: 1058px;
+}
+.groupDiv6 {
+  top: 297px;
+  left: 248px;
+}
+.livingUpToTheDecentralised {
+  position: absolute;
+  top: 91px;
+  left: 487px;
+  font-size: 40px;
+  font-weight: 500;
+  display: inline-block;
+  width: 529px;
+}
+.cone2Icon,
+.groupDiv3 {
+  position: absolute;
+  top: 3563px;
+  left: 198px;
+  width: 80%;
+  height: 715px;
+}
+.cone2Icon {
+  top: 567px;
+  left: 1059px;
+  width: 177.26px;
+  height: 153.61px;
+  object-fit: cover;
+  opacity: 0.35;
+}
+.saly1Icon,
+.womanPose03 {
+  position: absolute;
+  top: 2386px;
+  left: 448px;
+  width: 434px;
+  height: 434px;
+  object-fit: cover;
+}
+.saly1Icon {
+  top: 2798px;
+  left: 1021px;
+  width: 484px;
+  height: 484px;
+}
+.manPose03,
+.moneyBagIsoColorIcon,
+.sheildIsoColorIcon,
+.umbrellaIsoColorIcon {
+  position: absolute;
+  top: 3878px;
+  left: 1276px;
+  width: 109.18px;
+  height: 110px;
+  object-fit: cover;
+}
+.manPose03,
+.moneyBagIsoColorIcon,
+.sheildIsoColorIcon {
+  left: 895px;
+  width: 110px;
+}
+.manPose03,
+.sheildIsoColorIcon {
+  top: 3880px;
+  left: 466px;
+  width: 109.18px;
+}
+.manPose03 {
+  top: 367px;
+  left: 1012px;
+  width: 431px;
+  height: 431px;
+}
+.rectangleDiv5 {
+  position: absolute;
+  top: 77px;
+  left: 1102px;
+  border-radius: 5px 5px 0 0;
+  background-color: #fb9b20;
+  width: 27px;
+  height: 3px;
+}
+.aboutDiv {
+  position: relative;
+  background-color: #000;
+  margin-left: -150px;
+  height: 4590px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+  font-family: Ubuntu;
+}

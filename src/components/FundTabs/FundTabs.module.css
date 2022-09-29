@@ -1,0 +1,75 @@
+.groupDiv30 {
+  position: absolute;
+  top: 194px;
+  left: 34px;
+  width: 614px;
+  height: 50px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.rectangleIcon,
+.tradingDiv {
+  position: absolute;
+  top: -0.5px;
+  left: 212.5px;
+  width: 189px;
+  height: 50.5px;
+}
+
+.tradingDiv {
+  top: 12px;
+  left: 263px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  width: 87px;
+  height: 25px;
+}
+
+.rectangleIcon1,
+.yIeldDiv {
+  position: absolute;
+  top: -0.5px;
+  left: 426.5px;
+  width: 188px;
+  height: 50.5px;
+}
+.yIeldDiv {
+  top: 12px;
+  left: 476px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  width: 88px;
+  height: 25px;
+}
+
+.rectangleDiv16 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px 12px 0 0;
+
+  width: 187px;
+  height: 50px;
+}
+.portfolioDiv {
+  position: absolute;
+  top: 12px;
+  left: 37px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  display: inline-block;
+  width: 114px;
+  height: 25px;
+}
+
+.selected {
+  background-color: #282835;
+  color: #fb9b20;
+}

@@ -1,0 +1,1958 @@
+.groupIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1900px;
+  height: 1526px;
+  object-fit: cover;
+}
+.rectangleDiv,
+.rectangleDiv1 {
+  position: absolute;
+  top: 404px;
+  left: 1155px;
+  border-radius: 15px;
+  background-color: #1c1c25;
+  width: 350px;
+  height: 579px;
+}
+.rectangleDiv1 {
+  top: 1007px;
+  height: 502px;
+}
+.vectorIcon,
+.vectorIcon1 {
+  position: absolute;
+  top: 1253.8px;
+  left: 1178px;
+  width: 304px;
+  height: 0.4px;
+}
+.vectorIcon1 {
+  top: 1356.8px;
+}
+.rectangleDiv2,
+.rectangleDiv3 {
+  position: absolute;
+  top: 1031px;
+  left: 1181px;
+  border-radius: 7px;
+  height: 47px;
+}
+.rectangleDiv2 {
+  background-color: #000;
+  width: 297px;
+}
+.rectangleDiv3 {
+  border: 1px solid #fb9b20;
+  box-sizing: border-box;
+  width: 146px;
+}
+.activeOrdersDiv,
+.createNewDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+}
+.activeOrdersDiv {
+  left: 144px;
+  color: #fff;
+}
+.groupDiv {
+  position: absolute;
+  top: 1043px;
+  left: 1211px;
+  width: 251px;
+  height: 24px;
+  font-size: 14px;
+  color: #fb9b20;
+}
+.bTCUSDTDiv,
+.imageIconUser {
+  position: absolute;
+  top: 565.1px;
+  left: 1540.36px;
+  width: 30.23px;
+  height: 149.26px;
+  display: none;
+}
+.bTCUSDTDiv {
+  top: 550.89px;
+  left: 1536.58px;
+  line-height: 28.27px;
+  font-weight: 600;
+  font-family: Inter;
+  align-items: center;
+  width: 34.95px;
+  height: 85.29px;
+}
+.rectangleDiv4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 304px;
+  height: 79px;
+}
+.availableDiv,
+.uSDTDiv {
+  position: absolute;
+  left: 173px;
+  display: inline-block;
+}
+.availableDiv {
+  top: 42px;
+  line-height: 22.22px;
+  font-weight: 500;
+}
+.uSDTDiv {
+  top: 26px;
+  font-size: 12.6px;
+  line-height: 9.16px;
+  color: #fff;
+}
+.bTCUSDTDiv1,
+.marketOrderDiv {
+  position: absolute;
+  left: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 121.18px;
+  height: 25.75px;
+}
+.bTCUSDTDiv1 {
+  top: 14.25px;
+  font-size: 20px;
+  line-height: 28.27px;
+  color: #fff;
+}
+.marketOrderDiv {
+  top: 40px;
+  line-height: 22.22px;
+}
+.groupDiv1,
+.vectorIcon2 {
+  position: absolute;
+  top: 37px;
+  left: 273px;
+  width: 13px;
+  height: 8px;
+}
+.groupDiv1 {
+  top: 441px;
+  left: 1178px;
+  width: 304px;
+  height: 79px;
+  font-size: 13px;
+  color: #626d7d;
+}
+.bTCUSDTDiv2,
+.imageIconUser1 {
+  position: absolute;
+  top: 540.29px;
+  left: 1722.7px;
+  width: 103.78px;
+  height: 82.72px;
+  display: none;
+}
+.bTCUSDTDiv2 {
+  top: 532.41px;
+  left: 1709.73px;
+  line-height: 28.27px;
+  font-weight: 600;
+  font-family: Inter;
+  align-items: center;
+  width: 120px;
+  height: 47.27px;
+}
+.rectangleDiv5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  background-color: #1c1c25;
+  width: 750px;
+  height: 579px;
+}
+.groupIcon1 {
+  position: absolute;
+  top: 66px;
+  left: 685px;
+  width: 18px;
+  height: 18px;
+}
+.bTCUSDTDiv3,
+.imageIconUser2 {
+  position: absolute;
+  top: 500.68px;
+  left: 1220.76px;
+  width: 64.78px;
+  height: 89.57px;
+  display: none;
+}
+.bTCUSDTDiv3 {
+  top: 88.15px;
+  left: 817.67px;
+  line-height: 28.27px;
+  font-weight: 600;
+  align-items: center;
+  width: 74.9px;
+  height: 51.18px;
+}
+.groupDiv3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 750px;
+  height: 579px;
+}
+.rectangleDiv6,
+.rectangleDiv7 {
+  position: absolute;
+  top: 0;
+  left: 241px;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 373px;
+  height: 79px;
+}
+.rectangleDiv7 {
+  left: 0;
+  width: 221px;
+}
+.div,
+.hVolumeDiv {
+  position: absolute;
+  left: 512px;
+  line-height: 9.16px;
+  display: inline-block;
+}
+.hVolumeDiv {
+  top: 20px;
+  color: #626d7d;
+}
+.div {
+  top: 43px;
+}
+.bTCUSDTDiv4,
+.bitcoinDiv {
+  flex: 1;
+  align-self: stretch;
+  position: relative;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.bitcoinDiv {
+  font-size: 13px;
+  line-height: 22.22px;
+  color: #626d7d;
+}
+.frameDiv1 {
+  width: 121.18px;
+  height: 51.5px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.chooseActionDiv,
+.frameDiv {
+  position: absolute;
+  display: flex;
+}
+.frameDiv {
+  top: 14.25px;
+  left: 261px;
+  width: 109.62px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 20px;
+}
+.chooseActionDiv {
+  top: 40px;
+  left: 20px;
+  font-size: 13px;
+  line-height: 22.22px;
+  font-weight: 500;
+  color: #626d7d;
+  align-items: center;
+  width: 121.18px;
+  height: 25.75px;
+}
+.uniswapDiv,
+.vectorIcon3 {
+  position: absolute;
+  top: 37px;
+  left: 390px;
+  width: 13px;
+  height: 8px;
+}
+.uniswapDiv {
+  top: 14.25px;
+  left: 20px;
+  font-size: 20px;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 121.18px;
+  height: 25.75px;
+}
+.div1,
+.div2 {
+  line-height: 22.45px;
+  font-weight: 500;
+  display: inline-block;
+}
+.div1 {
+  position: absolute;
+  top: 11px;
+  left: 426px;
+  font-size: 18px;
+}
+.div2 {
+  position: relative;
+}
+.tagPercentaceDefault,
+.tagPercentaceMainDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tagPercentaceMainDiv {
+  border-radius: 61.23px;
+  background-color: rgba(38, 171, 95, 0.2);
+  padding: 0 8.164371490478516px;
+  box-sizing: border-box;
+}
+.tagPercentaceDefault {
+  position: absolute;
+  top: 39px;
+  left: 428px;
+  width: 68.38px;
+  font-size: 10.21px;
+  color: #26ab5f;
+}
+.groupDiv4,
+.vectorIcon4 {
+  position: absolute;
+  top: 37px;
+  left: 187px;
+  width: 13px;
+  height: 8px;
+}
+.groupDiv4 {
+  left: 34px;
+  width: 614px;
+  height: 79px;
+  font-size: 12.6px;
+  font-family: Ubuntu;
+}
+.groupDiv2 {
+  position: absolute;
+  top: 404px;
+  left: 395px;
+  width: 750px;
+  height: 579px;
+  font-family: Inter;
+}
+.menuTitleDiv {
+  position: relative;
+  line-height: 9.16px;
+  display: inline-block;
+}
+.textTextMediumMain {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.textSmallMainDiv,
+.textSmallMainDiv1,
+.textSmallMainDiv2,
+.textSmallMainDiv3,
+.textSmallMainDiv4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 31.51px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+.textSmallMainDiv1,
+.textSmallMainDiv2,
+.textSmallMainDiv3,
+.textSmallMainDiv4 {
+  left: 131.04px;
+  width: 29.86px;
+}
+.textSmallMainDiv2,
+.textSmallMainDiv3,
+.textSmallMainDiv4 {
+  left: 260.41px;
+  width: 34.83px;
+}
+.textSmallMainDiv3,
+.textSmallMainDiv4 {
+  left: 393.11px;
+  width: 29.86px;
+}
+.textSmallMainDiv4 {
+  left: 520.83px;
+  width: 33.17px;
+}
+.div3,
+.div4,
+.div5,
+.div6,
+.div7,
+.groupDiv5,
+.groupDiv6 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 554px;
+  height: 10px;
+}
+.div3,
+.div4,
+.div5,
+.div6,
+.div7,
+.groupDiv5 {
+  top: 873.13px;
+  left: 460px;
+  font-size: 12.6px;
+  color: #626d7d;
+}
+.div3,
+.div4,
+.div5,
+.div6,
+.div7 {
+  top: 560px;
+  left: 1064px;
+  line-height: 9.16px;
+  color: #26ab5f;
+  display: flex;
+  align-items: center;
+  width: 46px;
+  height: 14px;
+}
+.div4,
+.div5,
+.div6,
+.div7 {
+  top: 632px;
+  color: #626d7d;
+}
+.div5,
+.div6,
+.div7 {
+  top: 703px;
+  left: 1066px;
+  height: 15px;
+}
+.div6,
+.div7 {
+  top: 775px;
+  left: 1064px;
+}
+.div7 {
+  top: 847px;
+  left: 1066px;
+  height: 14px;
+}
+.autoSpan {
+  color: #fed519;
+}
+.uTC8LogAuto {
+  position: absolute;
+  top: 930px;
+  left: 929px;
+  font-size: 10px;
+  line-height: 9.16px;
+  text-align: right;
+  display: inline-block;
+}
+.groupIcon2 {
+  position: absolute;
+  top: 551px;
+  left: 429px;
+  width: 614px;
+  height: 303.14px;
+}
+.taglineDiv {
+  position: relative;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.tagPagginationMainDiv {
+  border-radius: 7px;
+  background-color: #000;
+  display: flex;
+  flex-direction: row;
+  padding: 2px 12px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+.tagPagginationOptionDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 43.26px;
+  height: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.tagPagginationOptionDiv1,
+.tagPagginationOptionDiv2,
+.tagPagginationOptionDiv3,
+.tagPagginationOptionDiv4,
+.tagPagginationOptionDiv5 {
+  position: absolute;
+  top: 0;
+  left: 50.83px;
+  width: 44.34px;
+  height: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.tagPagginationOptionDiv2,
+.tagPagginationOptionDiv3,
+.tagPagginationOptionDiv4,
+.tagPagginationOptionDiv5 {
+  left: 103.83px;
+}
+.tagPagginationOptionDiv3,
+.tagPagginationOptionDiv4,
+.tagPagginationOptionDiv5 {
+  left: 155.74px;
+  width: 43.26px;
+}
+.tagPagginationOptionDiv4,
+.tagPagginationOptionDiv5 {
+  left: 207.66px;
+  width: 45.43px;
+}
+.tagPagginationOptionDiv5 {
+  left: 260.66px;
+  width: 44.34px;
+  color: #fed519;
+}
+.groupDiv7 {
+  position: absolute;
+  top: 922px;
+  left: 429px;
+  width: 305px;
+  height: 28px;
+  text-align: center;
+  font-size: 10px;
+}
+.rectangleDiv8,
+.rectangleDiv9 {
+  position: absolute;
+  top: 0;
+  width: 137px;
+  height: 47px;
+}
+.rectangleDiv8 {
+  left: 167px;
+  border-radius: 7px;
+  background-color: #000;
+}
+.rectangleDiv9 {
+  left: 0;
+  border-radius: 10px;
+  background: linear-gradient(47.02deg, #ff2f45, #fb9b20);
+}
+.buyDiv,
+.sellDiv {
+  position: absolute;
+  top: 11px;
+  left: 53px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+}
+.sellDiv {
+  left: 218px;
+}
+.groupDiv8,
+.rectangleDiv10 {
+  position: absolute;
+  left: 1178px;
+}
+.groupDiv8 {
+  top: 907px;
+  width: 304px;
+  height: 47px;
+  font-size: 16px;
+}
+.rectangleDiv10 {
+  top: 739px;
+  border-radius: 5px;
+  border: 1px solid #fb9b20;
+  box-sizing: border-box;
+  width: 69px;
+  height: 22px;
+}
+.rectangleDiv11,
+.rectangleDiv12,
+.rectangleDiv13 {
+  position: absolute;
+  top: 739px;
+  left: 1336px;
+  border-radius: 5px;
+  background-color: #000;
+  width: 67px;
+  height: 22px;
+}
+.rectangleDiv12,
+.rectangleDiv13 {
+  left: 1257px;
+}
+.rectangleDiv13 {
+  left: 1413px;
+  width: 69px;
+}
+.div10,
+.div8,
+.div9,
+.maxDiv {
+  position: absolute;
+  top: 738px;
+  left: 1201px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-family: Poppins;
+  color: #fb9a21;
+  text-align: center;
+  display: inline-block;
+  width: 23px;
+}
+.div10,
+.div9,
+.maxDiv {
+  left: 1278px;
+  color: #5e6e78;
+  width: 24px;
+}
+.div10,
+.maxDiv {
+  left: 1358px;
+  width: 23px;
+}
+.maxDiv {
+  left: 1434px;
+  width: 27px;
+}
+.rectangleDiv14,
+.rectangleDiv15 {
+  position: absolute;
+  top: 617px;
+  left: 1178px;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 304px;
+  height: 47px;
+}
+.rectangleDiv15 {
+  top: 535px;
+}
+.sPOTDiv {
+  position: absolute;
+  top: 542px;
+  left: 1198px;
+  font-size: 20px;
+  line-height: 22.45px;
+  display: flex;
+  align-items: center;
+  width: 173px;
+  height: 34px;
+}
+.vectorIcon5 {
+  position: absolute;
+  top: 555px;
+  left: 1450px;
+  width: 13px;
+  height: 9px;
+}
+.rectangleDiv16,
+.rectangleDiv17,
+.rectangleDiv18 {
+  position: absolute;
+  top: 1291px;
+  left: 1178px;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 90px;
+  height: 47px;
+}
+.rectangleDiv17,
+.rectangleDiv18 {
+  left: 1286px;
+}
+.rectangleDiv18 {
+  left: 1394px;
+}
+.rectangleDiv19,
+.rectangleDiv20,
+.rectangleDiv21,
+.rectangleDiv22,
+.rectangleDiv23,
+.rectangleDiv24 {
+  position: absolute;
+  top: 1097px;
+  left: 1178px;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 304px;
+  height: 47px;
+}
+.rectangleDiv20,
+.rectangleDiv21,
+.rectangleDiv22,
+.rectangleDiv23,
+.rectangleDiv24 {
+  top: 1182px;
+}
+.rectangleDiv21,
+.rectangleDiv22,
+.rectangleDiv23,
+.rectangleDiv24 {
+  top: 679px;
+  width: 137px;
+}
+.rectangleDiv22,
+.rectangleDiv23,
+.rectangleDiv24 {
+  left: 1345px;
+}
+.rectangleDiv23,
+.rectangleDiv24 {
+  top: 798px;
+  left: 1178px;
+}
+.rectangleDiv24 {
+  left: 1345px;
+}
+.cRVDiv {
+  position: absolute;
+  top: 706px;
+  left: 1288px;
+  display: inline-block;
+}
+.cRVDiv,
+.cRVDiv1,
+.uSDTDiv1 {
+  font-size: 10px;
+  opacity: 0.5;
+}
+.uSDTDiv1 {
+  position: absolute;
+  top: 828px;
+  left: 1281px;
+  display: inline-block;
+}
+.cRVDiv1 {
+  top: 706px;
+  left: 1455px;
+}
+.cRVDiv1,
+.maxDiv1,
+.uSDTDiv2 {
+  position: absolute;
+  display: inline-block;
+}
+.uSDTDiv2 {
+  top: 828px;
+  left: 1448px;
+  font-size: 10px;
+  opacity: 0.5;
+}
+.maxDiv1 {
+  top: 780px;
+  left: 1178px;
+  font-size: 12.6px;
+  line-height: 9.16px;
+  color: #26ab5f;
+}
+.batchSizeDiv,
+.div11,
+.marketUSDTDiv,
+.priceDiv {
+  position: absolute;
+  top: 780px;
+  left: 1261px;
+  font-size: 10px;
+  display: inline-block;
+  opacity: 0.5;
+}
+.batchSizeDiv,
+.marketUSDTDiv,
+.priceDiv {
+  top: 599px;
+  left: 1178px;
+}
+.batchSizeDiv,
+.marketUSDTDiv {
+  top: 646px;
+  left: 1410px;
+}
+.batchSizeDiv {
+  top: 1273px;
+  left: 1178px;
+}
+.batchSizeDiv1,
+.estCompletionDiv,
+.feesDiv,
+.intervalDiv {
+  position: absolute;
+  top: 1374px;
+  left: 1178px;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: inline-block;
+}
+.estCompletionDiv,
+.feesDiv,
+.intervalDiv {
+  top: 1403px;
+}
+.estCompletionDiv,
+.feesDiv {
+  top: 1430px;
+}
+.estCompletionDiv {
+  top: 1459px;
+}
+.div12 {
+  top: 1374px;
+  left: 1453px;
+  display: inline-block;
+}
+.div12,
+.div13,
+.minDiv {
+  position: absolute;
+  line-height: 28.27px;
+  font-weight: 500;
+  text-align: right;
+}
+.minDiv {
+  top: 1403px;
+  left: 1449px;
+  display: inline-block;
+}
+.div13 {
+  top: 1430px;
+  left: 1453px;
+}
+.div13,
+.h33mDiv,
+.maxDiv2 {
+  display: inline-block;
+}
+.h33mDiv {
+  position: absolute;
+  top: 1459px;
+  left: 1439px;
+  line-height: 28.27px;
+  font-weight: 500;
+  text-align: right;
+}
+.maxDiv2 {
+  top: 780px;
+  left: 1345px;
+  font-size: 12.6px;
+  line-height: 9.16px;
+  color: #ef5969;
+}
+.div14,
+.div15,
+.maxDiv2 {
+  position: absolute;
+}
+.div14 {
+  top: 624px;
+  left: 1194px;
+  font-size: 20px;
+  line-height: 22.45px;
+  display: flex;
+  align-items: center;
+  width: 173px;
+  height: 34px;
+}
+.div15 {
+  top: 780px;
+  left: 1428px;
+  font-size: 10px;
+  display: inline-block;
+  opacity: 0.5;
+}
+.uSDTDiv3 {
+  top: 1104px;
+  left: 1225px;
+}
+.div16,
+.div17,
+.div18,
+.div19,
+.eTHDiv,
+.minDiv1,
+.uSDTDiv3 {
+  position: absolute;
+  font-size: 20px;
+  line-height: 22.45px;
+  display: flex;
+  align-items: center;
+  width: 173px;
+  height: 34px;
+}
+.div16 {
+  top: 1104px;
+  left: 1247px;
+  color: #575771;
+  text-align: right;
+}
+.div17,
+.div18,
+.div19,
+.eTHDiv,
+.minDiv1 {
+  top: 1189px;
+  left: 1225px;
+}
+.div17,
+.div18,
+.div19,
+.minDiv1 {
+  top: 1298px;
+  left: 1193px;
+  width: 69px;
+}
+.div18,
+.div19,
+.minDiv1 {
+  left: 1299px;
+}
+.div18,
+.div19 {
+  left: 1413px;
+}
+.div19 {
+  top: 1189px;
+  left: 1247px;
+  color: #575771;
+  text-align: right;
+  width: 173px;
+}
+.ellipseIcon,
+.vectorIcon6 {
+  position: absolute;
+  top: 1200.5px;
+  left: 436px;
+  width: 23px;
+  height: 23px;
+}
+.vectorIcon6 {
+  top: 1206.26px;
+  left: 441.76px;
+  width: 10.94px;
+  height: 12.22px;
+}
+.div20,
+.sANDUSDTDiv {
+  position: absolute;
+  top: 1195px;
+  line-height: 28.27px;
+  font-weight: 500;
+  width: 82px;
+  height: 34px;
+}
+.sANDUSDTDiv {
+  left: 549px;
+  display: flex;
+  align-items: center;
+}
+.div20 {
+  left: 729px;
+}
+.div20,
+.div21,
+.div22 {
+  display: flex;
+  align-items: center;
+}
+.div21 {
+  position: absolute;
+  top: 1195px;
+  left: 984px;
+  line-height: 28.27px;
+  font-weight: 500;
+  width: 82px;
+  height: 34px;
+}
+.div22 {
+  position: relative;
+  line-height: 22.45px;
+  font-weight: 600;
+  justify-content: center;
+  width: 37.76px;
+  flex-shrink: 0;
+}
+.tagPercentaceMainDiv1 {
+  flex: 1;
+  border-radius: 6px;
+  background-color: rgba(38, 171, 95, 0.2);
+  display: none;
+  flex-direction: row;
+  padding: 0 8.164371490478516px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tagPercentaceDefault1 {
+  position: absolute;
+  top: 1200.5px;
+  left: 663px;
+  width: 58px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  font-size: 10px;
+  color: #26ab5f;
+  font-family: Poppins;
+}
+.ellipseIcon1 {
+  position: absolute;
+  top: 1260.5px;
+  left: 436px;
+  width: 23px;
+  height: 23px;
+}
+.dOGEUSDTDiv,
+.div23 {
+  position: absolute;
+  top: 1255px;
+  left: 549px;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 82px;
+  height: 34px;
+}
+.div23 {
+  left: 729px;
+}
+.vectorIcon7 {
+  position: absolute;
+  top: 1265.51px;
+  left: 442.29px;
+  width: 10.94px;
+  height: 12.22px;
+}
+.div24 {
+  top: 1255px;
+  left: 984px;
+  line-height: 28.27px;
+  font-weight: 500;
+  width: 82px;
+  height: 34px;
+}
+.div24,
+.div26,
+.fTMUSDTDiv,
+.tagPercentaceDefault2 {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+.tagPercentaceDefault2 {
+  top: 1260.5px;
+  left: 663px;
+  width: 58px;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: center;
+  font-size: 10px;
+  color: #26ab5f;
+  font-family: Inter;
+}
+.div26,
+.fTMUSDTDiv {
+  top: 1315px;
+  left: 549px;
+  line-height: 28.27px;
+  font-weight: 500;
+  width: 82px;
+  height: 34px;
+}
+.div26 {
+  left: 729px;
+}
+.ellipseIcon2 {
+  position: absolute;
+  top: 1320.5px;
+  left: 436px;
+  width: 23px;
+  height: 23px;
+}
+.div27,
+.vectorIcon8 {
+  position: absolute;
+  top: 1326.26px;
+  left: 441.76px;
+  width: 10.94px;
+  height: 12.22px;
+}
+.div27 {
+  top: 1315px;
+  left: 984px;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 82px;
+  height: 34px;
+}
+.vectorIcon10,
+.vectorIcon11,
+.vectorIcon9 {
+  position: absolute;
+  top: 1181.8px;
+  left: 429px;
+  width: 682px;
+  height: 0.4px;
+}
+.vectorIcon10,
+.vectorIcon11 {
+  top: 1241.8px;
+  left: 428px;
+}
+.vectorIcon11 {
+  top: 1301.8px;
+  left: 429px;
+}
+.div28 {
+  position: relative;
+  line-height: 22.45px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 37.76px;
+  flex-shrink: 0;
+}
+.tagPercentaceDefault3,
+.tagPercentaceMainDiv3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tagPercentaceMainDiv3 {
+  flex: 1;
+  border-radius: 6px;
+  background-color: rgba(38, 171, 95, 0.2);
+  padding: 0 8.164371490478516px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.tagPercentaceDefault3 {
+  position: absolute;
+  top: 1320px;
+  left: 1057px;
+  width: 45px;
+  justify-content: flex-end;
+  text-align: center;
+  font-size: 10px;
+  color: #26ab5f;
+}
+.depositDiv,
+.div29,
+.div30,
+.div31,
+.div32,
+.div33,
+.div34,
+.div35,
+.div36,
+.div37 {
+  position: absolute;
+  top: 1314px;
+  left: 899px;
+  line-height: 22.45px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 77px;
+  height: 34px;
+}
+.depositDiv,
+.div30,
+.div31,
+.div32,
+.div33,
+.div34,
+.div35,
+.div36,
+.div37 {
+  top: 1134px;
+}
+.depositDiv,
+.div31,
+.div32,
+.div33,
+.div34,
+.div35,
+.div36,
+.div37 {
+  top: 1196px;
+}
+.depositDiv,
+.div32,
+.div33,
+.div34,
+.div35,
+.div36,
+.div37 {
+  top: 1255px;
+}
+.depositDiv,
+.div33,
+.div34,
+.div35,
+.div36,
+.div37 {
+  top: 1314px;
+  left: 823px;
+}
+.depositDiv,
+.div34,
+.div35,
+.div36,
+.div37 {
+  top: 1134px;
+}
+.depositDiv,
+.div35,
+.div36,
+.div37 {
+  top: 1196px;
+}
+.depositDiv,
+.div36,
+.div37 {
+  top: 1134px;
+  left: 549px;
+  line-height: 28.27px;
+  width: 82px;
+}
+.div36,
+.div37 {
+  left: 729px;
+}
+.div37 {
+  top: 1255px;
+  left: 823px;
+  line-height: 22.45px;
+  width: 77px;
+}
+.ellipseIcon3,
+.vectorIcon12 {
+  position: absolute;
+  top: 1139.5px;
+  left: 436px;
+  width: 23px;
+  height: 23px;
+}
+.vectorIcon12 {
+  top: 1144.51px;
+  left: 442.29px;
+  width: 10.94px;
+  height: 12.22px;
+}
+.div38,
+.div39 {
+  position: absolute;
+  top: 1134px;
+  display: flex;
+  align-items: center;
+  height: 34px;
+}
+.div38 {
+  left: 984px;
+  line-height: 28.27px;
+  font-weight: 500;
+  width: 82px;
+}
+.div39 {
+  left: 646px;
+  color: #26ab5f;
+  width: 64px;
+}
+.div39,
+.div40,
+.pMDiv {
+  line-height: 22.45px;
+  font-weight: 500;
+}
+.pMDiv {
+  position: absolute;
+  top: 1134px;
+  left: 465px;
+  display: flex;
+  align-items: center;
+  width: 77px;
+  height: 34px;
+}
+.div40 {
+  flex: 1;
+  position: relative;
+  display: inline-block;
+}
+.tagPercentaceDefault4,
+.tagPercentaceMainDiv4 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tagPercentaceMainDiv4 {
+  flex: 1;
+  border-radius: 6px;
+  background-color: rgba(244, 208, 100, 0.2);
+  padding: 0 8.164371490478516px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+.tagPercentaceDefault4 {
+  position: absolute;
+  top: 1140px;
+  left: 1057px;
+  width: 56px;
+  justify-content: flex-end;
+  text-align: center;
+  font-size: 10px;
+  color: #f4a662;
+}
+.instrumentDiv,
+.priceDiv1,
+.sideDiv,
+.timeDiv,
+.typeDiv {
+  position: absolute;
+  top: 1089px;
+  left: 429px;
+  font-size: 10px;
+  display: inline-block;
+  width: 94px;
+  opacity: 0.5;
+}
+.instrumentDiv,
+.priceDiv1,
+.sideDiv,
+.typeDiv {
+  left: 549px;
+  width: 64px;
+}
+.priceDiv1,
+.sideDiv,
+.typeDiv {
+  top: 1101px;
+  width: 39px;
+}
+.priceDiv1,
+.sideDiv {
+  left: 429px;
+  width: 36px;
+}
+.priceDiv1 {
+  top: 1089px;
+  left: 650px;
+}
+.avgPriceDiv,
+.estTotalDiv,
+.executedDiv,
+.quantityDiv,
+.statusDiv,
+.stopPriceDiv {
+  position: absolute;
+  top: 1089px;
+  left: 727px;
+  font-size: 10px;
+  display: inline-block;
+  width: 52px;
+  opacity: 0.5;
+}
+.avgPriceDiv,
+.estTotalDiv,
+.executedDiv,
+.statusDiv,
+.stopPriceDiv {
+  left: 823px;
+}
+.avgPriceDiv,
+.estTotalDiv,
+.statusDiv,
+.stopPriceDiv {
+  left: 900px;
+}
+.avgPriceDiv,
+.estTotalDiv,
+.statusDiv {
+  left: 984px;
+}
+.avgPriceDiv,
+.statusDiv {
+  left: 1057px;
+}
+.avgPriceDiv {
+  top: 1101px;
+  left: 900px;
+}
+.tagPercentaceMainDiv5 {
+  top: 1201px;
+  left: 1057px;
+  border-radius: 6px;
+  background-color: rgba(38, 171, 95, 0.2);
+  width: 45px;
+  flex-direction: row;
+  padding: 0 8px;
+  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
+  font-size: 10px;
+  color: #26ab5f;
+}
+.aMDiv,
+.div43,
+.tagPercentaceMainDiv5,
+.tagPercentaceMainDiv6 {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+.tagPercentaceMainDiv6 {
+  top: 1260px;
+  left: 1057px;
+  border-radius: 6px;
+  background-color: rgba(38, 171, 95, 0.2);
+  width: 45px;
+  flex-direction: row;
+  padding: 0 8px;
+  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
+  font-size: 10px;
+  color: #26ab5f;
+}
+.aMDiv,
+.div43 {
+  top: 1196px;
+  line-height: 22.45px;
+  font-weight: 500;
+  height: 34px;
+}
+.div43 {
+  left: 646px;
+  color: #ee6e6e;
+  width: 64px;
+}
+.aMDiv {
+  left: 465px;
+  width: 77px;
+}
+.div44 {
+  top: 1255px;
+  left: 646px;
+  color: #26ab5f;
+  width: 64px;
+}
+.aMDiv1,
+.div44,
+.div45,
+.pMDiv1 {
+  position: absolute;
+  line-height: 22.45px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  height: 34px;
+}
+.aMDiv1 {
+  top: 1255px;
+  left: 465px;
+  width: 77px;
+}
+.div45,
+.pMDiv1 {
+  top: 1314px;
+}
+.div45 {
+  left: 646px;
+  color: #26ab5f;
+  width: 64px;
+}
+.pMDiv1 {
+  left: 465px;
+  width: 77px;
+}
+.vectorIcon13,
+.vectorIcon14,
+.vectorIcon15 {
+  position: absolute;
+  top: 1201px;
+  left: 1450px;
+  width: 13px;
+  height: 9px;
+}
+.vectorIcon14,
+.vectorIcon15 {
+  top: 1117px;
+}
+.vectorIcon15 {
+  top: 1310px;
+  left: 1348px;
+}
+.imageIconETH,
+.imageIconWallet,
+.rectangleDiv25 {
+  position: absolute;
+  top: 1107px;
+  left: 1188px;
+  width: 26px;
+  height: 27px;
+}
+.imageIconETH,
+.rectangleDiv25 {
+  top: 1193px;
+  height: 25px;
+}
+.rectangleDiv25 {
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  background-color: #1c1c25;
+  width: 1110px;
+  height: 244px;
+}
+.bTCUSDTDiv5,
+.imageIconUser3 {
+  position: absolute;
+  top: 227.53px;
+  left: 1617.13px;
+  width: 95.87px;
+  height: 71.83px;
+  display: none;
+}
+.bTCUSDTDiv5 {
+  top: 70.69px;
+  left: 1210.15px;
+  line-height: 28.27px;
+  font-weight: 600;
+  align-items: center;
+  width: 110.85px;
+  height: 41.05px;
+}
+.groupDiv10 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1110px;
+  height: 244px;
+  font-size: 12px;
+  font-family: Inter;
+}
+.rectangleDiv26 {
+  position: absolute;
+  top: 34px;
+  left: 34px;
+  border-radius: 10px;
+  border: 1px solid #575771;
+  box-sizing: border-box;
+  width: 506px;
+  height: 68px;
+}
+.ellipseIcon4 {
+  position: absolute;
+  top: 45px;
+  left: 45px;
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+}
+.openSeaFundDiv {
+  position: absolute;
+  top: 50px;
+  left: 101px;
+  font-size: 32px;
+  font-weight: 500;
+  display: inline-block;
+  width: 265px;
+  height: 38px;
+}
+.vectorIcon16 {
+  position: absolute;
+  top: 67px;
+  left: 503px;
+  width: 13px;
+  height: 8px;
+}
+.shareDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 24px;
+  font-weight: 500;
+  display: inline-block;
+}
+.groupDiv14,
+.groupIcon3,
+.groupIcon4 {
+  position: absolute;
+  top: 0;
+  left: 66px;
+  width: 24px;
+  height: 24px;
+}
+.groupDiv14,
+.groupIcon4 {
+  left: 0;
+  width: 90px;
+}
+.groupIcon4 {
+  top: 3px;
+  left: 110px;
+  width: 21px;
+  height: 17.68px;
+}
+.groupDiv11,
+.groupDiv12 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 131px;
+  height: 24px;
+}
+.groupDiv11 {
+  top: 206px;
+  left: 943px;
+  font-size: 16px;
+  color: #fb9b20;
+}
+.div46 {
+  position: absolute;
+  top: 74px;
+  left: 600px;
+  font-size: 28px;
+  line-height: 28.27px;
+  font-weight: 500;
+  display: inline-block;
+}
+.vectorIcon17 {
+  position: absolute;
+  top: 87px;
+  left: 790px;
+  width: 269px;
+  height: 52px;
+}
+.portfolioValueDiv {
+  position: absolute;
+  top: 39px;
+  left: 600px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 300;
+  display: inline-block;
+}
+.div47,
+.startingValue500,
+.tagPercentaceMainDiv7 {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+.startingValue500 {
+  top: 116px;
+  left: 600px;
+  line-height: 22.45px;
+  font-weight: 500;
+  width: 165px;
+}
+.div47,
+.tagPercentaceMainDiv7 {
+  top: 152px;
+  color: #26ab5f;
+}
+.div47 {
+  left: 923px;
+  font-size: 13px;
+  line-height: 22.45px;
+  font-weight: 500;
+  width: 73px;
+}
+.tagPercentaceMainDiv7 {
+  left: 1014px;
+  border-radius: 60px;
+  background-color: rgba(38, 171, 95, 0.2);
+  flex-direction: row;
+  padding: 0 8px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+.rectangleDiv27 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 7px;
+  background-color: #000;
+  width: 39px;
+  height: 29px;
+}
+.hDiv {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.groupDiv17 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 39px;
+  height: 29px;
+  color: #fed519;
+}
+.dDiv {
+  position: absolute;
+  top: 3px;
+  left: 13px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.groupDiv18,
+.groupDiv19 {
+  position: absolute;
+  top: 0;
+  left: 49px;
+  width: 39px;
+  height: 29px;
+}
+.groupDiv19 {
+  left: 98px;
+}
+.mDiv {
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.groupDiv16,
+.groupDiv20 {
+  position: absolute;
+  top: 0;
+  left: 147px;
+  width: 39px;
+  height: 29px;
+}
+.groupDiv16 {
+  top: 34px;
+  left: 884px;
+  width: 186px;
+  text-align: center;
+  font-size: 10px;
+}
+.bMMk4gdD263q7QJt3VLWnG2x1mt9HVDiv {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  display: inline-block;
+}
+.groupDiv21,
+.groupIcon5,
+.groupIcon6 {
+  position: absolute;
+  top: 0;
+  left: 289px;
+  width: 18px;
+  height: 18px;
+}
+.groupDiv21,
+.groupIcon6 {
+  left: 329px;
+}
+.groupDiv21 {
+  top: 155px;
+  left: 34px;
+  width: 347px;
+  font-size: 10px;
+  color: #9191a7;
+}
+.rectangleDiv31 {
+  position: absolute;
+  top: 0;
+  left: 214px;
+  border-radius: 12px 12px 0 0;
+  background-color: #282835;
+  width: 187px;
+  height: 50px;
+}
+.dataUpdated1minAgo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 22.45px;
+  display: inline-block;
+}
+.groupDiv23,
+.groupIcon7 {
+  position: absolute;
+  top: 2px;
+  left: 131px;
+  width: 18px;
+  height: 18px;
+}
+.groupDiv23 {
+  top: 152px;
+  left: 600px;
+  width: 149px;
+  height: 23px;
+  color: #9191a7;
+}
+.vectorIcon18 {
+  position: absolute;
+  top: 34px;
+  left: 554.5px;
+  width: 1px;
+  height: 146px;
+}
+.expiryInDiv,
+.investorsDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 22.45px;
+  font-weight: 500;
+  display: inline-block;
+}
+.investorsDiv {
+  left: 156px;
+}
+.tagPercentaceMainDiv8,
+.tagPercentaceMainDiv9 {
+  position: absolute;
+  top: 0;
+  left: 53px;
+  border-radius: 60px;
+  background-color: rgba(145, 145, 167, 0.2);
+  display: flex;
+  flex-direction: row;
+  padding: 0 8px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-end;
+}
+.tagPercentaceMainDiv9 {
+  left: 212px;
+}
+.groupDiv24 {
+  position: absolute;
+  top: 120px;
+  left: 34px;
+  width: 247.33px;
+  height: 23px;
+  color: #9191a7;
+}
+.groupDiv9 {
+  position: relative;
+  width: 1110px;
+  height: 294px;
+  font-size: 11px;
+}
+.rectangleDiv32 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background: linear-gradient(47.02deg, #ff2f45, #fb9b20);
+  width: 20px;
+  height: 20px;
+}
+.enableTWAPDiv {
+  position: absolute;
+  top: 0;
+  left: 35px;
+  display: inline-block;
+}
+.groupDiv25,
+.groupDiv26,
+.groupIcon8 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+.groupDiv25,
+.groupDiv26 {
+  width: 133px;
+}
+.groupDiv25 {
+  top: 865px;
+  left: 1178px;
+  font-size: 16px;
+  color: #d0d0eb;
+}
+.carbonarrowDownIcon {
+  position: absolute;
+  top: 1151px;
+  left: 1318px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+.fundManagementTrading1 {
+  position: relative;
+  background-color: #000;
+  width: 100%;
+  height: 2176px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 12px;
+  color: #fff;
+  font-family: Ubuntu;
+}

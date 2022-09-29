@@ -1,0 +1,113 @@
+.rectangleDiv,
+.rectangleDiv1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 15px;
+  background-color: #1c1c25;
+  width: 748px;
+  height: 502px;
+}
+.rectangleDiv1 {
+  border-radius: 7px;
+  background-color: #000;
+  width: 39px;
+  height: 29px;
+}
+.allDiv {
+  position: absolute;
+  top: 3px;
+  left: 13px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.groupDiv2,
+.rectangleDiv2,
+.rectangleDiv3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 39px;
+  height: 29px;
+}
+.rectangleDiv2,
+.rectangleDiv3 {
+  border-radius: 7px;
+  background-color: #000;
+  width: 50px;
+}
+.rectangleDiv3 {
+  left: 60px;
+  width: 57px;
+}
+.historyDiv,
+.openDiv {
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.historyDiv {
+  left: 72px;
+}
+.groupDiv3 {
+  position: absolute;
+  top: 0;
+  left: 49px;
+  width: 117px;
+  height: 29px;
+  color: #fff;
+}
+.groupDiv1,
+.ordersDiv {
+  position: absolute;
+  top: 24px;
+}
+.groupDiv1 {
+  left: 127px;
+  width: 166px;
+  height: 29px;
+  text-align: center;
+  color: #fed519;
+}
+.ordersDiv {
+  left: 34px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 300;
+  display: inline-block;
+}
+.bTCUSDTDiv,
+.imageIconUser {
+  position: absolute;
+  top: 309.53px;
+  left: 1617.13px;
+  width: 95.87px;
+  height: 71.83px;
+  display: none;
+}
+.bTCUSDTDiv {
+  top: -704.31px;
+  left: 1210.15px;
+  font-size: 12px;
+  line-height: 28.27px;
+  font-weight: 600;
+  font-family: Inter;
+  align-items: center;
+  width: 110.85px;
+  height: 41.05px;
+}
+.groupDiv {
+  position: absolute;
+  top: 1007px;
+  left: 395px;
+  width: 748px;
+  height: 502px;
+  text-align: left;
+  font-size: 10px;
+  color: #fff;
+  font-family: Ubuntu;
+}
