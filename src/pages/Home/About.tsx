@@ -1,7 +1,7 @@
 import React from "react";
 import { FunctionComponent } from "react";
 import styles from "./About.module.css";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Trans } from "@lingui/macro";
 
@@ -120,13 +120,13 @@ const About: FunctionComponent = () => {
         edge in trading across decentralised protocols, just like a centralised
         exchange, but without the fear of losing access toy our funds.
       </div>
-      <NavLink className="default-btn" to="/create-fund">
+      <Link className="default-btn" to="/create-fund">
         <Trans>Create Fund</Trans>
-      </NavLink>
+      </Link>
       <img className={styles.saly31Icon} alt="" src="../locofy/saly31@2x.png" />
-      <NavLink className="default-btn" to="/fund/trading">
+      <Link className="default-btn" to="/fund/trading">
         <Trans>Create Fund</Trans>
-      </NavLink>
+      </Link>
 
       <img
         className={styles.ellipseIcon3}

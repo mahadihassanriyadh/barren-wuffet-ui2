@@ -33,8 +33,8 @@ function App() {
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <div className="z-0 flex flex-col items-center w-full h-screen">
-            {/* <Header /> */}
             <Router>
+              <Header />
               <div>
                 <Routes>
                   <Route path="/" element={<Home />} />

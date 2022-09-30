@@ -7,7 +7,7 @@ import discordIcon from "../../img/ic_discord.svg";
 // import telegramIcon from "../../img/ic_telegram.svg";
 import githubIcon from "../../img/ic_github.svg";
 // import mediumIcon from "../../img/ic_medium.svg";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const appLinks = [
   // { text: t`Terms & conditions`, link: "/terms-and-conditions" },
@@ -62,9 +62,9 @@ export default function Footer() {
               );
             }
             return (
-              <NavLink key={link} to={link} className="Footer-link">
+              <Link key={link} to={link} className="Footer-link">
                 {text}
-              </NavLink>
+              </Link>
             );
           })}
         </div>
