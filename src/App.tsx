@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 
@@ -23,12 +23,17 @@ import "./App.css";
 const { chains, wagmiClient } = getWalletConfig();
 
 function App() {
+  useEffect(() => {
+    // With this method we dynamically load the catalogs
+    dynamicActivate(defaultLocale);
+  }, []);
+
   return (
     <I18nProvider i18n={i18n}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <div className="z-0 flex flex-col items-center w-full h-screen">
-            <Header />
+            {/* <Header /> */}
             <Router>
               <div>
                 <Routes>
@@ -107,10 +112,6 @@ function App() {
                 </Routes>
               </div>
             </Router>
-  useEffect(() => {
-    // With this method we dynamically load the catalogs
-    dynamicActivate(defaultLocale);
-  }, []);
             <Footer />
           </div>
         </RainbowKitProvider>
