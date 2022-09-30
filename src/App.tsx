@@ -32,15 +32,17 @@ function App() {
     <I18nProvider i18n={i18n}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
-          <div className="z-0 flex flex-col items-center w-full h-screen">
+          <div>
             <Router>
-              <Header />
+              <div className="bg-gray-800">
+                <Header />
+              </div>
               <div>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
 
-                  <Route path="/create-fund" element={<CreateFund />} />
+                  {/* <Route path="/create-fund" element={<CreateFund />} /> */}
 
                   {/* <Route
                 path="/fund/trading"
@@ -112,7 +114,7 @@ function App() {
                 </Routes>
               </div>
             </Router>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </RainbowKitProvider>
       </WagmiConfig>
