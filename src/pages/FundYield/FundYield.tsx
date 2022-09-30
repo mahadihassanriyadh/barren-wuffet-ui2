@@ -45,7 +45,7 @@ import {
   cancelMultipleOrders,
 } from "../../domain/legacy";
 
-import { getContract } from "../../config/Addresses";
+import { getContract } from "../../config/configAddresses";
 import {
   getTokens,
   getToken,
@@ -74,7 +74,7 @@ import Footer from "../../components/Footer/Footer";
 import { getPositions, getPositionQuery } from "../../lib/data/positions";
 import { getPools, getPoolQuery } from "../../lib/data/pools";
 import { fetcher } from "../../lib/contracts/fetcher";
-import { ActionTypes } from "../../config/Actions";
+import { ActionTypes } from "../../config/actions";
 const { AddressZero } = ethers.constants;
 
 const notifications = {};

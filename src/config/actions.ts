@@ -1,4 +1,4 @@
-import { getContract } from "./addresses";
+import { getContract } from "./configAddresses";
 export enum ActionTypes {
   Trading,
   Yield,

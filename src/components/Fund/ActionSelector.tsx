@@ -4,7 +4,7 @@ import { Menu } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa";
 
 import "../Exchange/ChartTokenSelector.css";
-import { getWhitelistedActions, ActionTypes } from "../../config/Actions";
+import { getWhitelistedActions, ActionTypes } from "../../config/actions";
 
 export default function ActionSelector(props) {
   const { chainId, selectedAction, onSelectAction, actionType } = props;
