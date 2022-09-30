@@ -107,6 +107,10 @@ function App() {
                 </Routes>
               </div>
             </Router>
+  useEffect(() => {
+    // With this method we dynamically load the catalogs
+    dynamicActivate(defaultLocale);
+  }, []);
             <Footer />
           </div>
         </RainbowKitProvider>
