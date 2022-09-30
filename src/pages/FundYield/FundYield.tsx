@@ -45,7 +45,7 @@ import {
   cancelMultipleOrders,
 } from "../../domain/legacy";
 
-import { getContract } from "../../config/configAddresses";
+import { getContract } from "../../config/addresses";
 import {
   getTokens,
   getToken,
