@@ -17,6 +17,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
 import { getWalletConfig } from "./config/wallet";
+import { defaultLocale, dynamicActivate } from "./lib/i18n";
 import "./App.css";
 
 const { chains, wagmiClient } = getWalletConfig();
