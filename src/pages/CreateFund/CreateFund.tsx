@@ -9,7 +9,6 @@ const CreateFund: FunctionComponent = () => {
       <div />
       <b>Create Fund</b>
       <CreateFundForm />
-      <Footer />
     </div>
   );
 };
