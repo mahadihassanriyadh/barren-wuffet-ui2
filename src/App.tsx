@@ -41,74 +41,19 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
-
                   <Route path="/create-fund" element={<CreateFund />} />
-
-                  {/* <Route
-                path="/fund/trading"
-                element={
-                  <FundTrading
-                    ref={exchangeRef}
-                    savedShowPnlAfterFees={savedShowPnlAfterFees}
-                    savedIsPnlInLeverage={savedIsPnlInLeverage}
-                    setSavedIsPnlInLeverage={setSavedIsPnlInLeverage}
-                    savedSlippageAmount={savedSlippageAmount}
-                    setPendingTxns={setPendingTxns}
-                    pendingTxns={pendingTxns}
-                    savedShouldShowPositionLines={savedShouldShowPositionLines}
-                    setSavedShouldShowPositionLines={
-                      setSavedShouldShowPositionLines
-                    }
-                    connectWallet={connectWallet}
-                    savedShouldDisableOrderValidation={
-                      savedShouldDisableOrderValidation
-                    }
-                  />
-                }
-              />
-
+                  {/* <Route path="/fund/trading" element={<FundTrading />} /> */}
+                  {/* 
               <Route
                 path="/fund/portfolio"
                 element={
-                  <FundPortfolio
-                    ref={exchangeRef}
-                    savedShowPnlAfterFees={savedShowPnlAfterFees}
-                    savedIsPnlInLeverage={savedIsPnlInLeverage}
-                    setSavedIsPnlInLeverage={setSavedIsPnlInLeverage}
-                    savedSlippageAmount={savedSlippageAmount}
-                    setPendingTxns={setPendingTxns}
-                    pendingTxns={pendingTxns}
-                    savedShouldShowPositionLines={savedShouldShowPositionLines}
-                    setSavedShouldShowPositionLines={
-                      setSavedShouldShowPositionLines
-                    }
-                    connectWallet={connectWallet}
-                    savedShouldDisableOrderValidation={
-                      savedShouldDisableOrderValidation
-                    }
-                  />
+                  <FundPortfolio />
                 }
               />
               <Route
                 path="/fund/yield"
                 element={
-                  <FundYield
-                    ref={exchangeRef}
-                    savedShowPnlAfterFees={savedShowPnlAfterFees}
-                    savedIsPnlInLeverage={savedIsPnlInLeverage}
-                    setSavedIsPnlInLeverage={setSavedIsPnlInLeverage}
-                    savedSlippageAmount={savedSlippageAmount}
-                    setPendingTxns={setPendingTxns}
-                    pendingTxns={pendingTxns}
-                    savedShouldShowPositionLines={savedShouldShowPositionLines}
-                    setSavedShouldShowPositionLines={
-                      setSavedShouldShowPositionLines
-                    }
-                    connectWallet={connectWallet}
-                    savedShouldDisableOrderValidation={
-                      savedShouldDisableOrderValidation
-                    }
-                  />
+                  <FundYield />
                 }
               /> */}
                 </Routes>

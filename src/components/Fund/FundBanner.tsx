@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./FundBanner.module.css";
 import FundTabs from "../../components/FundTabs/FundTabs";
 
-export default function TradeOptionSelector(props: any) {
+export default function FundBanner(props: any) {
   return (
     <div className={styles.groupDiv9}>
       <div className={styles.rectangleDiv26} />
