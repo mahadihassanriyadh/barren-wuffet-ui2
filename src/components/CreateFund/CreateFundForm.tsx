@@ -5,6 +5,7 @@ import twitterIcon from "../../img/icons/twitterYellowIcon.svg"
 import discordIcon from "../../img/icons/discordYellowIcon.svg"
 import calendarIcon from "../../img/icons/calendarYellowIcon.svg"
 import parcentageIcon from "../../img/icons/parcentageYellowIcon.svg"
+import { NavLink } from "react-router-dom";
 
 const CreateFundForm: FunctionComponent = () => {
   return (
@@ -19,7 +20,7 @@ const CreateFundForm: FunctionComponent = () => {
             <div className="flex justify-between space-x-8">
               <div className="relative w-full">
                 <img className="absolute right-4 top-3" src={telegramIcon} alt="telegram icon" />
-                <input type="text" name="telegram" id="telegram" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Telegram" required />
+                <input value={"https://t.me/username"} type="text" name="telegram" id="telegram" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Telegram" required />
               </div>
               <div className="relative w-full">
                 <img className="absolute right-4 top-3" src={twitterIcon} alt="telegram icon" />
@@ -45,6 +46,12 @@ const CreateFundForm: FunctionComponent = () => {
               </div>
             </div>
           </div>
+
+          <NavLink className="hover:text-orange-400 flex justify-center mt-10" to="/fund/portfolio">
+              <button className="px-16 py-2.5 bg-gradient-to-r from-orange-600 to-orange-400 rounded-lg font-bold text-lg text-white">
+                Create Fund
+              </button>
+          </NavLink>
         </form>
       </div>
     </div>
