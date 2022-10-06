@@ -1,6 +1,6 @@
+import React from "react";
 import { FunctionComponent } from "react";
 import CreateFundForm from "../../components/CreateFund/CreateFundForm";
-import Footer from "../../components/Footer/Footer";
 import styles from "./CreateFund.module.css";
 
 const CreateFund: FunctionComponent = () => {
@@ -9,7 +9,6 @@ const CreateFund: FunctionComponent = () => {
       <div />
       <b>Create Fund</b>
       <CreateFundForm />
-      <Footer />
     </div>
   );
 };
