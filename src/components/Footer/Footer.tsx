@@ -25,50 +25,52 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <div className="Footer">
-      <div className={"Footer-wrapper"}>
-        <div className="Footer-logo">
-          <img src={logoImg} alt="BarrenWuffet" />
-        </div>
-        <div className="Footer-social-link-block">
-          {socialLinks.map((platform) => {
+
+    <footer className="container mx-auto">
+      {/* footer logo */}
+      <div>
+        <img className="mx-auto" src={logoImg} alt="BarrenWuffet" />
+      </div>
+      {/* socil links */}
+      <div className="flex justify-center items-center space-x-28">
+        {socialLinks.map((platform) => {
+          return (
+            <a
+              key={platform.name}
+              href={platform.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={platform.icon} alt={platform.name} />
+            </a>
+          );
+        })}
+      </div>
+      {/* other links */}
+      <div className="py-6">
+        {/* @ts-ignore */}
+        {appLinks.map(({ external, text, link, isAppLink }): JSX.Element => {
+          if (external) {
             return (
               <a
-                key={platform.name}
-                className="App-social-link"
-                href={platform.link}
+                key={text}
                 target="_blank"
+                href={link}
+                className="text-xl text-gray-400 text-center block"
                 rel="noopener noreferrer"
               >
-                <img src={platform.icon} alt={platform.name} />
+                {text}
               </a>
             );
-          })}
-        </div>
-        <div className="Footer-links">
-          {/* @ts-ignore */}
-          {appLinks.map(({ external, text, link, isAppLink }): JSX.Element => {
-            if (external) {
-              return (
-                <a
-                  key={text}
-                  target="_blank"
-                  href={link}
-                  className="Footer-link"
-                  rel="noopener noreferrer"
-                >
-                  {text}
-                </a>
-              );
-            }
-            return (
-              <Link key={link} to={link} className="Footer-link">
-                {text}
-              </Link>
-            );
-          })}
-        </div>
+          }
+          return (
+            <Link key={link} to={link} className="text-xl text-gray-400 text-center block">
+              {text}
+            </Link>
+          );
+        })}
       </div>
-    </div>
+    </footer>
+
   );
 }

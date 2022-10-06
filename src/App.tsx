@@ -59,7 +59,9 @@ function App() {
                 </Routes>
               </div>
             </Router>
-            <Footer />
+            <div className="bg-gray-800">
+              <Footer />
+            </div>
           </div>
         </RainbowKitProvider>
       </WagmiConfig>

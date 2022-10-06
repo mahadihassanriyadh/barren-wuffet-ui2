@@ -3,7 +3,7 @@ import styles from "./CreateFundForm.module.css";
 
 const CreateFundForm: FunctionComponent = () => {
   return (
-    <div className={styles.groupDiv}>
+    <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl">
       <div>
         <form>
           <div />
