@@ -5,47 +5,21 @@ const CreateFundForm: FunctionComponent = () => {
   return (
     <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl">
       <div>
-        <form>
-          <div />
-          <div>Your Fund name</div>
-          <div>Information about your fund</div>
+        <form >
+          <p className="text-white">Information about your fund</p>
+          <div className="mt-4 space-y-3">
+            <input type="text" name="fundName" id="fundName" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Your Fund Name" required />
+            <textarea name="about" id="about" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full h-24 p-2.5" placeholder="About" required></textarea>
+            <textarea name="strategy" id="strategy" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full h-24 p-2.5" placeholder="Strategy" required></textarea>
+            <div>
+              <div>
+                <img src="" alt="" />
+                <input type="text" name="fundName" id="fundName" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Your Fund Name" required />
+              </div>
+            </div>
+          </div>
           <div>Fund Settings</div>
         </form>
-        <label>About</label>
-        <textarea />
-        <div>
-          <div />
-          <div>{`Telegram `}</div>
-        </div>
-        <div>
-          <div />
-          <div>Twitter</div>
-        </div>
-        <div>
-          <div />
-          <div>Discord</div>
-        </div>
-        <div>
-          <div />
-          <img alt="" src="../group-237674.svg" />
-          <div>{`Duration of raise `}</div>
-        </div>
-        <div>
-          <div />
-          <div>{`Amount being raised, `}</div>
-        </div>
-        <div>
-          <div />
-          <div>Fees</div>
-          <div>%</div>
-        </div>
-        <div>
-          <div />
-          <div>{`Strategy `}</div>
-        </div>
-        <button type="submit" className="">
-          Create Fund
-        </button>
       </div>
     </div>
   );
