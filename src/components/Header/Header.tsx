@@ -3,7 +3,6 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import logo from "../../img/logo.svg";
 
-import "./Header.css";
 import { NavLink } from "react-router-dom";
 
 export default function Header() {
