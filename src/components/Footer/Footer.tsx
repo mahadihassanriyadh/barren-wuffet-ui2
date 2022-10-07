@@ -1,6 +1,6 @@
 import React from "react";
 import { t } from "@lingui/macro";
-import "./Footer.css";
+
 import logoImg from "../../img/logo_bw_sq.svg";
 import twitterIcon from "../../img/ic_twitter.svg";
 import discordIcon from "../../img/ic_discord.svg";
@@ -25,7 +25,6 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-
     <footer className="container mx-auto">
       {/* footer logo */}
       <div>
@@ -64,13 +63,16 @@ export default function Footer() {
             );
           }
           return (
-            <Link key={link} to={link} className="text-xl text-gray-400 text-center block">
+            <Link
+              key={link}
+              to={link}
+              className="text-xl text-gray-400 text-center block"
+            >
               {text}
             </Link>
           );
         })}
       </div>
     </footer>
-
   );
 }
