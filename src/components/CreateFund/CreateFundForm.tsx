@@ -21,6 +21,13 @@ const CreateFundForm: FunctionComponent = () => {
   const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
   const [twitter, setTwitter] = useState(TWITTER_PREFIX);
   const [discord, setDiscord] = useState(DISCORD_PREFIX);
+  const [fundName, setFundName] = useState("");
+  const [about, setAbout] = useState("");
+  const [strategy, setStrategy] = useState("");
+  const [amountRaised, setAmountRaised] = useState(10000);
+  const [closeDate, setCloseDate] = useState(new Date("2022-10-20"));
+  const [fees, setFees] = useState(1);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
@@ -62,13 +69,24 @@ const CreateFundForm: FunctionComponent = () => {
               type="text"
               name="fundName"
               id="fundName"
+              value={fundName}
+              onChange={(e) => setFundName(e.target.value)}
               placeholder={t`Your Fund Name`}
               required
             />
-            <TextArea name="about" id="about" placeholder={t`About`} required />
+            <TextArea
+              name="about"
+              id="about"
+              value={about}
+              placeholder={t`About`}
+              required
+              onChange={(e) => setAbout(e.target.value)}
+            />
             <TextArea
               name="strategy"
               id="strategy"
+              value={strategy}
+              onChange={(e) => setStrategy(e.target.value)}
               placeholder={t`Strategy`}
               required
             />
@@ -115,25 +133,39 @@ const CreateFundForm: FunctionComponent = () => {
               type="number"
               name="amountRaised"
               id="amountRaised"
+              value={amountRaised}
               placeholder={t`Amounts being raised $`}
+              onChange={(e) => setAmountRaised(parseFloat(e.target.value))}
               required
             />
             <div className="flex justify-between space-x-8">
               <Input
                 type="date"
                 icon={calendarIcon}
+                value={closeDate.toISOString().split("T")[0]}
                 name="durationOfRaise"
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
+                onChange={(e) => {
+                  const newDate = new Date(e.target.value);
+                  if (newDate.getTime() > new Date().getTime()) {
+                    setCloseDate(newDate);
+                  }
+                }}
                 required
               />
 
               <Input
                 type="number"
                 icon={percentageIcon}
+                value={fees}
                 name="fees"
                 id="fees"
                 placeholder={t`Fees`}
+                onChange={(e) => {
+                  const val = parseFloat(e.target.value);
+                  setFees(val < 100 && val >= 0 ? val : 0);
+                }}
                 required
               />
             </div>

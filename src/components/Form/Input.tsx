@@ -10,7 +10,11 @@ export const Input: FunctionComponent<InputProps> = (props) => {
   return (
     <div className="relative w-full">
       {props.icon && (
-        <img className="absolute right-4 top-3" src={props.icon} alt="icon" />
+        <img
+          className="absolute right-4 top-3 pointer-events-none"
+          src={props.icon}
+          alt="icon"
+        />
       )}
       <input
         {...props}
