@@ -1,51 +1,95 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, SetStateAction, useState } from "react";
 import styles from "./CreateFundForm.module.css";
+import telegramIcon from "../../img/icons/telegramYellowIcon.svg"
+import twitterIcon from "../../img/icons/twitterYellowIcon.svg"
+import discordIcon from "../../img/icons/discordYellowIcon.svg"
+import calendarIcon from "../../img/icons/calendarYellowIcon.svg"
+import parcentageIcon from "../../img/icons/parcentageYellowIcon.svg"
+import { NavLink } from "react-router-dom";
+import Error from "../ui/Error";
 
 const CreateFundForm: FunctionComponent = () => {
+  const [telegram, setTelegram] = useState('https://t.me/');
+  const [twitter, setTwitter] = useState('https://twitter.com/');
+  const [discord, setDiscord] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleTelegram = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setTelegram(e.target.value);
+  };
+  const handleTwitter = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setTwitter(e.target.value);
+  };
+  const handleDiscord = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setDiscord(e.target.value);
+  };
+  const handleFormSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    if (!telegram.startsWith('https://t.me/')) {
+      setIsError(true);
+      setError('Telegram input must starts with https://t.me/')
+      console.log(error)
+      return
+    }
+    if (!twitter.startsWith('https://twitter.com/')) {
+      setIsError(true);
+      setError('Twitter input must starts with https://twitter.com/')
+      console.log(error)
+      return
+    }
+    setIsError(false);
+    setError('');
+
+  }
   return (
     <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl">
       <div>
-        <form>
-          <div />
-          <div>Your Fund name</div>
-          <div>Information about your fund</div>
-          <div>Fund Settings</div>
+        <form onSubmit={handleFormSubmit}>
+          {
+            isError && <Error error={error} />
+          }
+          <p className="text-white">Information about your fund</p>
+          <div className="mt-4 space-y-3">
+            <input type="text" name="fundName" id="fundName" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-2.5" placeholder="Your Fund Name" required />
+            <textarea name="about" id="about" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full h-24 p-3" placeholder="About" required></textarea>
+            <textarea name="strategy" id="strategy" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full h-24 p-3" placeholder="Strategy" required></textarea>
+            <div className="flex justify-between space-x-8">
+              <div className="relative w-full">
+                <img className="absolute right-4 top-3" src={telegramIcon} alt="telegram icon" />
+                <input onChange={handleTelegram} value={telegram} type="text" name="telegram" id="telegram" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Telegram" required />
+              </div>
+              <div className="relative w-full">
+                <img className="absolute right-4 top-3" src={twitterIcon} alt="telegram icon" />
+                <input onChange={handleTwitter} value={twitter} type="text" name="twitter" id="twitter" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Twitter" required />
+              </div>
+              <div className="relative w-full">
+                <img className="absolute right-4 top-3" src={discordIcon} alt="telegram icon" />
+                <input onChange={handleDiscord} value={discord} type="text" name="discord" id="discord" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Discord Username" required />
+              </div>
+            </div>
+          </div>
+          <p className="text-white mt-8">Fund Setting</p>
+          <div className="mt-4 space-y-3">
+            <input type="number" name="amountRaised" id="amountRaised" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Amounts being raised $" required />
+            <div className="flex justify-between space-x-8">
+              <div className="relative w-full">
+                <img className="absolute right-4 top-3" src={calendarIcon} alt="telegram icon" />
+                <input type="date" name="durationOfRaise" id="durationOfRaise" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Duration of raise" required />
+              </div>
+              <div className="relative w-full">
+                <img className="absolute right-4 top-4" src={parcentageIcon} alt="telegram icon" />
+                <input type="number" name="fees" id="fees" className="bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3" placeholder="Fees" required />
+              </div>
+            </div>
+          </div>
+
+          <div className="hover:text-orange-400 flex justify-center mt-10">
+              <button type="submit" className="px-16 py-2.5 bg-gradient-to-r from-orange-600 to-orange-400 rounded-lg font-bold text-lg text-white">
+                Create Fund
+              </button>
+          </div>
         </form>
-        <label>About</label>
-        <textarea />
-        <div>
-          <div />
-          <div>{`Telegram `}</div>
-        </div>
-        <div>
-          <div />
-          <div>Twitter</div>
-        </div>
-        <div>
-          <div />
-          <div>Discord</div>
-        </div>
-        <div>
-          <div />
-          <img alt="" src="../group-237674.svg" />
-          <div>{`Duration of raise `}</div>
-        </div>
-        <div>
-          <div />
-          <div>{`Amount being raised, `}</div>
-        </div>
-        <div>
-          <div />
-          <div>Fees</div>
-          <div>%</div>
-        </div>
-        <div>
-          <div />
-          <div>{`Strategy `}</div>
-        </div>
-        <button type="submit" className="">
-          Create Fund
-        </button>
       </div>
     </div>
   );
