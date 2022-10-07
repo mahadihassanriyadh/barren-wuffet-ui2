@@ -9,38 +9,39 @@ import { Trans, t } from "@lingui/macro";
 import Error from "../ui/Error";
 import { Link } from "react-router-dom";
 
+const TELEGRAM_PREFIX = "https://t.me/";
+const TWITTER_PREFIX = "https://twitter.com/";
+const DISCORD_PREFIX = "https://discord.gg/";
+
+type Event = { target: { value: string } };
 const CreateFundForm: FunctionComponent = () => {
-  const [telegram, setTelegram] = useState("https://t.me/");
-  const [twitter, setTwitter] = useState("https://twitter.com/");
-  const [discord, setDiscord] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(true);
+  const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
+  const [twitter, setTwitter] = useState(TWITTER_PREFIX);
+  const [discord, setDiscord] = useState(DISCORD_PREFIX);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  const handleTelegram = (e: { target: { value: SetStateAction<string> } }) => {
-    setTelegram(e.target.value);
+  const handleSocialFn = (prefix: string) => {
+    return (e: Event) => {
+      const value = e.target.value;
+      if (value.startsWith(prefix)) {
+        return value;
+      }
+      return prefix + value;
+    };
   };
-  const handleTwitter = (e: { target: { value: SetStateAction<string> } }) => {
-    setTwitter(e.target.value);
+
+  const handleTelegram = (e: Event) => {
+    setTelegram(handleSocialFn(TELEGRAM_PREFIX)(e));
   };
-  const handleDiscord = (e: { target: { value: SetStateAction<string> } }) => {
-    setDiscord(e.target.value);
+  const handleTwitter = (e: Event) => {
+    setTwitter(handleSocialFn(TWITTER_PREFIX)(e));
+  };
+  const handleDiscord = (e: Event) => {
+    setDiscord(handleSocialFn(DISCORD_PREFIX)(e));
   };
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (!telegram.startsWith("https://t.me/")) {
-      setIsError(true);
-      setError(t`Telegram input must start with https://t.me/`);
-      console.log(error);
-      return;
-    }
-    if (!twitter.startsWith("https://twitter.com/")) {
-      setIsError(true);
-      setError(t`Twitter input must start with https://twitter.com/`);
-      console.log(error);
-      return;
-    }
-    setIsError(false);
     setIsSubmitted(true);
     setError("");
   };
@@ -49,7 +50,7 @@ const CreateFundForm: FunctionComponent = () => {
       <CreateFundThanks isHidden={!isSubmitted} />
       <div className={isSubmitted ? "hidden" : ""}>
         <form onSubmit={handleFormSubmit}>
-          {isError && <Error error={error} />}
+          {error && <Error error={error} />}
           <p>
             <Trans>Information about your fund</Trans>
           </p>
