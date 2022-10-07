@@ -98,7 +98,7 @@ const CreateFundForm: FunctionComponent = () => {
                 <img
                   className="absolute right-4 top-3"
                   src={twitterIcon}
-                  alt="telegram icon"
+                  alt="twitter icon"
                 />
                 <input
                   onChange={handleTwitter}
@@ -115,7 +115,7 @@ const CreateFundForm: FunctionComponent = () => {
                 <img
                   className="absolute right-4 top-3"
                   src={discordIcon}
-                  alt="telegram icon"
+                  alt="discord icon"
                 />
                 <input
                   onChange={handleDiscord}
