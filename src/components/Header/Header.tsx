@@ -79,7 +79,7 @@ export default function Header() {
               </li>
               <li>
                 <NavLink
-                  className="block hover:text-orange-400"
+                  className="block"
                   to="/fund/portfolio"
                 >
                   <Button label={t`Invest`} />
@@ -87,7 +87,7 @@ export default function Header() {
               </li>
               <li>
                 <NavLink
-                  className="block hover:text-orange-400"
+                  className="block"
                   to="/create-fund"
                 >
                   <Button label={t`Create Fund`} />

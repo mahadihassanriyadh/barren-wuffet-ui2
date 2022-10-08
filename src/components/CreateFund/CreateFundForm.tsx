@@ -56,18 +56,18 @@ const CreateFundForm: FunctionComponent = () => {
     setError("");
   };
   return (
-    <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl text-white">
+    <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
       <CreateFundThanks isHidden={!isSubmitted} />
       <div className={isSubmitted ? "hidden" : ""}>
         <form onSubmit={handleFormSubmit}>
           {error && <Error error={error} />}
-          <p>
+          <p className="text-lg font-bold">
             <Trans>Information about your fund</Trans>
           </p>
           <div className="mt-4 space-y-3">
             <Input
               type="text"
-              name="fundName"
+              name={t`Fund Name`}
               id="fundName"
               value={fundName}
               onChange={(e) => setFundName(e.target.value)}
@@ -75,7 +75,7 @@ const CreateFundForm: FunctionComponent = () => {
               required
             />
             <TextArea
-              name="about"
+              name={t`About This Fund`}
               id="about"
               value={about}
               placeholder={t`About`}
@@ -83,7 +83,7 @@ const CreateFundForm: FunctionComponent = () => {
               onChange={(e) => setAbout(e.target.value)}
             />
             <TextArea
-              name="strategy"
+              name={t`Fund Strategy`}
               id="strategy"
               value={strategy}
               onChange={(e) => setStrategy(e.target.value)}
@@ -96,7 +96,7 @@ const CreateFundForm: FunctionComponent = () => {
                 icon={telegramIcon}
                 value={telegram}
                 type="text"
-                name="telegram"
+                name={t`Telegram Username`}
                 id="telegram"
                 placeholder={t`Telegram`}
                 required
@@ -107,7 +107,7 @@ const CreateFundForm: FunctionComponent = () => {
                 icon={twitterIcon}
                 value={twitter}
                 type="text"
-                name="twitter"
+                name={t`Twitter Username`}
                 id="twitter"
                 placeholder={t`Twitter`}
                 required
@@ -118,20 +118,20 @@ const CreateFundForm: FunctionComponent = () => {
                 icon={discordIcon}
                 value={discord}
                 type="text"
-                name="discord"
+                name={t`Discord Username`}
                 id="discord"
                 placeholder={t`Discord Username`}
                 required
               />
             </div>
           </div>
-          <p className="text-white mt-8">
+          <p className="text-white mt-8 text-lg font-bold">
             <Trans>Fund Setting</Trans>
           </p>
           <div className="mt-4 space-y-3">
             <Input
               type="number"
-              name="amountRaised"
+              name={t`Amount to be Raised for This Fund`}
               id="amountRaised"
               value={amountRaised}
               placeholder={t`Amounts being raised $`}
@@ -143,7 +143,7 @@ const CreateFundForm: FunctionComponent = () => {
                 type="date"
                 icon={calendarIcon}
                 value={closeDate.toISOString().split("T")[0]}
-                name="durationOfRaise"
+                name={t`Closing Date of the Fund`}
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
                 onChange={(e) => {
@@ -159,7 +159,7 @@ const CreateFundForm: FunctionComponent = () => {
                 type="number"
                 icon={percentageIcon}
                 value={fees}
-                name="fees"
+                name={t`Fund Fees`}
                 id="fees"
                 placeholder={t`Fees`}
                 onChange={(e) => {
@@ -171,7 +171,7 @@ const CreateFundForm: FunctionComponent = () => {
             </div>
           </div>
 
-          <div className="hover:text-orange-400 flex justify-center mt-10">
+          <div className="flex justify-center mt-10">
             <Button type="submit" label={t`Create Fund`} />
           </div>
         </form>
@@ -185,17 +185,17 @@ function CreateFundThanks(props: { isHidden: boolean }) {
   return (
     <div className={isHidden ? "hidden" : ""}>
       <div>
-        <p className="mt-4">
-          <Trans>Thank you! Your Fund was created!</Trans>
+        <p className="text-6xl text-center py-2">🎉</p>
+        <p className="mt-4 text-center text-xl py-1.5 rounded-md font-medium bg-green-800 bg-opacity-40">
+          ✅ <Trans>Thank you! Your Fund was created!</Trans>
         </p>
-        <p className="mt-4">{`🎉 `}</p>
       </div>
-      <div className="mt-4">
+      <div className="mt-14">
         <Link to="/fund/portfolio">
           <Button label={t`START TRADING`} />
         </Link>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 text-gray-500 text-center">
         <Trans>
           If you are a trader, raise capital easily and scale up your investment
           and trading strategies. Decide on the fund size, the duration of
