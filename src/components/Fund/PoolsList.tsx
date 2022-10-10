@@ -4,14 +4,15 @@ import { Trans, t } from "@lingui/macro";
 
 import { ImSpinner2 } from "react-icons/im";
 import { formatAmount, USD_DECIMALS } from "../../data/formatting";
+import { Pool } from "../../api/pools";
 
 export default function PositionsList(props: {
-  pools: any;
+  pools: Pool[];
   poolDataIsLoading: boolean;
 }) {
   const { pools, poolDataIsLoading } = props;
 
-  const closePool = (pool: any) => {};
+  const closePool = (pool: Pool) => {};
 
   return (
     <div className="PositionsList">
@@ -51,7 +52,7 @@ export default function PositionsList(props: {
               </td>
             </tr>
           )}
-          {pools.map((pool: any) => {
+          {pools.map((pool: Pool) => {
             return (
               <tr key={pool.key}>
                 <td className="clickable">

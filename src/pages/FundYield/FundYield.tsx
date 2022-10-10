@@ -11,6 +11,8 @@ import TradingOrders from "../../components/Fund/TradingOrders";
 import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";
+import PoolsList from "../../components/Fund/PoolsList";
+import { getPools } from "../../api/pools";
 
 const FundYield = () => {
   const { chain } = useNetwork();
@@ -68,7 +70,7 @@ const FundYield = () => {
             </div>
           </div>
           <div className="Exchange-lists large">
-            <OrderList />
+            <PoolsList pools={getPools()} poolDataIsLoading={false} />
           </div>
         </div>
         <div className="Exchange-right">
