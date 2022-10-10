@@ -2,9 +2,51 @@ import React from "react";
 
 import { Trans, t } from "@lingui/macro";
 
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  Row,
+  ColumnDef,
+} from "@tanstack/react-table";
+
 import { ImSpinner2 } from "react-icons/im";
 import { formatAmount, USD_DECIMALS } from "../../data/formatting";
 import { Pool } from "../../api/pools";
+import Table from "../Table/Table";
+
+const columnHelper = createColumnHelper<Pool>();
+
+const columns: ColumnDef<Pool, any>[] = [
+  columnHelper.accessor((row) => row.indexToken.symbol, {
+    header: t`Pool`,
+  }),
+  columnHelper.accessor("vAPY", {
+    header: t`Base vAPY`,
+  }),
+  columnHelper.accessor("tAPY", {
+    header: t`Rewards tAPY`,
+  }),
+  columnHelper.accessor("volume", {
+    header: t`Volume`,
+  }),
+  columnHelper.accessor("tvl", {
+    header: t`TVL`,
+    cell: (info) => formatAmount(info.getValue(), USD_DECIMALS, 2, true, "0.0"),
+  }),
+  {
+    id: "close",
+    header: t`X`,
+    cell: ({ row }: { row: Row<Pool> }) => (
+      <button onClick={() => closePool(row.getValue("pool"))} disabled={false}>
+        <Trans>Close</Trans>
+      </button>
+    ),
+  },
+];
+
+const closePool = (pool: Pool) => {};
 
 export default function PositionsList(props: {
   pools: Pool[];
@@ -12,83 +54,15 @@ export default function PositionsList(props: {
 }) {
   const { pools, poolDataIsLoading } = props;
 
-  const closePool = (pool: Pool) => {};
+  const table = useReactTable<Pool>({
+    data: pools,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
-    <div className="PositionsList">
-      <table className="Exchange-list large App-box">
-        <tbody>
-          <tr className="Exchange-list-header">
-            <th>
-              <Trans>Pool</Trans>
-            </th>
-            <th>
-              <Trans>Base vAPY / Rewards tAPY</Trans>
-            </th>
-            <th>
-              <Trans>Volume</Trans>
-            </th>
-            <th>
-              <Trans>TVL</Trans>
-            </th>
-            <th></th>
-            <th></th>
-          </tr>
-          {pools.length === 0 && poolDataIsLoading && (
-            <tr>
-              <td colSpan={15}>
-                <div className="Exchange-empty-positions-list-note">
-                  Loading...
-                </div>
-              </td>
-            </tr>
-          )}
-          {pools.length === 0 && !poolDataIsLoading && (
-            <tr>
-              <td colSpan={15}>
-                <div className="Exchange-empty-positions-list-note">
-                  No open pools
-                </div>
-              </td>
-            </tr>
-          )}
-          {pools.map((pool: Pool) => {
-            return (
-              <tr key={pool.key}>
-                <td className="clickable">
-                  <div className="Exchange-list-title">
-                    {pool.indexToken.symbol}
-                    {pool.hasPendingChanges && (
-                      <ImSpinner2 className="spin position-loading-icon" />
-                    )}
-                  </div>
-                </td>
-                <td>
-                  <div>{pool.vAPY}</div>
-                  <div>{pool.tAPY}</div>
-                </td>
-                <td>
-                  <div>{pool.volume}</div>
-                </td>
-                <td>
-                  <div>
-                    ${formatAmount(pool.tvl, USD_DECIMALS, 2, true, "0.0")}
-                  </div>
-                </td>
-                <td>
-                  <button
-                    className="Exchange-list-action"
-                    onClick={() => closePool(pool)}
-                    disabled={false}
-                  >
-                    Close
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <div className="p-2">
+      <Table table={table} />
     </div>
   );
 }
