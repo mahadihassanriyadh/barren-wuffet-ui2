@@ -9,7 +9,7 @@ import { Trans, t } from "@lingui/macro";
 import Error from "../ui/Error";
 import { Link } from "react-router-dom";
 import { Input } from "../Form/Input";
-import { Button } from "../Form/Button";
+import Button from "../Form/Button";
 import { TextArea } from "../Form/TextArea";
 
 const TELEGRAM_PREFIX = "https://t.me/";

@@ -9,7 +9,7 @@ export function getWalletConfig() {
   const devChains = [chain.arbitrumGoerli];
 
   const { chains, provider } = configureChains(
-    [chain.mainnet, chain.arbitrum].concat(isDevelopment() ? devChains : []),
+    [chain.arbitrum, chain.mainnet].concat(isDevelopment() ? devChains : []),
     [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
   );
   const { connectors } = getDefaultWallets({

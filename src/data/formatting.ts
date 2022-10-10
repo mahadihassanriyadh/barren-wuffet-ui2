@@ -55,11 +55,8 @@ export const formatAmount = (
   tokenDecimals,
   displayDecimals,
   useCommas,
-  defaultValue
+  defaultValue = "..."
 ) => {
-  if (!defaultValue) {
-    defaultValue = "...";
-  }
   if (amount === undefined || amount.toString().length === 0) {
     return defaultValue;
   }

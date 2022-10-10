@@ -5,7 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
 }
 
-export const Button: FunctionComponent<ButtonProps> = (props) => (
+const Button: FunctionComponent<ButtonProps> = (props) => (
   <button
     {...props}
     className="px-16 py-2.5 bg-gradient-to-r from-orange-600 to-orange-400 rounded-lg font-bold text-lg text-white block mx-auto"
@@ -13,3 +13,5 @@ export const Button: FunctionComponent<ButtonProps> = (props) => (
     <Trans>{props.label}</Trans>
   </button>
 );
+
+export default Button;

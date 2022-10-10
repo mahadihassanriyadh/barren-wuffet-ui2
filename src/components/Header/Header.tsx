@@ -5,7 +5,7 @@ import logo from "../../img/logo.svg";
 
 import { NavLink } from "react-router-dom";
 import { t, Trans } from "@lingui/macro";
-import { Button } from "../Form/Button";
+import Button from "../Form/Button";
 
 export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -78,18 +78,12 @@ export default function Header() {
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  className="block"
-                  to="/fund/portfolio"
-                >
+                <NavLink className="block" to="/fund/portfolio">
                   <Button label={t`Invest`} />
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  className="block"
-                  to="/create-fund"
-                >
+                <NavLink className="block" to="/create-fund">
                   <Button label={t`Create Fund`} />
                 </NavLink>
               </li>
