@@ -51,7 +51,7 @@ import {
   getToken,
   getWhitelistedTokens,
   getTokenBySymbol,
-} from "../../config/Tokens";
+} from "../../config/tokens";
 
 import Reader from "../../abis/ReaderV2.json";
 import VaultV2 from "../../abis/VaultV2.json";

@@ -34,7 +34,7 @@ const OrderList: FunctionComponent = (props) => {
             },
             {
               label: t`Orders`,
-              content: <TradingOrders />,
+              content: <div>Orders stuff</div>,
             },
           ]}
         />
@@ -48,8 +48,8 @@ const FundTrading = () => {
 
   const tokens = chain ? getTokens(chain.id) : [];
 
-  const fromTokenAddress = tokens[0].address;
-  const toTokenAddress = tokens[1].address;
+  const fromTokenAddress = tokens[0]?.address;
+  const toTokenAddress = tokens[1]?.address;
 
   // const indexPricesUrl = getServerUrl(chainId, "/prices");
   // const { data: indexPrices } = useSWR([indexPricesUrl], {

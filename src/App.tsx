@@ -42,7 +42,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/create-fund" element={<CreateFund />} />
-                  {/* <Route path="/fund/trading" element={<FundTrading />} /> */}
+                  <Route path="/fund/trading" element={<FundTrading />} />
                   {/* 
               <Route
                 path="/fund/portfolio"

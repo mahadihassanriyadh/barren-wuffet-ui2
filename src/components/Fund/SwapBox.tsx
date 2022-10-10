@@ -5,8 +5,8 @@ import TokenSelector from "../Form/TokenSelector";
 
 export default function SwapBox(props: { tokens: Token[] }) {
   const { tokens } = props;
-  const [fromToken, setFromToken] = useState(tokens[0].address);
-  const [toToken, setToToken] = useState(tokens[0].address);
+  const [fromToken, setFromToken] = useState(tokens[0]?.address);
+  const [toToken, setToToken] = useState(tokens[0]?.address);
 
   return (
     <div>

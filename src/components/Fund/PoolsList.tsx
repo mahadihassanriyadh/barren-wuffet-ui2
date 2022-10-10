@@ -71,7 +71,7 @@ export default function PositionsList(props: {
                 </td>
                 <td>
                   <div>
-                    ${formatAmount(pool.tvl, USD_DECIMALS, 2, true, 0.0)}
+                    ${formatAmount(pool.tvl, USD_DECIMALS, 2, true, "0.0")}
                   </div>
                 </td>
                 <td>
