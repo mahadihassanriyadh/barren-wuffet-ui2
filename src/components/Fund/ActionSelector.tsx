@@ -1,12 +1,19 @@
-// @ts-nocheck
 import React from "react";
 import { Menu } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa";
 
-import "../Exchange/ChartTokenSelector.css";
-import { getWhitelistedActions, ActionTypes } from "../../config/actions";
+import {
+  getWhitelistedActions,
+  ActionTypes,
+  Action,
+} from "../../config/actions";
 
-export default function ActionSelector(props) {
+export default function ActionSelector(props: {
+  chainId: number;
+  selectedAction?: Action;
+  onSelectAction?: (action: Action) => void;
+  actionType: ActionTypes;
+}) {
   const { chainId, selectedAction, onSelectAction, actionType } = props;
 
   const whitelistedActions = getWhitelistedActions(
@@ -14,17 +21,13 @@ export default function ActionSelector(props) {
     actionType || ActionTypes.Trading
   );
 
-  const onSelect = async (action) => {
-    onSelectAction(action);
-  };
-
-  var value = selectedAction || whitelistedActions[0];
-
   return (
     <Menu>
       <Menu.Button as="div">
         <button className={`App-cta small transparent chart-token-selector`}>
-          <span className="chart-token-selector--current">{value?.name}</span>
+          <span className="chart-token-selector--current">
+            {selectedAction?.name}
+          </span>
           {<FaChevronDown />}
         </button>
       </Menu.Button>
@@ -34,9 +37,7 @@ export default function ActionSelector(props) {
             <Menu.Item key={index}>
               <div
                 className="menu-item"
-                onClick={() => {
-                  onSelect(option);
-                }}
+                onClick={() => (onSelectAction ? onSelectAction(option) : null)}
               >
                 <span style={{ marginLeft: 5 }} className="token-label">
                   {option.name}

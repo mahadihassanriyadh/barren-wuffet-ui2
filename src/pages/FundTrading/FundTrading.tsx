@@ -4,7 +4,7 @@ import React, {
   useCallback,
   FunctionComponent,
 } from "react";
-import { Trans, t } from "@lingui/macro";
+import { t } from "@lingui/macro";
 import { ethers } from "ethers";
 import { useAccount, useContractRead, useNetwork } from "wagmi";
 

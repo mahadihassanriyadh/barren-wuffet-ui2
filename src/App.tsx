@@ -49,13 +49,8 @@ function App() {
                 element={
                   <FundPortfolio />
                 }
-              />
-              <Route
-                path="/fund/yield"
-                element={
-                  <FundYield />
-                }
-              /> */}
+              />*/}
+                  <Route path="/fund/yield" element={<FundYield />} />
                 </Routes>
               </div>
             </Router>
