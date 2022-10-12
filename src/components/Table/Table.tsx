@@ -3,9 +3,10 @@ import { flexRender, Table as TableType } from "@tanstack/react-table";
 
 interface TableProps<T> {
   table: TableType<T>;
+  error: string | null;
 }
-const Table: FC<TableProps<any>> = ({ table }) => {
-  const rerender = React.useReducer(() => ({}), {})[1];
+
+const Table: FC<TableProps<any>> = ({ table, error }) => {
   return (
     <table>
       <thead>
@@ -25,6 +26,11 @@ const Table: FC<TableProps<any>> = ({ table }) => {
         ))}
       </thead>
       <tbody>
+        {error && (
+          <tr>
+            <td colSpan={table.getHeaderGroups()[0].headers.length}>{error}</td>
+          </tr>
+        )}
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (

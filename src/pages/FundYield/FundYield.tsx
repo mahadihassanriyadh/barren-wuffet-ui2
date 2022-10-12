@@ -12,7 +12,7 @@ import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";
 import PoolsList from "../../components/Fund/PoolsList";
-import { getPools } from "../../api/pools";
+import { getPools } from "../../test/data/pools";
 
 const FundYield = () => {
   const { chain } = useNetwork();
@@ -70,7 +70,7 @@ const FundYield = () => {
             </div>
           </div>
           <div className="Exchange-lists large">
-            <PoolsList pools={getPools()} poolDataIsLoading={false} />
+            <PoolsList />
           </div>
         </div>
         <div className="Exchange-right">

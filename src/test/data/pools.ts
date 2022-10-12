@@ -1,17 +1,7 @@
-export interface Pool {
-  key: string;
-  indexToken: {
-    symbol: string;
-  };
-  hasPendingChanges: boolean;
-  vAPY: number;
-  tAPY: number;
-  volume: number;
-  tvl: number;
-}
+import { Pool } from "../../api/models";
 
-export function getPools() {
-  return [
+export async function getPools(): Promise<Pool[]> {
+  return Promise.resolve([
     {
       key: "1",
       indexToken: {
@@ -45,5 +35,5 @@ export function getPools() {
       volume: 1000,
       tvl: 100000,
     },
-  ];
+  ]);
 }

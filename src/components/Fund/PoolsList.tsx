@@ -11,10 +11,11 @@ import {
   ColumnDef,
 } from "@tanstack/react-table";
 
-import { ImSpinner2 } from "react-icons/im";
 import { formatAmount, USD_DECIMALS } from "../../data/formatting";
-import { Pool } from "../../api/pools";
 import Table from "../Table/Table";
+import useSWR from "swr";
+import { Pool } from "../../api/models";
+import { api } from "../../config/env";
 
 const columnHelper = createColumnHelper<Pool>();
 
@@ -48,21 +49,18 @@ const columns: ColumnDef<Pool, any>[] = [
 
 const closePool = (pool: Pool) => {};
 
-export default function PositionsList(props: {
-  pools: Pool[];
-  poolDataIsLoading: boolean;
-}) {
-  const { pools, poolDataIsLoading } = props;
+export default function PoolsList() {
+  const { data, error } = useSWR("/api/user/123", api.getPools);
 
   const table = useReactTable<Pool>({
-    data: pools,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <div className="p-2">
-      <Table table={table} />
+      <Table table={table} error={error} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { createChart, LineStyle, CrosshairMode } from "lightweight-charts";
-import { generateCandlestickData } from "../../api/priceChart";
+import { generateCandlestickData } from "../../test/data/priceChart";
 
 const PriceChart: FunctionComponent<{
   title: string;
