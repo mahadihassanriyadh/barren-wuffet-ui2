@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import FundsList from "../../components/Fund/FundsList";
 import Button from "../../components/Form/Button";
 import FAQ from "../../components/FAQ/FAQ";
+import faqs from "../../config/faqs";
 
 const HomeV32: FunctionComponent = () => {
   return (
@@ -159,7 +160,7 @@ const HomeV32: FunctionComponent = () => {
         <div>View all</div>
         <hr />
         <div>FAQs 🤔</div>
-        <FAQ />
+        <FAQ faqs={faqs} />
       </div>
 
       <img className={styles.bgIcon} alt="" src="../locofy/bg@2x.png" />

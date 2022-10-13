@@ -1,8 +1,7 @@
 import { Disclosure, Transition } from "@headlessui/react";
 import { Trans } from "@lingui/macro";
-import faqs from "../../config/faqs";
 
-const FAQ = () => (
+const FAQ = ({ faqs }: { faqs: { q: string; a: string }[] }) => (
   <>
     {faqs.map((faq) => (
       <Disclosure as="div">
