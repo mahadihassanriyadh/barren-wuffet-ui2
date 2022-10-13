@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { Input } from "../Form/Input";
 import Button from "../Form/Button";
 import { TextArea } from "../Form/TextArea";
+import { formatDate } from "../../data/formatting";
 
 const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
@@ -142,7 +143,7 @@ const CreateFundForm: FunctionComponent = () => {
               <Input
                 type="date"
                 icon={calendarIcon}
-                value={closeDate.toISOString().split("T")[0]}
+                value={formatDate(closeDate)}
                 name={t`Closing Date of the Fund`}
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
@@ -154,7 +155,6 @@ const CreateFundForm: FunctionComponent = () => {
                 }}
                 required
               />
-
               <Input
                 type="number"
                 icon={percentageIcon}
