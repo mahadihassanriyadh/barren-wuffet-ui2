@@ -5,56 +5,18 @@ import { t, Trans } from "@lingui/macro";
 import { NavLink } from "react-router-dom";
 import FundsList from "../../components/Fund/FundsList";
 import Button from "../../components/Form/Button";
+import FAQ from "../../components/FAQ/FAQ";
 
 const HomeV32: FunctionComponent = () => {
   return (
     <div className={styles.homeV32Div}>
-      <img
-        className={styles.rectangleIcon}
-        alt=""
-        src="../locofy/locofy/rectangle-6285@2x.png"
-      />
-      <img
-        className={styles.ellipseIcon}
-        alt=""
-        src="../locofy/ellipse-28.svg"
-      />
-      <img
-        className={styles.groupIcon}
-        alt=""
-        src="../locofy/group-237648.svg"
-      />
-      <img
-        className={styles.ellipseIcon1}
-        alt=""
-        src="../locofy/ellipse-21.svg"
-      />
-      <img
-        className={styles.ellipseIcon2}
-        alt=""
-        src="../locofy/ellipse-24.svg"
-      />
-      <img
-        className={styles.ellipseIcon3}
-        alt=""
-        src="../locofy/ellipse-23.svg"
-      />
       <div className={styles.rectangleDiv} />
       <div className={styles.groupDiv}>
         <div className={styles.groupDiv1}>
           <div className={styles.impressiveNumbers}>Impressive numbers 🤩</div>
         </div>
       </div>
-      <img
-        className={styles.ellipseIcon4}
-        alt=""
-        src="../locofy/ellipse-35.svg"
-      />
-      <img
-        className={styles.rectangleIcon1}
-        alt=""
-        src="../locofy/rectangle-234.svg"
-      />
+
       <div className={styles.groupDiv2}>
         <div className={styles.groupDiv3}>
           <div className={styles.groupDiv4}>
@@ -127,72 +89,7 @@ const HomeV32: FunctionComponent = () => {
         </div>
       </div>
       <div className={styles.managingPlatformDiv}>Managing Platform</div>
-      <div className={styles.fAQsDiv}>FAQs 🤔</div>
-      <div className={styles.joinTheCommunity}>
-        <p className={styles.p}>👇</p>
-        <p className={styles.toOtherOrganizations}>Join the community</p>
-      </div>
-      <p className={styles.everythingYouNeedToKnowAb}>
-        Everything you need to know about GloDAO. Can’t find the answer you're
-        looking for? Please chat with our friendly team.
-      </p>
-      <div className={styles.groupDiv18}>
-        <div className={styles.rectangleDiv6} />
-        <div className={styles.howToMakeMoneyWithBarren}>
-          1, How to make money with Barren Wuffet?
-        </div>
-        <img
-          className={styles.carbonchevronDownIcon}
-          alt=""
-          src="../locofy/carbonchevrondown.svg"
-        />
-      </div>
-      <div className={styles.groupDiv19}>
-        <div className={styles.rectangleDiv6} />
-        <div className={styles.howToMakeMoneyWithBarren}>
-          2, Why is investing with GloDAO more profitable?
-        </div>
-        <img
-          className={styles.carbonchevronDownIcon}
-          alt=""
-          src="../locofy/carbonchevrondown.svg"
-        />
-      </div>
-      <div className={styles.groupDiv20}>
-        <div className={styles.rectangleDiv6} />
-        <div className={styles.howToMakeMoneyWithBarren}>3, How to join?</div>
-        <img
-          className={styles.carbonchevronDownIcon}
-          alt=""
-          src="../locofy/carbonchevrondown.svg"
-        />
-      </div>
-      <div className={styles.groupDiv21}>
-        <div className={styles.rectangleDiv6} />
-        <div className={styles.howToMakeMoneyWithBarren}>
-          4, What are the benefits of joining our organization?
-        </div>
-        <img
-          className={styles.carbonchevronDownIcon}
-          alt=""
-          src="../locofy/carbonchevrondown.svg"
-        />
-      </div>
-      <div className={styles.groupDiv22}>
-        <div className={styles.rectangleDiv6} />
-        <div className={styles.gloDAOsCompetitiveAdvantage}>
-          <p className={styles.p}>5, GloDAO's competitive advantage compared</p>
-          <p className={styles.toOtherOrganizations}>
-            {" "}
-            to other organizations?
-          </p>
-        </div>
-        <img
-          className={styles.carbonchevronDownIcon}
-          alt=""
-          src="../locofy/carbonchevrondown.svg"
-        />
-      </div>
+
       <div className={styles.groupDiv23}>
         <div className={styles.rectangleDiv11} />
         <div className={styles.rectangleDiv12} />
@@ -259,9 +156,12 @@ const HomeV32: FunctionComponent = () => {
         </div>
         <div>Top funds 🔥</div>
         <FundsList />
-        <div className={styles.rectangleDiv17} />
-        <div className={styles.viewAllDiv}>View all</div>
+        <div>View all</div>
+        <hr />
+        <div>FAQs 🤔</div>
+        <FAQ />
       </div>
+
       <img className={styles.bgIcon} alt="" src="../locofy/bg@2x.png" />
       <div className={styles.groupDiv53}>
         <div className={styles.walletDiv}>
