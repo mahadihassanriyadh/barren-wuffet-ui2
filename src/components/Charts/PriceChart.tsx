@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { createChart, LineStyle, CrosshairMode } from "lightweight-charts";
-import { generateCandlestickData } from "../../test/data/priceChart";
+import { api } from "../../config/env";
+import useSWR from "swr";
 
 const PriceChart: FunctionComponent<{
   title: string;
@@ -15,6 +16,10 @@ const PriceChart: FunctionComponent<{
   const gridColor = "#444";
   const borderColor = "#71649C";
   const chartContainerRef = useRef({} as HTMLDivElement);
+  const { data: priceFeedData, error } = useSWR(
+    "/api/priceFeed",
+    api.getPriceFeed
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,9 +67,8 @@ const PriceChart: FunctionComponent<{
     chart.timeScale().fitContent();
 
     const newSeries = chart.addCandlestickSeries();
-    const candleStickData = generateCandlestickData();
 
-    newSeries.setData(candleStickData);
+    newSeries.setData(priceFeedData || []);
 
     window.addEventListener("resize", handleResize);
 
@@ -80,6 +84,7 @@ const PriceChart: FunctionComponent<{
     gridColor,
     crossHairColor,
     borderColor,
+    priceFeedData,
   ]);
 
   return <div ref={chartContainerRef} />;

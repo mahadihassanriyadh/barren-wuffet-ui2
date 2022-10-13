@@ -12,7 +12,6 @@ import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";
 import PoolsList from "../../components/Fund/PoolsList";
-import { getPools } from "../../test/data/pools";
 
 const FundYield = () => {
   const { chain } = useNetwork();
