@@ -5,7 +5,6 @@ import { useNetwork } from "wagmi";
 import { getTokens } from "../../config/tokens";
 
 import SwapBox from "../../components/Fund/SwapBox";
-import FundBanner from "../../components/Fund/FundBanner";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import TradingOrders from "../../components/Fund/TradingOrders";
 import Tabs from "../../components/Tabs/Tabs";
@@ -42,7 +41,6 @@ const FundYield = () => {
 
   return (
     <div className="Exchange page-layout">
-      <FundBanner />
       <div className="Exchange-content">
         <div className="Exchange-left">
           <div className="ExchangeChart-top App-box App-box-border">

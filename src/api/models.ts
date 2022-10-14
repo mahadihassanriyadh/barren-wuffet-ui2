@@ -28,6 +28,23 @@ export interface Fund {
   investor_count?: number;
 }
 
+export interface FundType {
+  id: number;
+  name: string;
+  logo: string;
+  investors: number;
+  expiresIn: number;
+  portfolioValue: number;
+  startingValue: number;
+  dataUpdated: string;
+  newlyAddedMoney: number;
+  upPercentage: number;
+  wallet: number;
+  walletAddress: string;
+  assetBalances: object;
+  protocolBalances: object;
+}
+
 export enum FundStatus {
   RAISING = 0, // deposits possible, withdraws possible (inputToken), manager can't move funds
   DEPLOYED = 1, // deposits not possible, withdraws not possible, manager can move funds

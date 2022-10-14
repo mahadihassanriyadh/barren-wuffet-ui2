@@ -1,106 +1,140 @@
-import React from "react";
-import styles from "./FundBanner.module.css";
-import FundTabs from "../../components/FundTabs/FundTabs";
+import { Trans } from '@lingui/macro';
+import copyIcon from '../../img/icons/carbonCopyIcon.svg';
+import qrCodeIcon from '../../img/icons/carbonQrCodeIcon.svg';
+import updateNowIcon from '../../img/icons/carbonUpdateNowIcon.svg';
+import telegramIcon from '../../img/icons/telegramYellowIcon.svg';
+import twitterIcon from '../../img/icons/twitterYellowIcon.svg';
+import { numberWithCommas } from '../../data/formatting';
+import ListBox from './ListBox';
+import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import FundActionTab from './FundActionTab';
 
 export default function FundBanner(props: any) {
+  const { funds, selected, setSelected } = props;
+
+  // select portfolio/trading/yield from fund manage
+  const [selectedFundAction, setSelectedFundAction] = useState('portfolio');
+  const { expiresIn, investors, walletAddress, portfolioValue, startingValue, dataUpdated, newlyAddedMoney, upPercentage } = selected || {};
+
   return (
-    <div className={styles.groupDiv9}>
-      <div className={styles.rectangleDiv26} />
-      <img
-        className={styles.ellipseIcon4}
-        alt=""
-        src="../locofy/ellipse-1916@2x.png"
-      />
-      <div className={styles.openSeaFundDiv}>OpenSea fund</div>
-      <img className={styles.vectorIcon16} alt="" src="../locofy/vector6.svg" />
-      <div className={styles.groupDiv11}>
-        <div className={styles.groupDiv12}>
-          <div className={styles.groupDiv12}>
-            <div className={styles.groupDiv14}>
-              <div className={styles.groupDiv14}>
-                <div className={styles.shareDiv}>{`Share `}</div>
-                <img
-                  className={styles.groupIcon3}
-                  alt=""
-                  src="../locofy/group-2376731.svg"
-                />
-              </div>
+    <div className='container mx-auto my-20'>
+        <div className='bg-[#1c1b25] pt-10 px-8 rounded-xl mx-5'>
+            <div className='grid grid-cols-2'>
+                <div className='space-y-6'>
+                    <ListBox
+                      selected={selected}
+                      setSelected={setSelected}
+                      infos={funds}
+                    ></ListBox>
+                    <div className='flex space-x-12'>
+                        <p className='text-xs font-medium text-gray-400'>
+                            <Trans>
+                                Expiry in:
+                            </Trans>
+                            <span className='bg-[#33333f] py-1 px-2 rounded-xl ml-2'>
+                                <Trans>
+                                    {expiresIn} days
+                                </Trans>
+                            </span>
+                        </p>
+                        <p className='text-xs font-medium text-gray-400'>
+                            <Trans>
+                                Investors:
+                            </Trans>
+                            <span className='bg-[#33333f] py-1 px-2 rounded-xl ml-2'>
+                                <Trans>
+                                    {investors}
+                                </Trans> 
+                            </span>
+                        </p>
+                    </div>
+                    <div className='flex space-x-3'>
+                        <p className='text-xs font-medium text-gray-400 mr-6'>{walletAddress}</p>
+                        <button className='cursor-pointer'>
+                            <img src={copyIcon} alt="" />
+                        </button>
+                        <button className='cursor-pointer'>
+                            <img src={qrCodeIcon} alt="" />
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <div className='flex justify-between'>
+                        <p className='text-3xl text-white font-light'>
+                            <Trans>
+                                Portfolio Value
+                            </Trans>
+                        </p>
+                    </div>
+                    <h2 className='text-white text-4xl mt-3'>${numberWithCommas(Number(portfolioValue))}</h2>
+                    <p className='text-white text-xs mt-3'>
+                        <Trans>
+                            Starting value: ${numberWithCommas(Number(startingValue))}
+                        </Trans>
+                    </p>
+                    <div className='flex justify-between items-center'>
+                        <div className='flex space-x-5 mt-3'>
+                            <p className='text-gray-400 text-xs'>
+                                <Trans>
+                                    Data updated: {dataUpdated} ago
+                                </Trans>
+                            </p>
+                            <button className='cursor-pointer'>
+                                <img src={updateNowIcon} alt="" />
+                            </button>
+                        </div>
+                        <div className='flex items-center space-x-6'>
+                            <p className='text-green-400 text-xs font-medium'>
+                                +${ numberWithCommas(Number(newlyAddedMoney)) }
+                            </p>
+                            <p
+                                className='text-green-400 text-xs font-medium bg-green-900 bg-opacity-70 py-1 px-2 rounded-2xl'
+                            >
+                                +{ upPercentage }%
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <img
-              className={styles.groupIcon4}
-              alt=""
-              src="../locofy/group-237682.svg"
-            />
-          </div>
+
+            {/* Portfolio, Trading, Yield Buttons */}
+            <div className='flex items-center justify-between mt-10'>
+                <div className='space-x-6'>
+                    <NavLink to='/fund/portfolio'>
+                        <FundActionTab
+                              selected={selectedFundAction}
+                              setSelected={setSelectedFundAction}
+                              text="PORTFOLIO"
+                        ></FundActionTab>
+                    </NavLink>
+                    <NavLink to='/fund/trading'>
+                        <FundActionTab
+                              selected={selectedFundAction}
+                              setSelected={setSelectedFundAction}
+                              text="TRADING"
+                        ></FundActionTab>
+                    </NavLink>
+                    <NavLink to='/fund/yield'>
+                        <FundActionTab
+                              selected={selectedFundAction}
+                              setSelected={setSelectedFundAction}
+                              text="YIELD"
+                        ></FundActionTab>
+                    </NavLink>
+                </div>
+                <div className='flex space-x-4 items-center'>
+                    <p className='text-yellow-400 font-bold text-lg mr-4'>Share</p>
+                    <button className='cursor-pointer'>
+                        <img src={telegramIcon} alt="" />
+                    </button>
+                    <button className='cursor-pointer'>
+                        <img src={twitterIcon} alt="" />
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div className={styles.div46}>$123,987</div>
-      <img className={styles.vectorIcon17} alt="" src="../locofy/vector7.svg" />
-      <div className={styles.portfolioValueDiv}>Portfolio value</div>
-      <div className={styles.startingValue500}>Starting Value: $500</div>
-      <div className={styles.div47}>+$2560.78</div>
-      <div className={styles.tagPercentaceMainDiv7}>
-        <div className={styles.div2}>+14.67%</div>
-      </div>
-      <div className={styles.groupDiv16}>
-        <div className={styles.groupDiv17}>
-          <div className={styles.rectangleDiv27} />
-          <div className={styles.hDiv}>24H</div>
-        </div>
-        <div className={styles.groupDiv18}>
-          <div className={styles.rectangleDiv27} />
-          <div className={styles.dDiv}>1D</div>
-        </div>
-        <div className={styles.groupDiv19}>
-          <div className={styles.rectangleDiv27} />
-          <div className={styles.dDiv}>7D</div>
-        </div>
-        <div className={styles.groupDiv20}>
-          <div className={styles.rectangleDiv27} />
-          <div className={styles.mDiv}>1M</div>
-        </div>
-      </div>
-      <div className={styles.groupDiv21}>
-        <div className={styles.bMMk4gdD263q7QJt3VLWnG2x1mt9HVDiv}>
-          8BMMk4gdD263q7QJt3VLWnG2x1mt9HV56b4vX774n4Sc
-        </div>
-        <img
-          className={styles.groupIcon5}
-          alt=""
-          src="../locofy/group-237695.svg"
-        />
-        <img
-          className={styles.groupIcon6}
-          alt=""
-          src="../locofy/group-237694.svg"
-        />
-      </div>
-      <FundTabs />
-      <div className={styles.groupDiv23}>
-        <div
-          className={styles.dataUpdated1minAgo}
-        >{`Data updated 1min ago `}</div>
-        <img
-          className={styles.groupIcon7}
-          alt=""
-          src="../locofy/group-237699.svg"
-        />
-      </div>
-      <img
-        className={styles.vectorIcon18}
-        alt=""
-        src="../locofy/vector-85.svg"
-      />
-      <div className={styles.groupDiv24}>
-        <div className={styles.expiryInDiv}>Expiry in:</div>
-        <div className={styles.investorsDiv}>Investors:</div>
-        <div className={styles.tagPercentaceMainDiv8}>
-          <div className={styles.div2}>751 days</div>
-        </div>
-        <div className={styles.tagPercentaceMainDiv9}>
-          <div className={styles.div2}>103</div>
-        </div>
-      </div>
+        
     </div>
   );
 }

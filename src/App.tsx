@@ -19,6 +19,7 @@ import Footer from "./components/Footer/Footer";
 import { getWalletConfig } from "./config/wallet";
 import { defaultLocale, dynamicActivate } from "./lib/i18n";
 import "./App.css";
+import FundManage from "./pages/FundManage/FundManage";
 
 const { chains, wagmiClient } = getWalletConfig();
 
@@ -42,14 +43,17 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/create-fund" element={<CreateFund />} />
-                  <Route path="/fund/trading" element={<FundTrading />} />
-                  {/* 
-              <Route
-                path="/fund/portfolio"
-                element={
-                  <FundPortfolio />
-                }
-              />*/}
+                  {/* <Route
+                    path="/fund/portfolio"
+                    element={
+                      <FundPortfolio />
+                    }
+                  /> */}
+                  <Route path="fund" element={<FundManage />}>
+                    <Route path="portfolio" element={<FundPortfolio />} />
+                    <Route path="trading" element={<FundTrading />} />
+                    <Route path="yield" element={<FundYield />} />
+                  </Route>
                   <Route path="/fund/yield" element={<FundYield />} />
                 </Routes>
               </div>
