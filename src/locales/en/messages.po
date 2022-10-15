@@ -13,41 +13,287 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Header/AppHeaderLinks.tsx:37
+#: src/components/CreateFund/CreateFundForm.tsx:82
+#: src/components/Header/Header.tsx:72
 msgid "About"
 msgstr "About"
 
+#: src/components/CreateFund/CreateFundForm.tsx:79
+msgid "About This Fund"
+msgstr "About This Fund"
+
+#: src/components/Fund/FundsList.tsx:66
+msgid "Action"
+msgstr "Action"
+
+#: src/components/Fund/FundsList.tsx:54
+msgid "Admin Fee"
+msgstr "Admin Fee"
+
+#: src/components/Fund/FundsList.tsx:43
+msgid "Amount Raised"
+msgstr "Amount Raised"
+
+#: src/components/CreateFund/CreateFundForm.tsx:135
+msgid "Amount to be Raised for This Fund"
+msgstr "Amount to be Raised for This Fund"
+
+#: src/components/CreateFund/CreateFundForm.tsx:138
+msgid "Amounts being raised $"
+msgstr "Amounts being raised $"
+
+#: src/components/Fund/PoolsList.tsx:27
+msgid "Base vAPY"
+msgstr "Base vAPY"
+
 #: src/components/Fund/PoolsList.tsx:25
-msgid "Base vAPY / Rewards tAPY"
-msgstr "Base vAPY / Rewards tAPY"
+#~ msgid "Base vAPY / Rewards tAPY"
+#~ msgstr "Base vAPY / Rewards tAPY"
 
 #: src/components/Footer/Footer.tsx:16
+#: src/components/Header/Header.tsx:77
 msgid "Blog"
 msgstr "Blog"
 
-#: src/components/Header/Header.tsx:24
+#: src/components/Fund/TradingOrders.tsx:18
+msgid "Cancel {0} {orderText}"
+msgstr "Cancel {0} {orderText}"
+
+#: src/components/Fund/FundsList.tsx:34
+msgid "Change %"
+msgstr "Change %"
+
+#: src/components/Fund/PoolsList.tsx:44
+msgid "Close"
+msgstr "Close"
+
+#: src/components/CreateFund/CreateFundForm.tsx:147
+msgid "Closing Date of the Fund"
+msgstr "Closing Date of the Fund"
+
+#: src/components/CreateFund/CreateFundForm.tsx:175
+#: src/components/Header/Header.tsx:87
 #: src/pages/Home/About.tsx:124
 #: src/pages/Home/About.tsx:128
-#: src/pages/Home/HomeV32.tsx:233
+#: src/pages/Home/HomeV32.tsx:133
 msgid "Create Fund"
 msgstr "Create Fund"
 
 #: src/components/Header/AppHeaderLinks.tsx:32
-msgid "Dashboard"
-msgstr "Dashboard"
+#~ msgid "Dashboard"
+#~ msgstr "Dashboard"
 
-#: src/components/Header/Header.tsx:19
+#: src/components/Fund/FundBanner.tsx:79
+msgid "Data updated: {dataUpdated} ago"
+msgstr "Data updated: {dataUpdated} ago"
+
+#: src/components/CreateFund/CreateFundForm.tsx:122
+#: src/components/CreateFund/CreateFundForm.tsx:124
+msgid "Discord Username"
+msgstr "Discord Username"
+
+#: src/components/CreateFund/CreateFundForm.tsx:149
+msgid "Duration of raise"
+msgstr "Duration of raise"
+
+#: src/components/Fund/FundBanner.tsx:32
+msgid "Expiry in:"
+msgstr "Expiry in:"
+
+#: src/components/CreateFund/CreateFundForm.tsx:164
+msgid "Fees"
+msgstr "Fees"
+
+#: src/components/CreateFund/CreateFundForm.tsx:162
+msgid "Fund Fees"
+msgstr "Fund Fees"
+
+#: src/components/CreateFund/CreateFundForm.tsx:71
+msgid "Fund Name"
+msgstr "Fund Name"
+
+#: src/components/Fund/FundsList.tsx:50
+msgid "Fund Raising End Date"
+msgstr "Fund Raising End Date"
+
+#: src/components/CreateFund/CreateFundForm.tsx:130
+msgid "Fund Setting"
+msgstr "Fund Setting"
+
+#: src/components/CreateFund/CreateFundForm.tsx:87
+msgid "Fund Strategy"
+msgstr "Fund Strategy"
+
+#: src/config/faqs.ts:15
+msgid "How do I contribute?"
+msgstr "How do I contribute?"
+
+#: src/config/faqs.ts:11
+msgid "How do I invest in a fund?"
+msgstr "How do I invest in a fund?"
+
+#: src/config/faqs.ts:5
+msgid "How to make money with Barren Wuffet?"
+msgstr "How to make money with Barren Wuffet?"
+
+#: src/components/Fund/FundsList.tsx:75
+msgid "INVEST"
+msgstr "INVEST"
+
+#: src/components/CreateFund/CreateFundForm.tsx:199
+msgid "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
+msgstr "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
+
+#: src/components/CreateFund/CreateFundForm.tsx:66
+msgid "Information about your fund"
+msgstr "Information about your fund"
+
+#: src/components/Header/Header.tsx:82
 msgid "Invest"
 msgstr "Invest"
 
-#: src/components/Fund/PoolsList.tsx:22
+#: src/config/faqs.ts:6
+msgid ""
+"Invest in funds that are created by other traders. Review the fund\n"
+"page to understand the risks, and the skin in the game of the\n"
+"trader. Invest to get returns."
+msgstr ""
+"Invest in funds that are created by other traders. Review the fund\n"
+"page to understand the risks, and the skin in the game of the\n"
+"trader. Invest to get returns."
+
+#: src/components/Fund/FundsList.tsx:47
+msgid "Investors"
+msgstr "Investors"
+
+#: src/components/Fund/FundBanner.tsx:42
+msgid "Investors:"
+msgstr "Investors:"
+
+#: src/config/faqs.ts:16
+msgid "Join our discord and come talk to us~"
+msgstr "Join our discord and come talk to us~"
+
+#: src/components/Fund/FundsList.tsx:61
+msgid "Manager"
+msgstr "Manager"
+
+#: src/components/Fund/FundsList.tsx:30
+msgid "Maturity Date"
+msgstr "Maturity Date"
+
+#: src/components/Fund/FundsList.tsx:23
+msgid "Name"
+msgstr "Name"
+
+#: src/pages/FundTrading/FundTrading.tsx:28
+#: src/pages/FundYield/FundYield.tsx:32
+msgid "Orders"
+msgstr "Orders"
+
+#: src/components/Fund/PoolsList.tsx:24
 msgid "Pool"
 msgstr "Pool"
 
-#: src/components/Fund/PoolsList.tsx:31
+#: src/components/Fund/FundBanner.tsx:65
+msgid "Portfolio Value"
+msgstr "Portfolio Value"
+
+#: src/pages/FundTrading/FundTrading.tsx:24
+#: src/pages/FundYield/FundYield.tsx:28
+msgid "Positions"
+msgstr "Positions"
+
+#: src/components/Fund/PoolsList.tsx:30
+msgid "Rewards tAPY"
+msgstr "Rewards tAPY"
+
+#: src/components/CreateFund/CreateFundForm.tsx:195
+msgid "START TRADING"
+msgstr "START TRADING"
+
+#: src/components/Fund/FundsList.tsx:86
+msgid "See Investment"
+msgstr "See Investment"
+
+#: src/config/faqs.ts:12
+msgid "Sign in with your wallet, and click invest button at the top. Then pick a fund to invest in"
+msgstr "Sign in with your wallet, and click invest button at the top. Then pick a fund to invest in"
+
+#: src/components/Fund/FundsList.tsx:26
+msgid "Start Date"
+msgstr "Start Date"
+
+#: src/components/Fund/FundBanner.tsx:72
+msgid "Starting value: ${0}"
+msgstr "Starting value: ${0}"
+
+#: src/components/Fund/FundsList.tsx:57
+msgid "Status"
+msgstr "Status"
+
+#: src/components/CreateFund/CreateFundForm.tsx:91
+msgid "Strategy"
+msgstr "Strategy"
+
+#: src/components/Fund/PoolsList.tsx:36
 msgid "TVL"
 msgstr "TVL"
 
-#: src/components/Fund/PoolsList.tsx:28
+#: src/components/CreateFund/CreateFundForm.tsx:102
+msgid "Telegram"
+msgstr "Telegram"
+
+#: src/components/CreateFund/CreateFundForm.tsx:100
+msgid "Telegram Username"
+msgstr "Telegram Username"
+
+#: src/components/CreateFund/CreateFundForm.tsx:190
+msgid "Thank you! Your Fund was created!"
+msgstr "Thank you! Your Fund was created!"
+
+#: src/components/CreateFund/CreateFundForm.tsx:113
+msgid "Twitter"
+msgstr "Twitter"
+
+#: src/components/CreateFund/CreateFundForm.tsx:111
+msgid "Twitter Username"
+msgstr "Twitter Username"
+
+#: src/components/Fund/PoolsList.tsx:33
 msgid "Volume"
 msgstr "Volume"
+
+#: src/components/Fund/PoolsList.tsx:41
+msgid "X"
+msgstr "X"
+
+#: src/components/CreateFund/CreateFundForm.tsx:75
+msgid "Your Fund Name"
+msgstr "Your Fund Name"
+
+#: src/components/Fund/TradingOrders.tsx:11
+msgid "order"
+msgstr "order"
+
+#: src/components/Fund/TradingOrders.tsx:11
+msgid "orders"
+msgstr "orders"
+
+#: src/components/FAQ/FAQ.tsx:9
+#: src/components/FAQ/FAQ.tsx:20
+#: src/components/Form/Button.tsx:13
+msgid "{0}"
+msgstr "{0}"
+
+#: src/components/Fund/FundBanner.tsx:36
+msgid "{expiresIn} days"
+msgstr "{expiresIn} days"
+
+#: src/components/Fund/FundBanner.tsx:46
+msgid "{investors}"
+msgstr "{investors}"
+
+#: src/components/Fund/FundActionTab.tsx:8
+msgid "{text}"
+msgstr "{text}"
