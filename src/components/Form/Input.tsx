@@ -7,7 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input: FunctionComponent<InputProps> = (props) => {
-  const { id, name } = props || {}; 
+  const { id, name } = props || {};
   return (
     <div className="relative w-full space-y-1">
       {props.icon && (
@@ -17,7 +17,9 @@ export const Input: FunctionComponent<InputProps> = (props) => {
           alt={name}
         />
       )}
-      <label className="text-sm" htmlFor={id}>{ name }</label>
+      <label className="text-sm" htmlFor={id}>
+        {name}
+      </label>
       <input
         {...props}
         className={`bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3`}
