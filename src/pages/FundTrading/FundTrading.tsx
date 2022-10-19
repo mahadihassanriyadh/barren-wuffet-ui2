@@ -17,7 +17,7 @@ const { AddressZero } = ethers.constants;
 const OrderList: FunctionComponent = (props) => {
   return (
     <div>
-      <div className="Exchange-list-tab-container">
+      <div>
         <Tabs
           options={[
             {
@@ -55,20 +55,20 @@ const FundTrading = () => {
   // });
 
   return (
-    <div className="Exchange page-layout">
-      <div className="Exchange-content">
-        <div className="Exchange-left">
+    <div className="container mx-auto">
+      <div className="mx-5 mb-10 rounded-xl px-8 py-12 bg-gray-dark text-white">
+        <div>
           <PriceChart
             title={"USD/ETH"}
             priceFeed={() => []}
             fromToken={fromTokenAddress}
             toToken={toTokenAddress}
           />
-          <div className="Exchange-lists large">
+          <div>
             <OrderList />
           </div>
         </div>
-        <div className="Exchange-right">
+        <div>
           <SwapBox tokens={tokens} />
         </div>
       </div>

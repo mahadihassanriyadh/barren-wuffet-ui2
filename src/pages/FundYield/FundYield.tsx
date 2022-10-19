@@ -44,8 +44,8 @@ const FundYield = () => {
   };
 
   return (
-    <div className="Exchange page-layout">
-      <div className="Exchange-content">
+    <div className="container mx-auto">
+      <div className="mx-5 mb-10 rounded-xl px-8 py-12 bg-gray-dark text-white">
         <div className="Exchange-left">
           <div className="ExchangeChart-top App-box App-box-border">
             <div className="ExchangeChart-top-inner">
