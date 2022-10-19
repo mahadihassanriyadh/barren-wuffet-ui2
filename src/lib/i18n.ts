@@ -15,7 +15,7 @@ i18n.loadLocaleData({
  * @param locale any locale string
  */
 export async function dynamicActivate(locale: string) {
-  const { messages } = await import(`../locales/${locale}/messages.po`);
+  const { messages } = await import(`../locales/${locale}/messages`);
   i18n.load(locale, messages);
   i18n.activate(locale);
 }
