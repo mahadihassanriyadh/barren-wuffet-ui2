@@ -57,7 +57,7 @@ const CreateFundForm: FunctionComponent = () => {
     setError("");
   };
   return (
-    <div className="bg-[#1c1b25] mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
+    <div className="bg-gray-dark mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
       <CreateFundThanks isHidden={!isSubmitted} />
       <div className={isSubmitted ? "hidden" : ""}>
         <form onSubmit={handleFormSubmit}>

@@ -28,7 +28,7 @@ export default function FundBanner(props: any) {
 
   return (
     <div className="container mx-auto my-20">
-      <div className="bg-[#1c1b25] pt-10 px-8 rounded-xl mx-5">
+      <div className="bg-gray-dark pt-10 px-8 rounded-xl mx-5">
         <div className="grid grid-cols-2">
           <div className="space-y-6">
             <ListBox
@@ -39,13 +39,13 @@ export default function FundBanner(props: any) {
             <div className="flex space-x-12">
               <p className="text-xs font-medium text-gray-400">
                 <Trans>Expiry in:</Trans>
-                <span className="bg-[#33333f] py-1 px-2 rounded-xl ml-2">
+                <span className="bg-gray-light py-1 px-2 rounded-xl ml-2">
                   <Trans>{expiresIn} days</Trans>
                 </span>
               </p>
               <p className="text-xs font-medium text-gray-400">
                 <Trans>Investors:</Trans>
-                <span className="bg-[#33333f] py-1 px-2 rounded-xl ml-2">
+                <span className="bg-gray-light py-1 px-2 rounded-xl ml-2">
                   <Trans>{investors}</Trans>
                 </span>
               </p>
