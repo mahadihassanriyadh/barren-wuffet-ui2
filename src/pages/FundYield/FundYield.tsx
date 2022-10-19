@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
@@ -13,6 +13,10 @@ import { Action, ActionTypes } from "../../config/actions";
 import PoolsList from "../../components/Fund/PoolsList";
 
 const FundYield = () => {
+  useEffect(() => {
+    document.title = "Barren Wuffet | Fund Yield";
+  }, []);
+
   const { chain } = useNetwork();
   const [actionToPerform, setActionToPerform] = useState<Action>();
 

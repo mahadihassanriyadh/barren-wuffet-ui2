@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FunctionComponent } from "react";
 import styles from "./About.module.css";
 import { Link } from "react-router-dom";
@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { Trans } from "@lingui/macro";
 
 const About: FunctionComponent = () => {
+  useEffect(() => {
+    document.title = "Barren Wuffet | About";
+  }, []);
+
   return (
     <div className={styles.aboutDiv}>
       <img

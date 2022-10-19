@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { t } from "@lingui/macro";
 import { ethers } from "ethers";
 import { useNetwork } from "wagmi";
@@ -36,6 +36,10 @@ const OrderList: FunctionComponent = (props) => {
 };
 
 const FundTrading = () => {
+  useEffect(() => {
+    document.title = "Barren Wuffet | Fund Trading";
+  }, []);
+
   const { chain } = useNetwork();
 
   const tokens = chain ? getTokens(chain.id) : [];

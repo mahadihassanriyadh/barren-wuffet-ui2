@@ -29,6 +29,10 @@ function App() {
     dynamicActivate(defaultLocale);
   }, []);
 
+  useEffect(() => {
+    document.title = "Barren Wuffet";
+  }, []);
+
   return (
     <I18nProvider i18n={i18n}>
       <WagmiConfig client={wagmiClient}>
