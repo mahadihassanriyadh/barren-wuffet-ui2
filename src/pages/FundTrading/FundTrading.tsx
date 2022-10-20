@@ -56,20 +56,24 @@ const FundTrading = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="mx-5 mb-10 rounded-xl px-8 py-12 bg-gray-dark text-white">
-        <div>
-          <PriceChart
-            title={"USD/ETH"}
-            priceFeed={() => []}
-            fromToken={fromTokenAddress}
-            toToken={toTokenAddress}
-          />
-          <div>
+      <div className="flex flex-row">
+        <div className="md:basis-3/4">
+          <div className="bg-gray-dark text-white mx-5 mb-10 rounded-xl px-8 py-1">
+            <PriceChart
+              title={"USD/ETH"}
+              priceFeed={() => []}
+              fromToken={fromTokenAddress}
+              toToken={toTokenAddress}
+            />
+          </div>
+          <div className="bg-gray-dark text-white mx-5 mb-10 rounded-xl px-8 py-1">
             <OrderList />
           </div>
         </div>
-        <div>
-          <SwapBox tokens={tokens} />
+        <div className="md:basis-1/4">
+          <div className="bg-gray-dark text-white mx-5 mb-10 rounded-xl px-8 py-1">
+            <SwapBox tokens={tokens} />
+          </div>
         </div>
       </div>
     </div>

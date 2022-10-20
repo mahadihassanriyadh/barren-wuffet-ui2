@@ -11,7 +11,9 @@ export default function TokenSelector(props: {
 
   return (
     <Listbox value={selectedToken} onChange={setSelectedToken}>
-      <Listbox.Button>{selectedToken}</Listbox.Button>
+      <Listbox.Button>
+        {tokens.find((t) => t.address === selectedToken)?.name}
+      </Listbox.Button>
       <Listbox.Options>
         {tokens.map((token) => (
           <Listbox.Option key={token.address} value={token.name}>
