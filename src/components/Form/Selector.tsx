@@ -14,8 +14,8 @@ export default function Selector<
           <Listbox.Button className="w-3/5 rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-orange-100">
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
-                {selectedItem.icon && <img src={selectedItem.icon} alt="" />}
-                <p className="text-2xl font-bold">{selectedItem.name}</p>
+                {selectedItem?.icon && <img src={selectedItem?.icon} alt="" />}
+                <p className="text-2xl font-bold">{selectedItem?.name}</p>
               </div>
 
               <img className="block" src={dropDownArrow} alt="" />
