@@ -75,7 +75,7 @@ const FundYield = () => {
           </div>
         </div>
         <div className="Exchange-right">
-          <SwapBox tokens={tokens} />
+          <SwapBox tokens={tokens} amountAvailable={100} />
         </div>
         <div className="Exchange-lists small">
           <OrderList />

@@ -6,6 +6,7 @@ export function isDevelopment() {
 }
 
 export function isLocal() {
+  return true;
   return window.location.host?.includes("localhost");
 }
 
