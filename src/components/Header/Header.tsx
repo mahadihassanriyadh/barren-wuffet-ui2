@@ -79,6 +79,11 @@ export default function Header() {
               </li>
               <li>
                 <NavLink className="block" to="/fund/portfolio">
+                  <Button label={t`Manage Fund`} />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="block" to="/invest">
                   <Button label={t`Invest`} />
                 </NavLink>
               </li>

@@ -20,6 +20,7 @@ import { getWalletConfig } from "./config/wallet";
 import { defaultLocale, dynamicActivate } from "./lib/i18n";
 import "./App.css";
 import FundManage from "./pages/FundManage/FundManage";
+import Invest from "./pages/Invest/Invest";
 
 const { chains, wagmiClient } = getWalletConfig();
 
@@ -53,6 +54,7 @@ function App() {
                       <FundPortfolio />
                     }
                   /> */}
+                  <Route path="/invest" element={<Invest />} />
                   <Route path="fund" element={<FundManage />}>
                     <Route path="portfolio" element={<FundPortfolio />} />
                     <Route path="trading" element={<FundTrading />} />

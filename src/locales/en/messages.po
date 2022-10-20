@@ -82,7 +82,7 @@ msgid "Confirm"
 msgstr "Confirm"
 
 #: src/components/CreateFund/CreateFundForm.tsx:175
-#: src/components/Header/Header.tsx:87
+#: src/components/Header/Header.tsx:92
 #: src/pages/Home/About.tsx:128
 #: src/pages/Home/About.tsx:132
 #: src/pages/Home/HomeV32.tsx:133
@@ -163,7 +163,8 @@ msgstr "Information about your fund"
 msgid "Interval"
 msgstr "Interval"
 
-#: src/components/Header/Header.tsx:82
+#: src/components/Header/Header.tsx:87
+#: src/components/Invest/InvestForm.tsx:61
 msgid "Invest"
 msgstr "Invest"
 
@@ -177,6 +178,14 @@ msgstr ""
 "page to understand the risks, and the skin in the game of the\n"
 "trader. Invest to get returns."
 
+#: src/components/Invest/InvestForm.tsx:51
+msgid "Investment Amount"
+msgstr "Investment Amount"
+
+#: src/components/Invest/InvestForm.tsx:54
+msgid "Investment Amount $"
+msgstr "Investment Amount $"
+
 #: src/components/Fund/FundsList.tsx:47
 msgid "Investors"
 msgstr "Investors"
@@ -188,6 +197,10 @@ msgstr "Investors:"
 #: src/config/faqs.ts:16
 msgid "Join our discord and come talk to us~"
 msgstr "Join our discord and come talk to us~"
+
+#: src/components/Header/Header.tsx:82
+msgid "Manage Fund"
+msgstr "Manage Fund"
 
 #: src/components/Fund/FundsList.tsx:61
 msgid "Manager"
