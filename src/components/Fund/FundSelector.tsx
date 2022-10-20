@@ -1,6 +1,10 @@
 import Selector from "../Form/Selector";
 
-const FundSelector = (props: any) => {
+const FundSelector = (props: {
+  infos: any;
+  selected: any;
+  setSelected: any;
+}) => {
   const { infos, selected, setSelected } = props;
 
   return (
