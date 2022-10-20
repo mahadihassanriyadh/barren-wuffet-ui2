@@ -5,7 +5,7 @@ import updateNowIcon from "../../img/icons/carbonUpdateNowIcon.svg";
 import telegramIcon from "../../img/icons/telegramYellowIcon.svg";
 import twitterIcon from "../../img/icons/twitterYellowIcon.svg";
 import { numberWithCommas } from "../../data/formatting";
-import ListBox from "./ListBox";
+import FundSelector from "./FundSelector";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import FundActionTab from "./FundActionTab";
@@ -31,11 +31,11 @@ export default function FundBanner(props: any) {
       <div className="bg-gray-dark pt-10 px-8 rounded-xl mx-5">
         <div className="grid grid-cols-2">
           <div className="space-y-6">
-            <ListBox
+            <FundSelector
               selected={selected}
               setSelected={setSelected}
               infos={funds}
-            ></ListBox>
+            ></FundSelector>
             <div className="flex space-x-12">
               <p className="text-xs font-medium text-gray-400">
                 <Trans>Expiry in:</Trans>

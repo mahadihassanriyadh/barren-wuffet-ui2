@@ -12,8 +12,8 @@ export default function SwapBox(props: {
   amountAvailable: number;
 }) {
   const { tokens } = props;
-  const [fromToken, setFromToken] = useState(tokens[0]?.address);
-  const [toToken, setToToken] = useState(tokens[0]?.address);
+  const [fromToken, setFromToken] = useState(tokens[0]);
+  const [toToken, setToToken] = useState(tokens[0]);
   const [amountToSwap, setAmountToSwap] = useState(10);
 
   return (
