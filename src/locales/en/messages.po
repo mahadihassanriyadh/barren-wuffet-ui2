@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #: src/components/CreateFund/CreateFundForm.tsx:82
 #: src/components/Header/Header.tsx:72
@@ -24,6 +30,10 @@ msgstr "Action"
 msgid "Admin Fee"
 msgstr "Admin Fee"
 
+#: src/components/Fund/SwapBox.tsx:36
+msgid "Amount"
+msgstr "Amount"
+
 #: src/components/Fund/FundsList.tsx:43
 msgid "Amount Raised"
 msgstr "Amount Raised"
@@ -33,6 +43,7 @@ msgid "Amount to be Raised for This Fund"
 msgstr "Amount to be Raised for This Fund"
 
 #: src/components/CreateFund/CreateFundForm.tsx:138
+#: src/components/Fund/SwapBox.tsx:39
 msgid "Amounts being raised $"
 msgstr "Amounts being raised $"
 
@@ -61,15 +72,19 @@ msgstr "Close"
 msgid "Closing Date of the Fund"
 msgstr "Closing Date of the Fund"
 
+#: src/components/Fund/SwapBox.tsx:45
+msgid "Confirm"
+msgstr "Confirm"
+
 #: src/components/CreateFund/CreateFundForm.tsx:175
 #: src/components/Header/Header.tsx:87
-#: src/pages/Home/About.tsx:124
 #: src/pages/Home/About.tsx:128
+#: src/pages/Home/About.tsx:132
 #: src/pages/Home/HomeV32.tsx:133
 msgid "Create Fund"
 msgstr "Create Fund"
 
-#: src/components/Fund/FundBanner.tsx:79
+#: src/components/Fund/FundBanner.tsx:82
 msgid "Data updated: {dataUpdated} ago"
 msgstr "Data updated: {dataUpdated} ago"
 
@@ -82,7 +97,7 @@ msgstr "Discord Username"
 msgid "Duration of raise"
 msgstr "Duration of raise"
 
-#: src/components/Fund/FundBanner.tsx:32
+#: src/components/Fund/FundBanner.tsx:41
 msgid "Expiry in:"
 msgstr "Expiry in:"
 
@@ -152,7 +167,7 @@ msgstr ""
 msgid "Investors"
 msgstr "Investors"
 
-#: src/components/Fund/FundBanner.tsx:42
+#: src/components/Fund/FundBanner.tsx:47
 msgid "Investors:"
 msgstr "Investors:"
 
@@ -173,7 +188,7 @@ msgid "Name"
 msgstr "Name"
 
 #: src/pages/FundTrading/FundTrading.tsx:28
-#: src/pages/FundYield/FundYield.tsx:32
+#: src/pages/FundYield/FundYield.tsx:36
 msgid "Orders"
 msgstr "Orders"
 
@@ -181,12 +196,12 @@ msgstr "Orders"
 msgid "Pool"
 msgstr "Pool"
 
-#: src/components/Fund/FundBanner.tsx:65
+#: src/components/Fund/FundBanner.tsx:68
 msgid "Portfolio Value"
 msgstr "Portfolio Value"
 
 #: src/pages/FundTrading/FundTrading.tsx:24
-#: src/pages/FundYield/FundYield.tsx:28
+#: src/pages/FundYield/FundYield.tsx:32
 msgid "Positions"
 msgstr "Positions"
 
@@ -210,7 +225,7 @@ msgstr "Sign in with your wallet, and click invest button at the top. Then pick 
 msgid "Start Date"
 msgstr "Start Date"
 
-#: src/components/Fund/FundBanner.tsx:72
+#: src/components/Fund/FundBanner.tsx:75
 msgid "Starting value: ${0}"
 msgstr "Starting value: ${0}"
 
@@ -237,6 +252,14 @@ msgstr "Telegram Username"
 #: src/components/CreateFund/CreateFundForm.tsx:190
 msgid "Thank you! Your Fund was created!"
 msgstr "Thank you! Your Fund was created!"
+
+#: src/components/Fund/SwapBox.tsx:18
+msgid "Token In:"
+msgstr "Token In:"
+
+#: src/components/Fund/SwapBox.tsx:26
+msgid "Token Out:"
+msgstr "Token Out:"
 
 #: src/components/CreateFund/CreateFundForm.tsx:113
 msgid "Twitter"
@@ -272,14 +295,14 @@ msgstr "orders"
 msgid "{0}"
 msgstr "{0}"
 
-#: src/components/Fund/FundBanner.tsx:36
+#: src/components/Fund/FundBanner.tsx:43
 msgid "{expiresIn} days"
 msgstr "{expiresIn} days"
 
-#: src/components/Fund/FundBanner.tsx:46
+#: src/components/Fund/FundBanner.tsx:49
 msgid "{investors}"
 msgstr "{investors}"
 
-#: src/components/Fund/FundActionTab.tsx:8
+#: src/components/Fund/FundActionTab.tsx:15
 msgid "{text}"
 msgstr "{text}"
