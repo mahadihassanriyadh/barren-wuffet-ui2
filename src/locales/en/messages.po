@@ -13,12 +13,12 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CreateFund/CreateFundForm.tsx:82
+#: src/components/CreateFund/CreateFundForm.tsx:81
 #: src/components/Header/Header.tsx:72
 msgid "About"
 msgstr "About"
 
-#: src/components/CreateFund/CreateFundForm.tsx:79
+#: src/components/CreateFund/CreateFundForm.tsx:78
 msgid "About This Fund"
 msgstr "About This Fund"
 
@@ -30,7 +30,7 @@ msgstr "Action"
 msgid "Admin Fee"
 msgstr "Admin Fee"
 
-#: src/components/Fund/SwapBox.tsx:81
+#: src/components/Fund/SwapBox.tsx:197
 msgid "Amount"
 msgstr "Amount"
 
@@ -38,12 +38,12 @@ msgstr "Amount"
 msgid "Amount Raised"
 msgstr "Amount Raised"
 
-#: src/components/CreateFund/CreateFundForm.tsx:135
+#: src/components/CreateFund/CreateFundForm.tsx:134
 msgid "Amount to be Raised for This Fund"
 msgstr "Amount to be Raised for This Fund"
 
-#: src/components/CreateFund/CreateFundForm.tsx:138
-#: src/components/Fund/SwapBox.tsx:84
+#: src/components/CreateFund/CreateFundForm.tsx:137
+#: src/components/Fund/SwapBox.tsx:200
 msgid "Amounts being raised $"
 msgstr "Amounts being raised $"
 
@@ -61,6 +61,10 @@ msgstr "Batch Size"
 msgid "Blog"
 msgstr "Blog"
 
+#: src/components/Fund/SwapBox.tsx:60
+msgid "Buy"
+msgstr "Buy"
+
 #: src/components/Fund/TradingOrders.tsx:18
 msgid "Cancel {0} {orderText}"
 msgstr "Cancel {0} {orderText}"
@@ -73,15 +77,15 @@ msgstr "Change %"
 msgid "Close"
 msgstr "Close"
 
-#: src/components/CreateFund/CreateFundForm.tsx:147
+#: src/components/CreateFund/CreateFundForm.tsx:146
 msgid "Closing Date of the Fund"
 msgstr "Closing Date of the Fund"
 
-#: src/components/Fund/SwapBox.tsx:102
+#: src/components/Fund/SwapBox.tsx:218
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/CreateFund/CreateFundForm.tsx:175
+#: src/components/CreateFund/CreateFundForm.tsx:174
 #: src/components/Header/Header.tsx:92
 #: src/pages/Home/About.tsx:128
 #: src/pages/Home/About.tsx:132
@@ -93,12 +97,12 @@ msgstr "Create Fund"
 msgid "Data updated: {dataUpdated} ago"
 msgstr "Data updated: {dataUpdated} ago"
 
-#: src/components/CreateFund/CreateFundForm.tsx:122
-#: src/components/CreateFund/CreateFundForm.tsx:124
+#: src/components/CreateFund/CreateFundForm.tsx:121
+#: src/components/CreateFund/CreateFundForm.tsx:123
 msgid "Discord Username"
 msgstr "Discord Username"
 
-#: src/components/CreateFund/CreateFundForm.tsx:149
+#: src/components/CreateFund/CreateFundForm.tsx:148
 msgid "Duration of raise"
 msgstr "Duration of raise"
 
@@ -110,15 +114,15 @@ msgstr "Estimated Completion: {0} minutes"
 msgid "Expiry in:"
 msgstr "Expiry in:"
 
-#: src/components/CreateFund/CreateFundForm.tsx:164
+#: src/components/CreateFund/CreateFundForm.tsx:163
 msgid "Fees"
 msgstr "Fees"
 
-#: src/components/CreateFund/CreateFundForm.tsx:162
+#: src/components/CreateFund/CreateFundForm.tsx:161
 msgid "Fund Fees"
 msgstr "Fund Fees"
 
-#: src/components/CreateFund/CreateFundForm.tsx:71
+#: src/components/CreateFund/CreateFundForm.tsx:70
 msgid "Fund Name"
 msgstr "Fund Name"
 
@@ -126,11 +130,11 @@ msgstr "Fund Name"
 msgid "Fund Raising End Date"
 msgstr "Fund Raising End Date"
 
-#: src/components/CreateFund/CreateFundForm.tsx:130
+#: src/components/CreateFund/CreateFundForm.tsx:129
 msgid "Fund Setting"
 msgstr "Fund Setting"
 
-#: src/components/CreateFund/CreateFundForm.tsx:87
+#: src/components/CreateFund/CreateFundForm.tsx:86
 msgid "Fund Strategy"
 msgstr "Fund Strategy"
 
@@ -150,11 +154,11 @@ msgstr "How to make money with Barren Wuffet?"
 msgid "INVEST"
 msgstr "INVEST"
 
-#: src/components/CreateFund/CreateFundForm.tsx:199
+#: src/components/CreateFund/CreateFundForm.tsx:198
 msgid "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
 msgstr "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
 
-#: src/components/CreateFund/CreateFundForm.tsx:66
+#: src/components/CreateFund/CreateFundForm.tsx:65
 msgid "Information about your fund"
 msgstr "Information about your fund"
 
@@ -198,6 +202,19 @@ msgstr "Investors:"
 msgid "Join our discord and come talk to us~"
 msgstr "Join our discord and come talk to us~"
 
+#: src/components/Fund/SwapBox.tsx:76
+msgid "Limit Buy Price"
+msgstr "Limit Buy Price"
+
+#: src/components/Fund/SwapBox.tsx:73
+#: src/components/Fund/SwapBox.tsx:96
+msgid "Limit Price"
+msgstr "Limit Price"
+
+#: src/components/Fund/SwapBox.tsx:99
+msgid "Limit Sell Price"
+msgstr "Limit Sell Price"
+
 #: src/components/Header/Header.tsx:82
 msgid "Manage Fund"
 msgstr "Manage Fund"
@@ -214,7 +231,7 @@ msgstr "Maturity Date"
 msgid "Name"
 msgstr "Name"
 
-#: src/pages/FundTrading/FundTrading.tsx:31
+#: src/pages/FundTrading/FundTrading.tsx:28
 #: src/pages/FundYield/FundYield.tsx:36
 msgid "Orders"
 msgstr "Orders"
@@ -227,7 +244,7 @@ msgstr "Pool"
 msgid "Portfolio Value"
 msgstr "Portfolio Value"
 
-#: src/pages/FundTrading/FundTrading.tsx:27
+#: src/pages/FundTrading/FundTrading.tsx:24
 #: src/pages/FundYield/FundYield.tsx:32
 msgid "Positions"
 msgstr "Positions"
@@ -236,13 +253,17 @@ msgstr "Positions"
 msgid "Rewards tAPY"
 msgstr "Rewards tAPY"
 
-#: src/components/CreateFund/CreateFundForm.tsx:195
+#: src/components/CreateFund/CreateFundForm.tsx:194
 msgid "START TRADING"
 msgstr "START TRADING"
 
 #: src/components/Fund/FundsList.tsx:86
 msgid "See Investment"
 msgstr "See Investment"
+
+#: src/components/Fund/SwapBox.tsx:83
+msgid "Sell"
+msgstr "Sell"
 
 #: src/config/faqs.ts:12
 msgid "Sign in with your wallet, and click invest button at the top. Then pick a fund to invest in"
@@ -260,7 +281,7 @@ msgstr "Starting value: ${0}"
 msgid "Status"
 msgstr "Status"
 
-#: src/components/CreateFund/CreateFundForm.tsx:91
+#: src/components/CreateFund/CreateFundForm.tsx:90
 msgid "Strategy"
 msgstr "Strategy"
 
@@ -268,31 +289,53 @@ msgstr "Strategy"
 msgid "TVL"
 msgstr "TVL"
 
-#: src/components/CreateFund/CreateFundForm.tsx:102
+#: src/components/CreateFund/CreateFundForm.tsx:101
 msgid "Telegram"
 msgstr "Telegram"
 
-#: src/components/CreateFund/CreateFundForm.tsx:100
+#: src/components/CreateFund/CreateFundForm.tsx:99
 msgid "Telegram Username"
 msgstr "Telegram Username"
 
-#: src/components/CreateFund/CreateFundForm.tsx:190
+#: src/components/CreateFund/CreateFundForm.tsx:189
 msgid "Thank you! Your Fund was created!"
 msgstr "Thank you! Your Fund was created!"
 
-#: src/components/Fund/SwapBox.tsx:63
+#: src/components/Fund/SwapBox.tsx:169
 msgid "Token In:"
 msgstr "Token In:"
 
-#: src/components/Fund/SwapBox.tsx:71
+#: src/components/Fund/SwapBox.tsx:180
 msgid "Token Out:"
 msgstr "Token Out:"
 
-#: src/components/CreateFund/CreateFundForm.tsx:113
+#: src/components/Fund/SwapBox.tsx:125
+#: src/components/Fund/SwapBox.tsx:128
+msgid "Trailing Percent"
+msgstr "Trailing Percent"
+
+#: src/components/Fund/SwapBox.tsx:67
+msgid "Trigger Buy Price"
+msgstr "Trigger Buy Price"
+
+#: src/components/Fund/SwapBox.tsx:64
+#: src/components/Fund/SwapBox.tsx:87
+#: src/components/Fund/SwapBox.tsx:115
+#: src/components/Fund/SwapBox.tsx:118
+#: src/components/Fund/SwapBox.tsx:144
+#: src/components/Fund/SwapBox.tsx:147
+msgid "Trigger Price"
+msgstr "Trigger Price"
+
+#: src/components/Fund/SwapBox.tsx:90
+msgid "Trigger Sell Price"
+msgstr "Trigger Sell Price"
+
+#: src/components/CreateFund/CreateFundForm.tsx:112
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/CreateFund/CreateFundForm.tsx:111
+#: src/components/CreateFund/CreateFundForm.tsx:110
 msgid "Twitter Username"
 msgstr "Twitter Username"
 
@@ -304,7 +347,7 @@ msgstr "Volume"
 msgid "X"
 msgstr "X"
 
-#: src/components/CreateFund/CreateFundForm.tsx:75
+#: src/components/CreateFund/CreateFundForm.tsx:74
 msgid "Your Fund Name"
 msgstr "Your Fund Name"
 
@@ -321,6 +364,10 @@ msgstr "orders"
 #: src/components/Form/Button.tsx:13
 msgid "{0}"
 msgstr "{0}"
+
+#: src/components/Fund/SwapBox.tsx:176
+msgid "{0} available"
+msgstr "{0} available"
 
 #: src/components/Fund/FundBanner.tsx:43
 msgid "{expiresIn} days"
