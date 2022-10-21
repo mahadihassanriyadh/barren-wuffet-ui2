@@ -11,9 +11,6 @@ import SwapBox from "../../components/Fund/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
 import TradingOrders from "../../components/Fund/TradingOrders";
 import Tabs from "../../components/Tabs/Tabs";
-import TradeOptionSelector, {
-  TradeOptions,
-} from "../../components/Fund/TradeOptionSelector";
 
 const { AddressZero } = ethers.constants;
 
@@ -43,7 +40,6 @@ const FundTrading = () => {
     document.title = "Barren Wuffet | Fund Trading";
   }, []);
 
-  const [tradeOption, setTradeOption] = useState(TradeOptions.SPOT);
   const { chain } = useNetwork();
 
   const tokens = chain ? getTokens(chain.id) : [];
@@ -76,10 +72,6 @@ const FundTrading = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark text-white mx-5 mb-10 rounded-xl px-8 py-1">
-            <TradeOptionSelector
-              selected={tradeOption}
-              setSelected={setTradeOption}
-            />
             <SwapBox tokens={tokens} amountAvailable={100} />
           </div>
         </div>

@@ -8,6 +8,7 @@ import { Input } from "../Form/Input";
 import Selector from "../Form/Selector";
 import Slider from "../Form/Slider";
 import TokenSelector from "../Form/TokenSelector";
+import TradeOptionSelector, { TradeOptions } from "./TradeOptionSelector";
 
 const twapIntervals = ["Min", "Hour", "Day"];
 
@@ -56,6 +57,7 @@ export default function SwapBox(props: {
   const [toToken, setToToken] = useState(tokens[0]);
   const [amountToSwap, setAmountToSwap] = useState(10);
   const [useTwap, setUseTwap] = useState(false);
+  const [tradeOption, setTradeOption] = useState(TradeOptions.SPOT);
 
   return (
     <div>
@@ -75,6 +77,10 @@ export default function SwapBox(props: {
           setSelectedToken={setToToken}
         />
       </div>
+      <TradeOptionSelector
+        selected={tradeOption}
+        setSelected={setTradeOption}
+      />
       <div className="mt-4 space-y-3">
         <Input
           type="number"
