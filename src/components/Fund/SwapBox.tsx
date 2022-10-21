@@ -17,37 +17,141 @@ function TwapOptions() {
   const [interval, setInterval] = useState(60 * 60); // 1 hour
 
   return (
-    <div>
-      <div className="mt-4 space-y-3">
+    <div className="mt-4 space-y-3">
+      <Input
+        type="number"
+        name={t`Batch Size`}
+        id="batchSize"
+        value={batchSize * 100}
+        placeholder={t`Batch Size`}
+        onChange={(value) => setBatchSize(parseFloat(value) / 100)}
+        required
+      />
+      %
+      <Selector
+        items={twapIntervals.map((i) => ({ name: i }))}
+        selectedItem={{ name: twapIntervals[0] }}
+        setSelectedItem={(item) => console.log(item)}
+      />
+      <Input
+        type="number"
+        name={t`Interval`}
+        id="interval"
+        value={interval / 60}
+        placeholder={t`Interval`}
+        onChange={(value) => setInterval(parseFloat(value) * 60)} // need to adjust based on selector
+        required
+      />
+      <Trans>Estimated Completion: {interval / batchSize / 60} minutes</Trans>
+    </div>
+  );
+}
+
+function OCOOptions() {
+  const [triggerBuyPrice, setTriggerBuyPrice] = useState(110);
+  const [limitBuyPrice, setLimitBuyPrice] = useState(120);
+  const [triggerSellPrice, setTriggerSellPrice] = useState(130);
+  const [limitSellPrice, setLimitSellPrice] = useState(120);
+
+  return (
+    <div className="mt-4 flex flex-auto">
+      <div>
+        <div>
+          <Trans>Buy</Trans>
+        </div>
         <Input
           type="number"
-          name={t`Batch Size`}
-          id="batchSize"
-          value={batchSize * 100}
-          placeholder={t`Batch Size`}
-          onChange={(value) => setBatchSize(parseFloat(value) / 100)}
+          name={t`Trigger Price`}
+          id="triggerBuyPrice"
+          value={triggerBuyPrice}
+          placeholder={t`Trigger Buy Price`}
+          onChange={(value) => setTriggerBuyPrice(parseFloat(value))}
           required
-        />
-        %
-        <Selector
-          items={twapIntervals.map((i) => ({ name: i }))}
-          selectedItem={{ name: twapIntervals[0] }}
-          setSelectedItem={(item) => console.log(item)}
         />
         <Input
           type="number"
-          name={t`Interval`}
-          id="interval"
-          value={interval / 60}
-          placeholder={t`Interval`}
-          onChange={(value) => setInterval(parseFloat(value) * 60)} // need to adjust based on selector
+          name={t`Limit Price`}
+          id="limitBuyPrice"
+          value={limitBuyPrice}
+          placeholder={t`Limit Buy Price`}
+          onChange={(value) => setLimitBuyPrice(parseFloat(value))}
           required
         />
-        <Trans>Estimated Completion: {interval / batchSize / 60} minutes</Trans>
+      </div>
+      <div>
+        <div>
+          <Trans>Sell</Trans>
+        </div>
+        <Input
+          type="number"
+          name={t`Trigger Price`}
+          id="triggerSellPrice"
+          value={triggerSellPrice}
+          placeholder={t`Trigger Sell Price`}
+          onChange={(value) => setTriggerSellPrice(parseFloat(value))}
+          required
+        />
+        <Input
+          type="number"
+          name={t`Limit Price`}
+          id="limitSellPrice"
+          value={limitSellPrice}
+          placeholder={t`Limit Sell Price`}
+          onChange={(value) => setLimitSellPrice(parseFloat(value))}
+          required
+        />
       </div>
     </div>
   );
 }
+
+function TrailingStopOptions() {
+  const [triggerPrice, setTriggerPrice] = useState(110);
+  const [trailingPercent, setTrailingPercent] = useState(0.1);
+  return (
+    <div className="mt-4 space-y-3">
+      <Input
+        type="number"
+        name={t`Trigger Price`}
+        id="triggerPrice"
+        value={triggerPrice}
+        placeholder={t`Trigger Price`}
+        onChange={(value) => setTriggerPrice(parseFloat(value))}
+        required
+      />
+      <div>
+        <Input
+          type="number"
+          name={t`Trailing Percent`}
+          id="trailingPercent"
+          value={trailingPercent}
+          placeholder={t`Trailing Percent`}
+          onChange={(value) => setTrailingPercent(parseFloat(value) / 100)}
+          required
+        />
+        <span>%</span>
+      </div>
+    </div>
+  );
+}
+
+function MarketTriggerOptions() {
+  const [triggerPrice, setTriggerPrice] = useState(110);
+  return (
+    <div className="mt-4 space-y-3">
+      <Input
+        type="number"
+        name={t`Trigger Price`}
+        id="triggerPrice"
+        value={triggerPrice}
+        placeholder={t`Trigger Price`}
+        onChange={(value) => setTriggerPrice(parseFloat(value))}
+        required
+      />
+    </div>
+  );
+}
+
 export default function SwapBox(props: {
   tokens: Token[];
   amountAvailable: number;
@@ -68,6 +172,9 @@ export default function SwapBox(props: {
           selectedToken={fromToken}
           setSelectedToken={setFromToken}
         />
+        <span>
+          <Trans>{props.amountAvailable} available</Trans>
+        </span>
       </div>
       <div className="mt-4 space-y-3">
         <Trans>Token Out:</Trans>
@@ -81,6 +188,9 @@ export default function SwapBox(props: {
         selected={tradeOption}
         setSelected={setTradeOption}
       />
+      {tradeOption === TradeOptions.OCO && <OCOOptions />}
+      {tradeOption === TradeOptions.MARKET_TRIGGER && <MarketTriggerOptions />}
+      {tradeOption === TradeOptions.TRAILING_STOP && <TrailingStopOptions />}
       <div className="mt-4 space-y-3">
         <Input
           type="number"
