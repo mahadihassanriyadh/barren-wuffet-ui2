@@ -52,7 +52,7 @@ const InvestForm: FunctionComponent = () => {
               id="investmentAmount"
               value={investmentAmount}
               placeholder={t`Investment Amount $`}
-              onChange={(e) => setInvestmentAmount(parseFloat(e.target.value))}
+              onChange={(value) => setInvestmentAmount(parseFloat(value))}
               required
             />
           </div>

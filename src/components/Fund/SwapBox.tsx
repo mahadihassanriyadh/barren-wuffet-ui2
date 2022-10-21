@@ -24,7 +24,7 @@ function TwapOptions() {
           id="batchSize"
           value={batchSize * 100}
           placeholder={t`Batch Size`}
-          onChange={(e) => setBatchSize(parseFloat(e.target.value) / 100)}
+          onChange={(value) => setBatchSize(parseFloat(value) / 100)}
           required
         />
         %
@@ -39,7 +39,7 @@ function TwapOptions() {
           id="interval"
           value={interval / 60}
           placeholder={t`Interval`}
-          onChange={(e) => setInterval(parseFloat(e.target.value) * 60)} // need to adjust based on selector
+          onChange={(value) => setInterval(parseFloat(value) * 60)} // need to adjust based on selector
           required
         />
         <Trans>Estimated Completion: {interval / batchSize / 60} minutes</Trans>
@@ -82,7 +82,7 @@ export default function SwapBox(props: {
           id="amountRaised"
           value={amountToSwap}
           placeholder={t`Amounts being raised $`}
-          onChange={(e) => setAmountToSwap(parseFloat(e.target.value))}
+          onChange={(value) => setAmountToSwap(parseFloat(value))}
           required
         />
       </div>

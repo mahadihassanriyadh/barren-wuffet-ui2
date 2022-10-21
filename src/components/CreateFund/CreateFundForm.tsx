@@ -33,8 +33,7 @@ const CreateFundForm: FunctionComponent = () => {
   const [error, setError] = useState("");
 
   const handleSocialFn = (prefix: string) => {
-    return (e: Event) => {
-      const value = e.target.value;
+    return (value: string) => {
       if (value.startsWith(prefix)) {
         return value;
       }
@@ -42,14 +41,14 @@ const CreateFundForm: FunctionComponent = () => {
     };
   };
 
-  const handleTelegram = (e: Event) => {
-    setTelegram(handleSocialFn(TELEGRAM_PREFIX)(e));
+  const handleTelegram = (v: string) => {
+    setTelegram(handleSocialFn(TELEGRAM_PREFIX)(v));
   };
-  const handleTwitter = (e: Event) => {
-    setTwitter(handleSocialFn(TWITTER_PREFIX)(e));
+  const handleTwitter = (v: string) => {
+    setTwitter(handleSocialFn(TWITTER_PREFIX)(v));
   };
-  const handleDiscord = (e: Event) => {
-    setDiscord(handleSocialFn(DISCORD_PREFIX)(e));
+  const handleDiscord = (v: string) => {
+    setDiscord(handleSocialFn(DISCORD_PREFIX)(v));
   };
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -71,7 +70,7 @@ const CreateFundForm: FunctionComponent = () => {
               name={t`Fund Name`}
               id="fundName"
               value={fundName}
-              onChange={(e) => setFundName(e.target.value)}
+              onChange={(value) => setFundName(value)}
               placeholder={t`Your Fund Name`}
               required
             />
@@ -81,13 +80,13 @@ const CreateFundForm: FunctionComponent = () => {
               value={about}
               placeholder={t`About`}
               required
-              onChange={(e) => setAbout(e.target.value)}
+              onChange={(value) => setAbout(value)}
             />
             <TextArea
               name={t`Fund Strategy`}
               id="strategy"
               value={strategy}
-              onChange={(e) => setStrategy(e.target.value)}
+              onChange={(value) => setStrategy(value)}
               placeholder={t`Strategy`}
               required
             />
@@ -136,7 +135,7 @@ const CreateFundForm: FunctionComponent = () => {
               id="amountRaised"
               value={amountRaised}
               placeholder={t`Amounts being raised $`}
-              onChange={(e) => setAmountRaised(parseFloat(e.target.value))}
+              onChange={(val) => setAmountRaised(parseFloat(val))}
               required
             />
             <div className="flex justify-between space-x-8">
@@ -147,8 +146,8 @@ const CreateFundForm: FunctionComponent = () => {
                 name={t`Closing Date of the Fund`}
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
-                onChange={(e) => {
-                  const newDate = new Date(e.target.value);
+                onChange={(value) => {
+                  const newDate = new Date(value);
                   if (newDate.getTime() > new Date().getTime()) {
                     setCloseDate(newDate);
                   }
@@ -162,8 +161,8 @@ const CreateFundForm: FunctionComponent = () => {
                 name={t`Fund Fees`}
                 id="fees"
                 placeholder={t`Fees`}
-                onChange={(e) => {
-                  const val = parseFloat(e.target.value);
+                onChange={(value) => {
+                  const val = parseFloat(value);
                   setFees(val < 100 && val >= 0 ? val : 0);
                 }}
                 required

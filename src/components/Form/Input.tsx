@@ -1,7 +1,11 @@
 import { FunctionComponent } from "react";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type?: string;
+type InputType = "number" | "text" | "password" | "email" | "date";
+
+interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  onChange: (val: string) => void;
+  type?: InputType;
   label?: string;
   icon?: string;
 }
@@ -22,6 +26,7 @@ export const Input: FunctionComponent<InputProps> = (props) => {
       </label>
       <input
         {...props}
+        onChange={(ev) => props.onChange(ev.target.value)}
         className={`bg-transparent border border-gray-600 text-gray-300 text-sm rounded-lg focus:ring-yellow-400 focus:border-yellow-400 block w-full p-3`}
       />
     </div>
