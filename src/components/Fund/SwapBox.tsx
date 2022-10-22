@@ -135,8 +135,11 @@ function TrailingStopOptions() {
   );
 }
 
-function MarketTriggerOptions() {
-  const [triggerPrice, setTriggerPrice] = useState(110);
+function MarketTriggerOptions(props: {
+  triggerPrice: number | undefined;
+  setTriggerPrice: (val: number) => void;
+}) {
+  const { triggerPrice, setTriggerPrice } = props;
   return (
     <div className="mt-4 space-y-3">
       <Input
@@ -152,6 +155,26 @@ function MarketTriggerOptions() {
   );
 }
 
+function isNumber(n: any): boolean {
+  return !isNaN(parseFloat(n)) && !isNaN(n - 0);
+}
+
+function calculateAmountReceived(
+  amountToSend: any,
+  price: any
+): number | undefined {
+  if (!isNumber(price) || !isNumber(amountToSend)) return undefined;
+  return amountToSend * price;
+}
+
+function calculateAmountToSend(
+  amountToReceive: any,
+  price: any
+): number | undefined {
+  if (!isNumber(price) || !isNumber(amountToReceive)) return undefined;
+  return amountToReceive / price;
+}
+
 export default function SwapBox(props: {
   tokens: Token[];
   amountAvailable: number;
@@ -159,9 +182,12 @@ export default function SwapBox(props: {
   const { tokens } = props;
   const [fromToken, setFromToken] = useState(tokens[0]);
   const [toToken, setToToken] = useState(tokens[0]);
-  const [amountToSwap, setAmountToSwap] = useState(10);
+  const [amountToSend, setAmountToSend] = useState(10);
   const [useTwap, setUseTwap] = useState(false);
   const [tradeOption, setTradeOption] = useState(TradeOptions.SPOT);
+  const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
+    undefined
+  );
 
   return (
     <div>
@@ -189,23 +215,47 @@ export default function SwapBox(props: {
         setSelected={setTradeOption}
       />
       {tradeOption === TradeOptions.OCO && <OCOOptions />}
-      {tradeOption === TradeOptions.MARKET_TRIGGER && <MarketTriggerOptions />}
+      {tradeOption === TradeOptions.MARKET_TRIGGER && (
+        <MarketTriggerOptions
+          triggerPrice={triggerPrice}
+          setTriggerPrice={setTriggerPrice}
+        />
+      )}
       {tradeOption === TradeOptions.TRAILING_STOP && <TrailingStopOptions />}
       <div className="mt-4 space-y-3">
         <Input
           type="number"
-          name={t`Amount`}
-          id="amountRaised"
-          value={amountToSwap}
-          placeholder={t`Amounts being raised $`}
-          onChange={(value) => setAmountToSwap(parseFloat(value))}
+          name={t`${fromToken.name} Amount`}
+          id="amountToSend"
+          value={amountToSend}
+          placeholder={t`Amount to send`}
+          onChange={(value) => setAmountToSend(parseFloat(value))}
           required
         />
       </div>
+      <div className="mt-4 space-y-3">
+        {triggerPrice && (
+          <Input
+            type="number"
+            name={t`${toToken.name} Amount`}
+            id="amountReceived"
+            value={calculateAmountReceived(amountToSend, triggerPrice)}
+            placeholder={t`Amount to receive`}
+            onChange={(value) => {
+              const swapAmt = calculateAmountToSend(
+                parseFloat(value),
+                triggerPrice
+              );
+              swapAmt && setAmountToSend(swapAmt);
+            }}
+            required
+          />
+        )}
+      </div>
       <Slider
-        value={Math.round((amountToSwap * 100) / props.amountAvailable)}
+        value={Math.round((amountToSend * 100) / props.amountAvailable)}
         onChange={(val) =>
-          setAmountToSwap(Math.round((val / 100) * props.amountAvailable))
+          setAmountToSend(Math.round((val / 100) * props.amountAvailable))
         }
       />
       <Checkbox
