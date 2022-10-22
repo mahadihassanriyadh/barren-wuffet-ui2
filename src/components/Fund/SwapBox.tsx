@@ -189,6 +189,15 @@ export default function SwapBox(props: {
     undefined
   );
 
+  const spotPrice = 20;
+
+  const toPrice =
+    (tradeOption === TradeOptions.MARKET_TRIGGER && triggerPrice) ||
+    (tradeOption === TradeOptions.SPOT && spotPrice) ||
+    undefined;
+  const enableToAmount = !!toPrice;
+  const toAmount = calculateAmountReceived(amountToSend, toPrice);
+
   return (
     <div>
       <div className="mt-4 space-y-3">
@@ -211,6 +220,9 @@ export default function SwapBox(props: {
           selectedToken={toToken}
           setSelectedToken={setToToken}
         />
+      </div>
+      <div>
+        <Trans>Current Price: {spotPrice}</Trans>
       </div>
       <TradeOptionSelector
         selected={tradeOption}
@@ -236,23 +248,21 @@ export default function SwapBox(props: {
         />
       </div>
       <div className="mt-4 space-y-3">
-        {triggerPrice && (
+        {
           <Input
             type="number"
-            name={t`${toToken?.name} Amount`}
+            name={t`Min. ${toToken?.name} Amount`}
             id="amountReceived"
-            value={calculateAmountReceived(amountToSend, triggerPrice)}
-            placeholder={t`Amount to receive`}
+            value={toAmount}
+            placeholder={t`Min. Amount to receive`}
             onChange={(value) => {
-              const swapAmt = calculateAmountToSend(
-                parseFloat(value),
-                triggerPrice
-              );
+              const swapAmt = calculateAmountToSend(parseFloat(value), toPrice);
               swapAmt && setAmountToSend(swapAmt);
             }}
             required
+            disabled={!enableToAmount}
           />
-        )}
+        }
       </div>
       <Slider
         value={Math.round((amountToSend * 100) / props.amountAvailable)}
