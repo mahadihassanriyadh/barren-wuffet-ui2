@@ -180,10 +180,7 @@ function calculateAmountToSend(
   return amountToReceive / price;
 }
 
-export default function SwapBox(props: {
-  tokens: Token[];
-  amountAvailable: number;
-}) {
+export default function SwapBox(props: { tokens: Token[] }) {
   const { tokens } = props;
   const [fromToken, setFromToken] = useState<Token | undefined>(tokens[0]);
   const [toToken, setToToken] = useState<Token | undefined>(tokens[0]);
@@ -196,6 +193,8 @@ export default function SwapBox(props: {
   const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
     undefined
   );
+  const amountFromAvailable = 100;
+  const amountToAvailable = 20;
 
   const spotPrice = 20;
 
@@ -221,9 +220,28 @@ export default function SwapBox(props: {
         />
 
         <span>
-          <Trans>{props.amountAvailable} available</Trans>
+          <Trans>{amountFromAvailable} available</Trans>
         </span>
       </div>
+      <div className="mt-4 space-y-3">
+        <Input
+          type="number"
+          name={t`${fromToken?.name} Amount`}
+          id="amountToSend"
+          value={amountToSend}
+          placeholder={t`Amount to send`}
+          onChange={(value) =>
+            setAmountToSend(Math.min(amountFromAvailable, parseFloat(value)))
+          }
+          required
+        />
+      </div>
+      <Slider
+        value={Math.round((amountToSend * 100) / amountFromAvailable)}
+        onChange={(val) =>
+          setAmountToSend(Math.round((val / 100) * amountFromAvailable))
+        }
+      />
       <div className="mt-4 space-y-3">
         <Trans>Token Out:</Trans>
         <TokenSelector
@@ -232,6 +250,9 @@ export default function SwapBox(props: {
           setSelectedToken={setToToken}
         />
       </div>
+      <span>
+        <Trans>{amountFromAvailable} available</Trans>
+      </span>
       <div>
         <Trans>Current Price: {spotPrice}</Trans>
       </div>
@@ -255,19 +276,6 @@ export default function SwapBox(props: {
         />
       )}
       <div className="mt-4 space-y-3">
-        <Input
-          type="number"
-          name={t`${fromToken?.name} Amount`}
-          id="amountToSend"
-          value={amountToSend}
-          placeholder={t`Amount to send`}
-          onChange={(value) =>
-            setAmountToSend(Math.min(props.amountAvailable, parseFloat(value)))
-          }
-          required
-        />
-      </div>
-      <div className="mt-4 space-y-3">
         {
           <Input
             type="number"
@@ -284,12 +292,7 @@ export default function SwapBox(props: {
           />
         }
       </div>
-      <Slider
-        value={Math.round((amountToSend * 100) / props.amountAvailable)}
-        onChange={(val) =>
-          setAmountToSend(Math.round((val / 100) * props.amountAvailable))
-        }
-      />
+
       <Checkbox
         isChecked={useTwap}
         label={"Enable TWAP"}

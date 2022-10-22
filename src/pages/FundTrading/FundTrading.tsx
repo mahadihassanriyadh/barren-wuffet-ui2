@@ -72,7 +72,7 @@ const FundTrading = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark text-white mx-5 mb-10 rounded-xl px-8 py-1">
-            <SwapBox tokens={tokens} amountAvailable={100} />
+            <SwapBox tokens={tokens} />
           </div>
         </div>
       </div>
