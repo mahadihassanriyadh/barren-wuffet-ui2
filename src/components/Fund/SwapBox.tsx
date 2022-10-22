@@ -105,9 +105,14 @@ function OCOOptions() {
   );
 }
 
-function TrailingStopOptions() {
-  const [triggerPrice, setTriggerPrice] = useState(110);
-  const [trailingPercent, setTrailingPercent] = useState(0.1);
+function TrailingStopOptions(props: {
+  triggerPrice: number | undefined;
+  trailingPercent: number | undefined;
+  setTriggerPrice: (val: number) => void;
+  setTrailingPercent: (val: number) => void;
+}) {
+  const { triggerPrice, setTriggerPrice, trailingPercent, setTrailingPercent } =
+    props;
   return (
     <div className="mt-4 space-y-3">
       <Input
@@ -124,7 +129,7 @@ function TrailingStopOptions() {
           type="number"
           name={t`Trailing Percent`}
           id="trailingPercent"
-          value={trailingPercent}
+          value={(trailingPercent || 0) * 100}
           placeholder={t`Trailing Percent`}
           onChange={(value) => setTrailingPercent(parseFloat(value) / 100)}
           required
@@ -188,12 +193,18 @@ export default function SwapBox(props: {
   const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
     undefined
   );
+  const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
+    undefined
+  );
 
   const spotPrice = 20;
 
   const toPrice =
     (tradeOption === TradeOptions.MARKET_TRIGGER && triggerPrice) ||
     (tradeOption === TradeOptions.SPOT && spotPrice) ||
+    (tradeOption === TradeOptions.TRAILING_STOP &&
+      trailingPercent &&
+      (1 - trailingPercent) * spotPrice) ||
     undefined;
   const enableToAmount = !!toPrice;
   const toAmount = calculateAmountReceived(amountToSend, toPrice);
@@ -235,7 +246,14 @@ export default function SwapBox(props: {
           setTriggerPrice={setTriggerPrice}
         />
       )}
-      {tradeOption === TradeOptions.TRAILING_STOP && <TrailingStopOptions />}
+      {tradeOption === TradeOptions.TRAILING_STOP && (
+        <TrailingStopOptions
+          triggerPrice={triggerPrice}
+          setTriggerPrice={setTriggerPrice}
+          trailingPercent={trailingPercent}
+          setTrailingPercent={setTrailingPercent}
+        />
+      )}
       <div className="mt-4 space-y-3">
         <Input
           type="number"
@@ -243,7 +261,9 @@ export default function SwapBox(props: {
           id="amountToSend"
           value={amountToSend}
           placeholder={t`Amount to send`}
-          onChange={(value) => setAmountToSend(parseFloat(value))}
+          onChange={(value) =>
+            setAmountToSend(Math.min(props.amountAvailable, parseFloat(value)))
+          }
           required
         />
       </div>
