@@ -4,7 +4,11 @@ import dropDownArrow from "../../img/icons/dropDownArrowGray.svg";
 
 export default function Selector<
   T extends { name: string; icon?: string; id?: string }
->(props: { items: T[]; selectedItem: T; setSelectedItem: (value: T) => void }) {
+>(props: {
+  items: T[];
+  selectedItem?: T;
+  setSelectedItem: (value: T) => void;
+}) {
   const { items, selectedItem, setSelectedItem } = props;
 
   return (

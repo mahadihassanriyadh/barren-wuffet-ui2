@@ -180,8 +180,8 @@ export default function SwapBox(props: {
   amountAvailable: number;
 }) {
   const { tokens } = props;
-  const [fromToken, setFromToken] = useState(tokens[0]);
-  const [toToken, setToToken] = useState(tokens[0]);
+  const [fromToken, setFromToken] = useState<Token | undefined>(tokens[0]);
+  const [toToken, setToToken] = useState<Token | undefined>(tokens[0]);
   const [amountToSend, setAmountToSend] = useState(10);
   const [useTwap, setUseTwap] = useState(false);
   const [tradeOption, setTradeOption] = useState(TradeOptions.SPOT);
@@ -193,11 +193,13 @@ export default function SwapBox(props: {
     <div>
       <div className="mt-4 space-y-3">
         <Trans>Token In:</Trans>
+
         <TokenSelector
           tokens={tokens}
           selectedToken={fromToken}
           setSelectedToken={setFromToken}
         />
+
         <span>
           <Trans>{props.amountAvailable} available</Trans>
         </span>
@@ -225,7 +227,7 @@ export default function SwapBox(props: {
       <div className="mt-4 space-y-3">
         <Input
           type="number"
-          name={t`${fromToken.name} Amount`}
+          name={t`${fromToken?.name} Amount`}
           id="amountToSend"
           value={amountToSend}
           placeholder={t`Amount to send`}
@@ -237,7 +239,7 @@ export default function SwapBox(props: {
         {triggerPrice && (
           <Input
             type="number"
-            name={t`${toToken.name} Amount`}
+            name={t`${toToken?.name} Amount`}
             id="amountReceived"
             value={calculateAmountReceived(amountToSend, triggerPrice)}
             placeholder={t`Amount to receive`}

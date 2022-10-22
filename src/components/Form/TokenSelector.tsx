@@ -3,7 +3,7 @@ import Selector from "./Selector";
 
 export default function TokenSelector(props: {
   tokens: Token[];
-  selectedToken: Token;
+  selectedToken?: Token;
   setSelectedToken: (value: Token) => void;
 }) {
   const { tokens, selectedToken, setSelectedToken } = props;
