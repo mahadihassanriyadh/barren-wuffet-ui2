@@ -47,18 +47,37 @@ function TwapOptions() {
   );
 }
 
-function OCOOptions() {
+function OCOOptions(props: {
+  fromToken?: Token;
+  toToken?: Token;
+  amountFromAvailable: number;
+  amountToAvailable: number;
+}) {
+  const { fromToken, toToken, amountFromAvailable, amountToAvailable } = props;
   const [triggerBuyPrice, setTriggerBuyPrice] = useState(110);
   const [limitBuyPrice, setLimitBuyPrice] = useState(120);
   const [triggerSellPrice, setTriggerSellPrice] = useState(130);
   const [limitSellPrice, setLimitSellPrice] = useState(120);
+  const [amountToSendBuy, setAmountToSendBuy] = useState(10);
+  const [amountToSendSell, setAmountToSendSell] = useState(10);
 
+  const toBuyAmount = calculateAmountReceived(amountToSendBuy, limitBuyPrice);
+  const toSellAmount = calculateAmountReceived(
+    amountToSendSell,
+    limitSellPrice
+  );
   return (
     <div className="mt-4 flex flex-auto">
       <div>
         <div>
           <Trans>Buy</Trans>
         </div>
+        <AmountToSendInput
+          fromToken={fromToken}
+          amountFromAvailable={amountFromAvailable}
+          setAmountToSend={setAmountToSendBuy}
+          amountToSend={amountToSendBuy}
+        />
         <Input
           type="number"
           name={t`Trigger Price`}
@@ -77,11 +96,24 @@ function OCOOptions() {
           onChange={(value) => setLimitBuyPrice(parseFloat(value))}
           required
         />
+        <MinAmountInput
+          token={fromToken}
+          amount={toBuyAmount}
+          price={limitBuyPrice}
+          isEnabled={true}
+          setAmountToSend={setAmountToSendBuy}
+        />
       </div>
       <div>
         <div>
-          <Trans>Sell</Trans>
+          <Trans>Or Sell</Trans>
         </div>
+        <AmountToSendInput
+          fromToken={toToken}
+          amountFromAvailable={amountToAvailable}
+          setAmountToSend={setAmountToSendSell}
+          amountToSend={amountToSendSell}
+        />
         <Input
           type="number"
           name={t`Trigger Price`}
@@ -99,6 +131,13 @@ function OCOOptions() {
           placeholder={t`Limit Sell Price`}
           onChange={(value) => setLimitSellPrice(parseFloat(value))}
           required
+        />
+        <MinAmountInput
+          token={toToken}
+          amount={toSellAmount}
+          price={limitSellPrice}
+          isEnabled={true}
+          setAmountToSend={setAmountToSendSell}
         />
       </div>
     </div>
@@ -160,6 +199,75 @@ function MarketTriggerOptions(props: {
   );
 }
 
+function MinAmountInput(props: {
+  token?: Token;
+  amount?: number;
+  price?: number;
+  isEnabled: boolean;
+  setAmountToSend: (val: number) => void;
+}) {
+  const { token, amount, price, isEnabled, setAmountToSend } = props;
+  return (
+    <div className="mt-4 space-y-3">
+      {
+        <Input
+          type="number"
+          name={t`Min. ${token?.name} Amount`}
+          id="amountReceived"
+          value={amount}
+          placeholder={t`Min. Amount to receive`}
+          onChange={(value) => {
+            const swapAmt = calculateAmountToSend(parseFloat(value), price);
+            swapAmt && setAmountToSend(swapAmt);
+          }}
+          required
+          disabled={!isEnabled}
+        />
+      }
+    </div>
+  );
+}
+
+function AmountToSendInput(props: {
+  fromToken?: Token;
+  amountToSend?: number;
+  setAmountToSend: (val: number) => void;
+  amountFromAvailable?: number;
+}) {
+  const { fromToken, amountToSend, setAmountToSend, amountFromAvailable } =
+    props;
+
+  const sliderVal =
+    (amountToSend &&
+      amountFromAvailable &&
+      Math.round((amountToSend * 100) / amountFromAvailable)) ||
+    0;
+  return (
+    <div>
+      <div className="mt-4 space-y-3">
+        <Input
+          type="number"
+          name={t`${fromToken?.name} Amount`}
+          id="amountToSend"
+          value={amountToSend}
+          placeholder={t`Amount to send`}
+          onChange={(value) =>
+            amountFromAvailable &&
+            setAmountToSend(Math.min(amountFromAvailable, parseFloat(value)))
+          }
+          required
+        />
+      </div>
+      <Slider
+        value={sliderVal}
+        onChange={(val) =>
+          amountFromAvailable &&
+          setAmountToSend(Math.round((val / 100) * amountFromAvailable))
+        }
+      />
+    </div>
+  );
+}
 function isNumber(n: any): boolean {
   return !isNaN(parseFloat(n)) && !isNaN(n - 0);
 }
@@ -223,25 +331,11 @@ export default function SwapBox(props: { tokens: Token[] }) {
           <Trans>{amountFromAvailable} available</Trans>
         </span>
       </div>
-      <div className="mt-4 space-y-3">
-        <Input
-          type="number"
-          name={t`${fromToken?.name} Amount`}
-          id="amountToSend"
-          value={amountToSend}
-          placeholder={t`Amount to send`}
-          onChange={(value) =>
-            setAmountToSend(Math.min(amountFromAvailable, parseFloat(value)))
-          }
-          required
+      {tradeOption !== TradeOptions.OCO && (
+        <AmountToSendInput
+          {...{ fromToken, amountToSend, setAmountToSend, amountFromAvailable }}
         />
-      </div>
-      <Slider
-        value={Math.round((amountToSend * 100) / amountFromAvailable)}
-        onChange={(val) =>
-          setAmountToSend(Math.round((val / 100) * amountFromAvailable))
-        }
-      />
+      )}
       <div className="mt-4 space-y-3">
         <Trans>Token Out:</Trans>
         <TokenSelector
@@ -251,7 +345,7 @@ export default function SwapBox(props: { tokens: Token[] }) {
         />
       </div>
       <span>
-        <Trans>{amountFromAvailable} available</Trans>
+        <Trans>{amountToAvailable} available</Trans>
       </span>
       <div>
         <Trans>Current Price: {spotPrice}</Trans>
@@ -260,7 +354,14 @@ export default function SwapBox(props: { tokens: Token[] }) {
         selected={tradeOption}
         setSelected={setTradeOption}
       />
-      {tradeOption === TradeOptions.OCO && <OCOOptions />}
+      {tradeOption === TradeOptions.OCO && (
+        <OCOOptions
+          fromToken={fromToken}
+          toToken={toToken}
+          amountFromAvailable={amountFromAvailable}
+          amountToAvailable={amountToAvailable}
+        />
+      )}
       {tradeOption === TradeOptions.MARKET_TRIGGER && (
         <MarketTriggerOptions
           triggerPrice={triggerPrice}
@@ -275,23 +376,15 @@ export default function SwapBox(props: { tokens: Token[] }) {
           setTrailingPercent={setTrailingPercent}
         />
       )}
-      <div className="mt-4 space-y-3">
-        {
-          <Input
-            type="number"
-            name={t`Min. ${toToken?.name} Amount`}
-            id="amountReceived"
-            value={toAmount}
-            placeholder={t`Min. Amount to receive`}
-            onChange={(value) => {
-              const swapAmt = calculateAmountToSend(parseFloat(value), toPrice);
-              swapAmt && setAmountToSend(swapAmt);
-            }}
-            required
-            disabled={!enableToAmount}
-          />
-        }
-      </div>
+      {tradeOption !== TradeOptions.OCO && (
+        <MinAmountInput
+          token={toToken}
+          amount={toAmount}
+          price={toPrice}
+          isEnabled={enableToAmount}
+          setAmountToSend={setAmountToSend}
+        />
+      )}
 
       <Checkbox
         isChecked={useTwap}
