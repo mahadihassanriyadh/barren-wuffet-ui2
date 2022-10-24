@@ -13,12 +13,12 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/CreateFund/CreateFundForm.tsx:82
+#: src/components/CreateFund/CreateFundForm.tsx:81
 #: src/components/Header/Header.tsx:72
 msgid "About"
 msgstr "About"
 
-#: src/components/CreateFund/CreateFundForm.tsx:79
+#: src/components/CreateFund/CreateFundForm.tsx:78
 msgid "About This Fund"
 msgstr "About This Fund"
 
@@ -38,7 +38,7 @@ msgstr "Admin Fee"
 msgid "Amount Raised"
 msgstr "Amount Raised"
 
-#: src/components/CreateFund/CreateFundForm.tsx:135
+#: src/components/CreateFund/CreateFundForm.tsx:134
 msgid "Amount to be Raised for This Fund"
 msgstr "Amount to be Raised for This Fund"
 
@@ -46,7 +46,7 @@ msgstr "Amount to be Raised for This Fund"
 msgid "Amount to send"
 msgstr "Amount to send"
 
-#: src/components/CreateFund/CreateFundForm.tsx:138
+#: src/components/CreateFund/CreateFundForm.tsx:137
 msgid "Amounts being raised $"
 msgstr "Amounts being raised $"
 
@@ -80,7 +80,7 @@ msgstr "Change %"
 msgid "Close"
 msgstr "Close"
 
-#: src/components/CreateFund/CreateFundForm.tsx:147
+#: src/components/CreateFund/CreateFundForm.tsx:146
 msgid "Closing Date of the Fund"
 msgstr "Closing Date of the Fund"
 
@@ -88,7 +88,7 @@ msgstr "Closing Date of the Fund"
 msgid "Confirm"
 msgstr "Confirm"
 
-#: src/components/CreateFund/CreateFundForm.tsx:178
+#: src/components/CreateFund/CreateFundForm.tsx:187
 #: src/components/Header/Header.tsx:92
 #: src/pages/Home/About.tsx:128
 #: src/pages/Home/About.tsx:132
@@ -104,12 +104,12 @@ msgstr "Current Price: {spotPrice}"
 msgid "Data updated: {dataUpdated} ago"
 msgstr "Data updated: {dataUpdated} ago"
 
-#: src/components/CreateFund/CreateFundForm.tsx:122
-#: src/components/CreateFund/CreateFundForm.tsx:124
+#: src/components/CreateFund/CreateFundForm.tsx:121
+#: src/components/CreateFund/CreateFundForm.tsx:123
 msgid "Discord Username"
 msgstr "Discord Username"
 
-#: src/components/CreateFund/CreateFundForm.tsx:149
+#: src/components/CreateFund/CreateFundForm.tsx:148
 msgid "Duration of raise"
 msgstr "Duration of raise"
 
@@ -121,15 +121,15 @@ msgstr "Estimated Completion: {0} minutes"
 msgid "Expiry in:"
 msgstr "Expiry in:"
 
-#: src/components/CreateFund/CreateFundForm.tsx:164
+#: src/components/CreateFund/CreateFundForm.tsx:163
 msgid "Fees"
 msgstr "Fees"
 
-#: src/components/CreateFund/CreateFundForm.tsx:162
+#: src/components/CreateFund/CreateFundForm.tsx:161
 msgid "Fund Fees"
 msgstr "Fund Fees"
 
-#: src/components/CreateFund/CreateFundForm.tsx:71
+#: src/components/CreateFund/CreateFundForm.tsx:70
 msgid "Fund Name"
 msgstr "Fund Name"
 
@@ -137,11 +137,11 @@ msgstr "Fund Name"
 msgid "Fund Raising End Date"
 msgstr "Fund Raising End Date"
 
-#: src/components/CreateFund/CreateFundForm.tsx:130
+#: src/components/CreateFund/CreateFundForm.tsx:129
 msgid "Fund Setting"
 msgstr "Fund Setting"
 
-#: src/components/CreateFund/CreateFundForm.tsx:87
+#: src/components/CreateFund/CreateFundForm.tsx:86
 msgid "Fund Strategy"
 msgstr "Fund Strategy"
 
@@ -161,11 +161,11 @@ msgstr "How to make money with Barren Wuffet?"
 msgid "INVEST"
 msgstr "INVEST"
 
-#: src/components/CreateFund/CreateFundForm.tsx:202
+#: src/components/CreateFund/CreateFundForm.tsx:211
 msgid "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
 msgstr "If you are a trader, raise capital easily and scale up your investment and trading strategies. Decide on the fund size, the duration of management and the profit share amounts. Market it to your community and help them increase their returns."
 
-#: src/components/CreateFund/CreateFundForm.tsx:66
+#: src/components/CreateFund/CreateFundForm.tsx:65
 msgid "Information about your fund"
 msgstr "Information about your fund"
 
@@ -272,7 +272,7 @@ msgstr "Positions"
 msgid "Rewards tAPY"
 msgstr "Rewards tAPY"
 
-#: src/components/CreateFund/CreateFundForm.tsx:198
+#: src/components/CreateFund/CreateFundForm.tsx:207
 msgid "START TRADING"
 msgstr "START TRADING"
 
@@ -300,7 +300,7 @@ msgstr "Starting value: ${0}"
 msgid "Status"
 msgstr "Status"
 
-#: src/components/CreateFund/CreateFundForm.tsx:91
+#: src/components/CreateFund/CreateFundForm.tsx:90
 msgid "Strategy"
 msgstr "Strategy"
 
@@ -308,15 +308,15 @@ msgstr "Strategy"
 msgid "TVL"
 msgstr "TVL"
 
-#: src/components/CreateFund/CreateFundForm.tsx:102
+#: src/components/CreateFund/CreateFundForm.tsx:101
 msgid "Telegram"
 msgstr "Telegram"
 
-#: src/components/CreateFund/CreateFundForm.tsx:100
+#: src/components/CreateFund/CreateFundForm.tsx:99
 msgid "Telegram Username"
 msgstr "Telegram Username"
 
-#: src/components/CreateFund/CreateFundForm.tsx:193
+#: src/components/CreateFund/CreateFundForm.tsx:202
 msgid "Thank you! Your Fund was created!"
 msgstr "Thank you! Your Fund was created!"
 
@@ -350,11 +350,11 @@ msgstr "Trigger Price"
 msgid "Trigger Sell Price"
 msgstr "Trigger Sell Price"
 
-#: src/components/CreateFund/CreateFundForm.tsx:113
+#: src/components/CreateFund/CreateFundForm.tsx:112
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/components/CreateFund/CreateFundForm.tsx:111
+#: src/components/CreateFund/CreateFundForm.tsx:110
 msgid "Twitter Username"
 msgstr "Twitter Username"
 
@@ -362,11 +362,15 @@ msgstr "Twitter Username"
 msgid "Volume"
 msgstr "Volume"
 
+#: src/components/CreateFund/CreateFundForm.tsx:173
+msgid "Whitelist tokens"
+msgstr "Whitelist tokens"
+
 #: src/components/Fund/PoolsList.tsx:41
 msgid "X"
 msgstr "X"
 
-#: src/components/CreateFund/CreateFundForm.tsx:75
+#: src/components/CreateFund/CreateFundForm.tsx:74
 msgid "Your Fund Name"
 msgstr "Your Fund Name"
 

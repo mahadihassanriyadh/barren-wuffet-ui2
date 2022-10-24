@@ -12,12 +12,12 @@ import { Input } from "../Form/Input";
 import Button from "../Form/Button";
 import { TextArea } from "../Form/TextArea";
 import { formatDate } from "../../data/formatting";
+import MultiSelector from "../Form/MultiSelector";
 
 const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
 const DISCORD_PREFIX = "https://discord.gg/";
 
-type Event = { target: { value: string } };
 const CreateFundForm: FunctionComponent = () => {
   const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
   const [twitter, setTwitter] = useState(TWITTER_PREFIX);
@@ -166,6 +166,19 @@ const CreateFundForm: FunctionComponent = () => {
                   setFees(val < 100 && val >= 0 ? val : 0);
                 }}
                 required
+              />
+            </div>
+            <div className="flex justify-between space-x-8">
+              <MultiSelector
+                label={t`Whitelist tokens`}
+                items={[
+                  { id: 1, name: "ETH" },
+                  { id: 2, name: "SUSHI" },
+                  { id: 3, name: "UNI" },
+                  { id: 4, name: "CRV" },
+                  { id: 5, name: "DPX" },
+                  { id: 6, name: "RDPX" },
+                ]}
               />
             </div>
           </div>
