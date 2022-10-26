@@ -3,8 +3,8 @@ import { Trans } from "@lingui/macro";
 
 const FAQ = ({ faqs }: { faqs: { q: string; a: string }[] }) => (
   <>
-    {faqs.map((faq) => (
-      <Disclosure as="div">
+    {faqs.map((faq, i) => (
+      <Disclosure as="div" key={i}>
         <Disclosure.Button className="py-2">
           <Trans>{faq.q}</Trans>
         </Disclosure.Button>
