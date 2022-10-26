@@ -1,4 +1,4 @@
-import { Fund, Pool, PriceFeed } from "./models";
+import { Fund, FundStatus, Pool, PriceFeed } from "./models";
 import { request, gql } from "graphql-request";
 
 export interface APIConfig {
@@ -15,44 +15,65 @@ export class API {
     throw new Error("Not implemented");
   }
 
-  async getFunds(): Promise<Fund[]> {
-    const data = await request<{ funds: Fund[] }>(
-      this.graphUrl,
-      gql`
-        {
-          funds {
-            id
-            creation_timestamp
-            closed_timestamp
-            manager
-            actions
-            rules
-            positions
+  async getFunds(params: string): Promise<Fund[] | undefined> {
+    try {
+      const data = await request<{ funds: Fund[] }>(
+        this.graphUrl,
+        gql`
+          {
+            funds {
+              id
+              name
+              creation_timestamp
+              closed_timestamp
+              manager_fee_percentage
+              manager {
+                id
+              }
+              subscription_constraints {
+                id
+                lockin
+                deadline
+              }
+              rules
+              positions
+            }
           }
-        }
-      `
-    );
-    console.log(data);
-    return Promise.resolve(
-      data.funds.map((fund) => ({
-        ...fund,
-        // @ts-ignore
-        creation_timestamp:
-          fund.creation_timestamp &&
+        `
+      );
+      return Promise.resolve(
+        data.funds.map((fund) => ({
+          ...fund,
           // @ts-ignore
-          new Date(parseInt(fund.creation_timestamp) * 1000),
-        // @ts-ignore
-        deploy_timestamp:
-          fund.deploy_timestamp &&
+          status: fund.closed_timestamp
+            ? FundStatus.CLOSED
+            : FundStatus.RAISING,
           // @ts-ignore
-          new Date(parseInt(fund.deploy_timestamp) * 1000),
-        // @ts-ignore
-        close_timestamp:
-          fund.close_timestamp &&
+          admin_fee: fund.manager_fee_percentage,
           // @ts-ignore
-          new Date(parseInt(fund.close_timestamp) * 1000),
-      }))
-    );
+          manager: fund.manager.id,
+          // @ts-ignore
+          creation_timestamp:
+            fund.creation_timestamp &&
+            // @ts-ignore
+            new Date(parseInt(fund.creation_timestamp) * 1000),
+          // @ts-ignore
+          deploy_timestamp:
+            // @ts-ignore
+            fund.subscription_constraints.deadline &&
+            // @ts-ignore
+            new Date(parseInt(fund.subscription_constraints.deadline)),
+          // @ts-ignore
+          close_timestamp:
+            // @ts-ignore
+            fund.subscription_constraints.lockin &&
+            // @ts-ignore
+            new Date(parseInt(fund.subscription_constraints.lockin)),
+        }))
+      );
+    } catch (err) {
+      throw new Error("Error fetching funds");
+    }
   }
 
   getPriceFeed(): Promise<PriceFeed[]> {

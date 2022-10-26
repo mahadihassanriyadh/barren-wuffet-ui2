@@ -19,7 +19,7 @@ import { api } from "../../config/env";
 const columnHelper = createColumnHelper<Fund>();
 
 const columns: ColumnDef<Fund, any>[] = [
-  columnHelper.accessor((row) => row.id, {
+  columnHelper.accessor("name", {
     header: t`Name`,
   }),
   columnHelper.accessor("creation_timestamp", {
@@ -96,7 +96,7 @@ function investInFund(fundId: string): void {
 }
 
 export default function FundsList() {
-  const { data, error } = useSWR("/api/funds", api.getFunds);
+  const { data, error } = useSWR("/api/funds", api.getFunds.bind(api));
 
   const table = useReactTable<Fund>({
     data: data || [],
