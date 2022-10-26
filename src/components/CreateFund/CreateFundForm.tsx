@@ -13,10 +13,19 @@ import Button from "../Form/Button";
 import { TextArea } from "../Form/TextArea";
 import { formatDate } from "../../data/formatting";
 import MultiSelector from "../Form/MultiSelector";
+import { useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
+import { getContract } from "../../config/addresses";
+import BWContract from "../../contracts/BarrenWuffet.json";
+import { Abi as AbiType } from "abitype";
+import { BigNumber, ethers } from "ethers";
+import { ERC20_DECIMALS } from "../../config/constants";
+import { getEthToken } from "../../config/tokens";
 
 const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
 const DISCORD_PREFIX = "https://discord.gg/";
+
+const factoryContractABI = BWContract.abi;
 
 const CreateFundForm: FunctionComponent = () => {
   const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
@@ -26,11 +35,40 @@ const CreateFundForm: FunctionComponent = () => {
   const [about, setAbout] = useState("");
   const [strategy, setStrategy] = useState("");
   const [amountRaised, setAmountRaised] = useState(10000);
-  const [closeDate, setCloseDate] = useState(new Date("2022-10-20"));
+  const [closeDate, setCloseDate] = useState(new Date());
+  const [lockin, setLockin] = useState(
+    new Date(new Date().getTime() + 86400000 * 10)
+  );
   const [fees, setFees] = useState(1);
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const { chain } = useNetwork();
+
+  const factoryContract = chain ? getContract(chain.id, "BarrenWuffet") : "";
+
+  const { config } = usePrepareContractWrite({
+    address: factoryContract,
+    abi: factoryContractABI as AbiType,
+    functionName: "createFund",
+    args: [
+      fundName,
+      {
+        minCollateralPerSub: BigNumber.from(0).mul(ERC20_DECIMALS),
+        maxCollateralPerSub: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
+        minCollateralTotal: BigNumber.from(0).mul(ERC20_DECIMALS),
+        maxCollateralTotal: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
+        deadline: closeDate.getTime(),
+        lockin: lockin.getTime(),
+        allowedDepositToken: chain
+          ? [0, getEthToken(chain.id), 0]
+          : [0, "0x0000000000000000000000000000000000000000", 0],
+      },
+      fees,
+      [], // whitelisted tokens
+    ],
+  });
+
+  const { data, isLoading, error, isSuccess, status, write } =
+    useContractWrite(config);
 
   const handleSocialFn = (prefix: string) => {
     return (value: string) => {
@@ -52,15 +90,16 @@ const CreateFundForm: FunctionComponent = () => {
   };
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setError("");
+    write?.();
   };
+
   return (
     <div className="bg-gray-dark mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
-      <CreateFundThanks isHidden={!isSubmitted} />
-      <div className={isSubmitted ? "hidden" : ""}>
+      <CreateFundThanks isHidden={!isSuccess} />
+      <div className={!isSuccess ? "" : "hidden"}>
         <form onSubmit={handleFormSubmit}>
-          {error && <Error error={error} />}
+          {isLoading && <div>Submitting form..</div>}
+          {error && <Error error={error.message} />}
           <p className="text-lg font-bold">
             <Trans>Information about your fund</Trans>
           </p>
@@ -150,6 +189,21 @@ const CreateFundForm: FunctionComponent = () => {
                   const newDate = new Date(value);
                   if (newDate.getTime() > new Date().getTime()) {
                     setCloseDate(newDate);
+                  }
+                }}
+                required
+              />
+              <Input
+                type="date"
+                icon={calendarIcon}
+                value={formatDate(lockin)}
+                name={t`Withdrawal Date from the fund`}
+                id="lockin"
+                placeholder={t`Fund withdrawal date`}
+                onChange={(value) => {
+                  const newDate = new Date(value);
+                  if (newDate.getTime() > new Date().getTime()) {
+                    setLockin(lockin);
                   }
                 }}
                 required

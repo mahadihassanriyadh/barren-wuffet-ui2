@@ -826,3 +826,7 @@ const tokenList: {
 export function getTokens(chainId: number, fundId = null) {
   return tokenList.tokens.filter((token) => token.chainId === chainId);
 }
+
+export function getEthToken(chainId: number) {
+  return "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+}
