@@ -1,15 +1,14 @@
-import { API, API_Config } from "../../api/api";
+import { API, APIConfig } from "../../api/api";
 import { Fund } from "../../api/models";
 import { funds } from "./funds";
 import { pools } from "./pools";
 import { priceFeed } from "./priceChart";
 
 export class DummyAPI implements API {
-  graph_url: string;
+  graphUrl: string;
 
-  constructor(config?: API_Config) {
-    // we ignore the config as the dummy api doesnt care.
-    this.graph_url = "";
+  constructor(config: APIConfig) {
+    this.graphUrl = "";
   }
 
   getPools = () => Promise.resolve(pools);

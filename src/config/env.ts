@@ -6,15 +6,9 @@ export function isDevelopment() {
 }
 
 export function isLocal() {
-  return true;
   return window.location.host?.includes("localhost");
 }
 
-export function getGraphUrl() {
-  return (
-    process.env.GRAPH_URL ||
-    "http://localhost:8000/subgraphs/name/barren-wuffet"
-  );
-}
-
-export const api = isLocal() ? new DummyAPI() : new API();
+export const api = !!process.env.REACT_APP_GRAPH_URL
+  ? new API({ graphUrl: process.env.REACT_APP_GRAPH_URL })
+  : new DummyAPI({ graphUrl: "" });

@@ -1,20 +1,23 @@
 import { Fund, Pool, PriceFeed } from "./models";
 import { request, gql } from "graphql-request";
-import { getGraphUrl } from "../config/env";
 
-export interface API_Config {
-  graph_url: string;
-  rpc_url: string;
+export interface APIConfig {
+  graphUrl: string;
 }
 
 export class API {
+  graphUrl: string;
+  constructor(config: APIConfig) {
+    this.graphUrl = config.graphUrl;
+  }
+
   getPools(): Promise<Pool[]> {
     throw new Error("Not implemented");
   }
 
   async getFunds(): Promise<Fund[]> {
     const data = await request<{ funds: Fund[] }>(
-      getGraphUrl(),
+      this.graphUrl,
       gql`
         {
           funds {
