@@ -52,6 +52,7 @@ function TwapOptions() {
 function OCOOptions(props: {
   fromToken?: Token;
   toToken?: Token;
+  price: number;
   tokenInPriceUSD?: number;
   tokenOutPriceUSD?: number;
   amountFromAvailable: number;
@@ -62,26 +63,27 @@ function OCOOptions(props: {
     toToken,
     amountFromAvailable,
     amountToAvailable,
+    price,
     tokenInPriceUSD,
     tokenOutPriceUSD,
   } = props;
-  const [triggerBuyPrice, setTriggerBuyPrice] = useState(110);
-  const [limitBuyPrice, setLimitBuyPrice] = useState(120);
-  const [triggerSellPrice, setTriggerSellPrice] = useState(130);
-  const [limitSellPrice, setLimitSellPrice] = useState(120);
-  const [amountToSendBuy, setAmountToSendBuy] = useState(10);
-  const [amountToSendSell, setAmountToSendSell] = useState(10);
+  const [triggerBuyPrice, setTriggerBuyPrice] = useState(price);
+  const [limitBuyPrice, setLimitBuyPrice] = useState(price * 0.9);
+  const [triggerSellPrice, setTriggerSellPrice] = useState(price);
+  const [limitSellPrice, setLimitSellPrice] = useState(price * 1.1);
+  const [amountToSendBuy, setAmountToSendBuy] = useState(amountFromAvailable);
+  const [amountToSendSell, setAmountToSendSell] = useState(amountToAvailable);
 
   const toBuyAmount = calculateAmountReceived(amountToSendBuy, limitBuyPrice);
   const toSellAmount = calculateAmountReceived(
     amountToSendSell,
-    limitSellPrice
+    1 / limitSellPrice
   );
   return (
     <div className="mt-4 flex flex-auto">
       <div>
         <div>
-          <Trans>Buy</Trans>
+          <Trans>Buy {toToken?.name}</Trans>
         </div>
         <AmountToSendInput
           fromToken={fromToken}
@@ -111,14 +113,17 @@ function OCOOptions(props: {
           token={fromToken}
           amount={toBuyAmount}
           price={limitBuyPrice}
-          tokenOutPriceUSD={tokenInPriceUSD}
+          tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={true}
-          setAmountToSend={setAmountToSendBuy}
+          onChange={(value: number) => {
+            const swapAmt = calculateAmountToSend(value, limitBuyPrice);
+            swapAmt && setAmountToSendBuy(swapAmt);
+          }}
         />
       </div>
       <div>
         <div>
-          <Trans>Or Sell</Trans>
+          <Trans>Or Sell {toToken?.name}</Trans>
         </div>
         <AmountToSendInput
           fromToken={toToken}
@@ -148,9 +153,12 @@ function OCOOptions(props: {
           token={toToken}
           amount={toSellAmount}
           price={limitSellPrice}
-          tokenOutPriceUSD={tokenOutPriceUSD}
+          tokenOutPriceUSD={tokenInPriceUSD}
           isEnabled={true}
-          setAmountToSend={setAmountToSendSell}
+          onChange={(value: number) => {
+            const swapAmt = calculateAmountToSend(value, 1 / limitSellPrice);
+            swapAmt && setAmountToSendSell(swapAmt);
+          }}
         />
       </div>
     </div>
@@ -268,10 +276,9 @@ function MinAmountInput(props: {
   price?: number;
   tokenOutPriceUSD?: number;
   isEnabled: boolean;
-  setAmountToSend: (val: number) => void;
+  onChange: (val: number) => void;
 }) {
-  const { token, amount, price, tokenOutPriceUSD, isEnabled, setAmountToSend } =
-    props;
+  const { token, amount, tokenOutPriceUSD, isEnabled, onChange } = props;
   return (
     <div className="mt-4 space-y-3">
       <Input
@@ -280,10 +287,7 @@ function MinAmountInput(props: {
         id="amountReceived"
         value={amount}
         placeholder={t`Min. Amount to receive`}
-        onChange={(value) => {
-          const swapAmt = calculateAmountToSend(parseFloat(value), price);
-          swapAmt && setAmountToSend(swapAmt);
-        }}
+        onChange={(value) => onChange(parseFloat(value))}
         required
         disabled={!isEnabled}
       />
@@ -436,6 +440,7 @@ export default function SwapBox(props: { tokens: Token[] }) {
         <OCOOptions
           fromToken={fromToken}
           toToken={toToken}
+          price={spotPrice}
           tokenInPriceUSD={tokenInPriceUSD}
           tokenOutPriceUSD={tokenOutPriceUSD}
           amountFromAvailable={amountFromAvailable}
@@ -471,7 +476,10 @@ export default function SwapBox(props: { tokens: Token[] }) {
           price={toPrice}
           tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={enableToAmount}
-          setAmountToSend={setAmountToSend}
+          onChange={(value: number) => {
+            const swapAmt = calculateAmountToSend(value, toPrice);
+            swapAmt && setAmountToSend(swapAmt);
+          }}
         />
       )}
 
