@@ -8,7 +8,9 @@ import { Input } from "../Form/Input";
 import Selector from "../Form/Selector";
 import Slider from "../Form/Slider";
 import TokenSelector from "../Form/TokenSelector";
+import calendarIcon from "../../img/icons/calendarYellowIcon.svg";
 import TradeOptionSelector, { TradeOptions } from "./TradeOptionSelector";
+import { formatDate } from "../../data/formatting";
 
 const twapIntervals = ["Min", "Hour", "Day"];
 
@@ -50,10 +52,19 @@ function TwapOptions() {
 function OCOOptions(props: {
   fromToken?: Token;
   toToken?: Token;
+  tokenInPriceUSD?: number;
+  tokenOutPriceUSD?: number;
   amountFromAvailable: number;
   amountToAvailable: number;
 }) {
-  const { fromToken, toToken, amountFromAvailable, amountToAvailable } = props;
+  const {
+    fromToken,
+    toToken,
+    amountFromAvailable,
+    amountToAvailable,
+    tokenInPriceUSD,
+    tokenOutPriceUSD,
+  } = props;
   const [triggerBuyPrice, setTriggerBuyPrice] = useState(110);
   const [limitBuyPrice, setLimitBuyPrice] = useState(120);
   const [triggerSellPrice, setTriggerSellPrice] = useState(130);
@@ -100,6 +111,7 @@ function OCOOptions(props: {
           token={fromToken}
           amount={toBuyAmount}
           price={limitBuyPrice}
+          tokenOutPriceUSD={tokenInPriceUSD}
           isEnabled={true}
           setAmountToSend={setAmountToSendBuy}
         />
@@ -136,6 +148,7 @@ function OCOOptions(props: {
           token={toToken}
           amount={toSellAmount}
           price={limitSellPrice}
+          tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={true}
           setAmountToSend={setAmountToSendSell}
         />
@@ -168,9 +181,9 @@ function TrailingStopOptions(props: {
           type="number"
           name={t`Trailing Percent`}
           id="trailingPercent"
-          value={(trailingPercent || 0) * 100}
+          value={trailingPercent || 0}
           placeholder={t`Trailing Percent`}
-          onChange={(value) => setTrailingPercent(parseFloat(value) / 100)}
+          onChange={(value) => setTrailingPercent(parseFloat(value))}
           required
         />
         <span>%</span>
@@ -179,7 +192,7 @@ function TrailingStopOptions(props: {
   );
 }
 
-function MarketTriggerOptions(props: {
+function LimitTriggerOptions(props: {
   triggerPrice: number | undefined;
   setTriggerPrice: (val: number) => void;
 }) {
@@ -199,31 +212,82 @@ function MarketTriggerOptions(props: {
   );
 }
 
-function MinAmountInput(props: {
-  token?: Token;
-  amount?: number;
-  price?: number;
-  isEnabled: boolean;
-  setAmountToSend: (val: number) => void;
+function OrderExpiryInput(props: {
+  expiryDate: Date;
+  setExpiryDate: (val: Date) => void;
 }) {
-  const { token, amount, price, isEnabled, setAmountToSend } = props;
+  const { expiryDate, setExpiryDate } = props;
+  return (
+    <div className="mt-4 space-y-3">
+      {
+        <Input
+          type="date"
+          icon={calendarIcon}
+          value={formatDate(expiryDate)}
+          name={t`Order Expiry`}
+          id="orderExpiry"
+          placeholder={t`Order Expiry`}
+          onChange={(value) => {
+            const newDate = new Date(value);
+            if (newDate.getTime() > new Date().getTime()) {
+              setExpiryDate(newDate);
+            }
+          }}
+          required
+        />
+      }
+    </div>
+  );
+}
+
+function LimitPriceInput(props: {
+  price?: number;
+  setPrice: (val: number) => void;
+}) {
+  const { price, setPrice } = props;
   return (
     <div className="mt-4 space-y-3">
       {
         <Input
           type="number"
-          name={t`Min. ${token?.name} Amount`}
-          id="amountReceived"
-          value={amount}
-          placeholder={t`Min. Amount to receive`}
-          onChange={(value) => {
-            const swapAmt = calculateAmountToSend(parseFloat(value), price);
-            swapAmt && setAmountToSend(swapAmt);
-          }}
+          name={t`Limit Price`}
+          id="limitPrice"
+          value={price}
+          placeholder={t`Limit Price`}
+          onChange={(value) => setPrice(parseFloat(value))}
           required
-          disabled={!isEnabled}
         />
       }
+    </div>
+  );
+}
+
+function MinAmountInput(props: {
+  token?: Token;
+  amount?: number;
+  price?: number;
+  tokenOutPriceUSD?: number;
+  isEnabled: boolean;
+  setAmountToSend: (val: number) => void;
+}) {
+  const { token, amount, price, tokenOutPriceUSD, isEnabled, setAmountToSend } =
+    props;
+  return (
+    <div className="mt-4 space-y-3">
+      <Input
+        type="number"
+        name={t`Min. ${token?.name} Amount`}
+        id="amountReceived"
+        value={amount}
+        placeholder={t`Min. Amount to receive`}
+        onChange={(value) => {
+          const swapAmt = calculateAmountToSend(parseFloat(value), price);
+          swapAmt && setAmountToSend(swapAmt);
+        }}
+        required
+        disabled={!isEnabled}
+      />
+      <span>$ {(tokenOutPriceUSD || 0) * (amount || 0)}</span>
     </div>
   );
 }
@@ -289,29 +353,37 @@ function calculateAmountToSend(
 }
 
 export default function SwapBox(props: { tokens: Token[] }) {
+  const spotPrice = 20;
+  const amountFromAvailable = 100;
+  const amountToAvailable = 20;
+  const tokenOutPriceUSD = 1;
+  const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
+
   const { tokens } = props;
   const [fromToken, setFromToken] = useState<Token | undefined>(tokens[0]);
   const [toToken, setToToken] = useState<Token | undefined>(tokens[0]);
   const [amountToSend, setAmountToSend] = useState(10);
   const [useTwap, setUseTwap] = useState(false);
-  const [tradeOption, setTradeOption] = useState(TradeOptions.SPOT);
+  const [tradeOption, setTradeOption] = useState(TradeOptions.LIMIT);
   const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
     undefined
+  );
+  const [limitPrice, setLimitPrice] = useState<number | undefined>(
+    spotPrice * 1.05
   );
   const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
     undefined
   );
-  const amountFromAvailable = 100;
-  const amountToAvailable = 20;
 
-  const spotPrice = 20;
+  const [expiryDate, setExpiryDate] = useState(
+    new Date(new Date().getTime() + 86400000 * 10)
+  );
 
   const toPrice =
-    (tradeOption === TradeOptions.MARKET_TRIGGER && triggerPrice) ||
-    (tradeOption === TradeOptions.SPOT && spotPrice) ||
+    (tradeOption === TradeOptions.LIMIT_TRIGGER && limitPrice) ||
+    (tradeOption === TradeOptions.LIMIT && limitPrice) ||
     (tradeOption === TradeOptions.TRAILING_STOP &&
-      trailingPercent &&
-      (1 - trailingPercent) * spotPrice) ||
+      (1 - (trailingPercent || 0) / 100) * (limitPrice || 0)) ||
     undefined;
   const enableToAmount = !!toPrice;
   const toAmount = calculateAmountReceived(amountToSend, toPrice);
@@ -328,7 +400,10 @@ export default function SwapBox(props: { tokens: Token[] }) {
         />
 
         <span>
-          <Trans>{amountFromAvailable} available</Trans>
+          <Trans>
+            {amountFromAvailable} available (${" "}
+            {tokenInPriceUSD * amountFromAvailable})
+          </Trans>
         </span>
       </div>
       {tradeOption !== TradeOptions.OCO && (
@@ -345,7 +420,10 @@ export default function SwapBox(props: { tokens: Token[] }) {
         />
       </div>
       <span>
-        <Trans>{amountToAvailable} available</Trans>
+        <Trans>
+          {amountToAvailable} available (${" "}
+          {tokenOutPriceUSD * amountToAvailable})
+        </Trans>
       </span>
       <div>
         <Trans>Current Price: {spotPrice}</Trans>
@@ -358,12 +436,14 @@ export default function SwapBox(props: { tokens: Token[] }) {
         <OCOOptions
           fromToken={fromToken}
           toToken={toToken}
+          tokenInPriceUSD={tokenInPriceUSD}
+          tokenOutPriceUSD={tokenOutPriceUSD}
           amountFromAvailable={amountFromAvailable}
           amountToAvailable={amountToAvailable}
         />
       )}
-      {tradeOption === TradeOptions.MARKET_TRIGGER && (
-        <MarketTriggerOptions
+      {tradeOption === TradeOptions.LIMIT_TRIGGER && (
+        <LimitTriggerOptions
           triggerPrice={triggerPrice}
           setTriggerPrice={setTriggerPrice}
         />
@@ -376,15 +456,26 @@ export default function SwapBox(props: { tokens: Token[] }) {
           setTrailingPercent={setTrailingPercent}
         />
       )}
+      {[TradeOptions.LIMIT, TradeOptions.LIMIT_TRIGGER].includes(
+        tradeOption
+      ) && (
+        <LimitPriceInput
+          price={limitPrice}
+          setPrice={(val) => setLimitPrice(val)}
+        />
+      )}
       {tradeOption !== TradeOptions.OCO && (
         <MinAmountInput
           token={toToken}
           amount={toAmount}
           price={toPrice}
+          tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={enableToAmount}
           setAmountToSend={setAmountToSend}
         />
       )}
+
+      <OrderExpiryInput expiryDate={expiryDate} setExpiryDate={setExpiryDate} />
 
       <Checkbox
         isChecked={useTwap}

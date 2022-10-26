@@ -1,17 +1,17 @@
 import Selector from "../Form/Selector";
 
 export enum TradeOptions {
-  SPOT = "spot",
+  LIMIT = "limit",
   OCO = "oco",
   TRAILING_STOP = "trailing_stop",
-  MARKET_TRIGGER = "market_trigger",
+  LIMIT_TRIGGER = "limit_trigger",
 }
 
 const tradeOptions = [
-  { id: TradeOptions.SPOT, name: "Spot" },
+  { id: TradeOptions.LIMIT, name: "Limit" },
   { id: TradeOptions.OCO, name: "OCO" },
   { id: TradeOptions.TRAILING_STOP, name: "Trailing Stop" },
-  { id: TradeOptions.MARKET_TRIGGER, name: "Trigger (Market)" },
+  { id: TradeOptions.LIMIT_TRIGGER, name: "Trigger (Limit)" },
 ];
 
 const TradeOptionSelector = (props: {
