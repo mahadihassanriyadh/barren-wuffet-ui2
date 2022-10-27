@@ -14,7 +14,7 @@ const Tabs: FunctionComponent<{
     <Tab.Group>
       <Tab.List>
         {props.options.map((option) => (
-          <Tab className="ui-selected:bg-blue-500 ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
+          <Tab className="p-2 m-2 bg-black rounded-xl hover:bg-gray-700 ui-selected:bg-gray-dark ui-selected:text-white ui-not-selected:bg-white ui-not-selected:text-black">
             {option.label}
           </Tab>
         ))}

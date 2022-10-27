@@ -9,8 +9,9 @@ import Selector from "../Form/Selector";
 import Slider from "../Form/Slider";
 import TokenSelector from "../Form/TokenSelector";
 import calendarIcon from "../../img/icons/calendarYellowIcon.svg";
-import TradeOptionSelector, { TradeOptions } from "./TradeOptionSelector";
+import TradeOptionSelector from "./TradeOptionSelector";
 import { formatDate } from "../../data/formatting";
+import { TradeOptions } from "../../api/models";
 
 const twapIntervals = ["Min", "Hour", "Day"];
 

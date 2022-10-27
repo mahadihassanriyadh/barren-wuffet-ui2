@@ -45,6 +45,28 @@ export interface FundType {
   protocolBalances: object;
 }
 
+export enum TradeOptions {
+  LIMIT = "limit",
+  OCO = "oco",
+  TRAILING_STOP = "trailing_stop",
+  LIMIT_TRIGGER = "limit_trigger",
+}
+
+export interface Order {
+  platform: string;
+  position: string;
+  trigger_type: TradeOptions;
+  collateral: number;
+  limit_price?: number;
+  fill_price?: number;
+  creation_timestamp: Date;
+  expiry_timestamp: Date;
+  is_executed: boolean;
+  twap_orders?: TwapOrder[];
+}
+
+export type TwapOrder = Omit<Order, "twap_orders">;
+
 export enum FundStatus {
   RAISING = 0, // deposits possible, withdraws possible (inputToken), manager can't move funds
   DEPLOYED = 1, // deposits not possible, withdraws not possible, manager can move funds

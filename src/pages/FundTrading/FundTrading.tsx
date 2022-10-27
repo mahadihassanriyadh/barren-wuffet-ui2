@@ -24,11 +24,11 @@ const OrderList: FunctionComponent = (props) => {
           options={[
             {
               label: t`Positions`,
-              content: <TradingOrders />,
+              content: <div>Positions stuff</div>,
             },
             {
               label: t`Orders`,
-              content: <div>Orders stuff</div>,
+              content: <TradingOrders />,
             },
           ]}
         />

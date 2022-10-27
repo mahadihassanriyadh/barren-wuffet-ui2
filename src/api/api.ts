@@ -1,4 +1,4 @@
-import { Fund, FundStatus, Pool, PriceFeed } from "./models";
+import { Fund, FundStatus, Order, Pool, PriceFeed } from "./models";
 import { request, gql } from "graphql-request";
 
 export interface APIConfig {
@@ -16,61 +16,65 @@ export class API {
   }
 
   async getFunds(params: string): Promise<Fund[] | undefined> {
-      const data = await request<{ funds: Fund[] }>(
-        this.graphUrl,
-        gql`
-          {
-            funds {
+    const data = await request<{ funds: Fund[] }>(
+      this.graphUrl,
+      gql`
+        {
+          funds {
+            id
+            name
+            creation_timestamp
+            closed_timestamp
+            manager_fee_percentage
+            manager {
               id
-              name
-              creation_timestamp
-              closed_timestamp
-              manager_fee_percentage
-              manager {
-                id
-              }
-              subscription_constraints {
-                id
-                lockin
-                deadline
-              }
-              rules
-              positions
             }
+            subscription_constraints {
+              id
+              lockin
+              deadline
+            }
+            rules
+            positions
           }
-        `
-      );
-      return Promise.resolve(
-        data.funds.map((fund) => ({
-          ...fund,
-          // @ts-ignore
+        }
+      `
+    );
+    return Promise.resolve(
+      data.funds.map((fund) => ({
+        ...fund,
+        // @ts-ignore
         status: fund.closed_timestamp ? FundStatus.CLOSED : FundStatus.RAISING,
+        // @ts-ignore
+        admin_fee: fund.manager_fee_percentage,
+        // @ts-ignore
+        manager: fund.manager.id,
+        // @ts-ignore
+        creation_timestamp:
+          fund.creation_timestamp &&
           // @ts-ignore
-          admin_fee: fund.manager_fee_percentage,
+          new Date(parseInt(fund.creation_timestamp) * 1000),
+        // @ts-ignore
+        deploy_timestamp:
           // @ts-ignore
-          manager: fund.manager.id,
+          fund.subscription_constraints.deadline &&
           // @ts-ignore
-          creation_timestamp:
-            fund.creation_timestamp &&
-            // @ts-ignore
-            new Date(parseInt(fund.creation_timestamp) * 1000),
+          new Date(parseInt(fund.subscription_constraints.deadline)),
+        // @ts-ignore
+        close_timestamp:
           // @ts-ignore
-          deploy_timestamp:
-            // @ts-ignore
-            fund.subscription_constraints.deadline &&
-            // @ts-ignore
-            new Date(parseInt(fund.subscription_constraints.deadline)),
+          fund.subscription_constraints.lockin &&
           // @ts-ignore
-          close_timestamp:
-            // @ts-ignore
-            fund.subscription_constraints.lockin &&
-            // @ts-ignore
-            new Date(parseInt(fund.subscription_constraints.lockin)),
-        }))
-      );
+          new Date(parseInt(fund.subscription_constraints.lockin)),
+      }))
+    );
   }
 
   getPriceFeed(): Promise<PriceFeed[]> {
+    throw new Error("Not implemented");
+  }
+
+  getOpenOrders(): Promise<Order[]> {
     throw new Error("Not implemented");
   }
 }

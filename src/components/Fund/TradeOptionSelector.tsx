@@ -1,11 +1,5 @@
+import { TradeOptions } from "../../api/models";
 import Selector from "../Form/Selector";
-
-export enum TradeOptions {
-  LIMIT = "limit",
-  OCO = "oco",
-  TRAILING_STOP = "trailing_stop",
-  LIMIT_TRIGGER = "limit_trigger",
-}
 
 const tradeOptions = [
   { id: TradeOptions.LIMIT, name: "Limit" },
