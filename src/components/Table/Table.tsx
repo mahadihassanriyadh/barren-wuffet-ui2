@@ -28,7 +28,9 @@ const Table: FC<TableProps<any>> = ({ table, error }) => {
       <tbody>
         {error && (
           <tr>
-            <td colSpan={table.getHeaderGroups()[0].headers.length}>{error}</td>
+            <td colSpan={table.getHeaderGroups()[0].headers.length}>
+              {error.toString()}
+            </td>
           </tr>
         )}
         {table.getRowModel().rows.map((row) => (

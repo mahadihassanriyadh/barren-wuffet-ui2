@@ -16,7 +16,6 @@ export class API {
   }
 
   async getFunds(params: string): Promise<Fund[] | undefined> {
-    try {
       const data = await request<{ funds: Fund[] }>(
         this.graphUrl,
         gql`
@@ -45,9 +44,7 @@ export class API {
         data.funds.map((fund) => ({
           ...fund,
           // @ts-ignore
-          status: fund.closed_timestamp
-            ? FundStatus.CLOSED
-            : FundStatus.RAISING,
+        status: fund.closed_timestamp ? FundStatus.CLOSED : FundStatus.RAISING,
           // @ts-ignore
           admin_fee: fund.manager_fee_percentage,
           // @ts-ignore
@@ -71,9 +68,6 @@ export class API {
             new Date(parseInt(fund.subscription_constraints.lockin)),
         }))
       );
-    } catch (err) {
-      throw new Error("Error fetching funds");
-    }
   }
 
   getPriceFeed(): Promise<PriceFeed[]> {
