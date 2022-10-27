@@ -9,10 +9,11 @@ import { getContract } from "../../config/addresses";
 import { getTokens } from "../../config/tokens";
 import SwapBox from "../../components/Fund/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
-import TradingOrders from "../../components/Fund/TradingOrders";
+import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import { Action, ActionTypes } from "../../config/actions";
+import OpenPositions from "../../components/Fund/OpenPositions";
 
 const { AddressZero } = ethers.constants;
 
@@ -24,7 +25,11 @@ const OrderList: FunctionComponent = (props) => {
           options={[
             {
               label: t`Positions`,
-              content: <div>Positions stuff</div>,
+              content: (
+                <div>
+                  <OpenPositions />
+                </div>
+              ),
             },
             {
               label: t`Orders`,

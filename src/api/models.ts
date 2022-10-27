@@ -65,6 +65,26 @@ export interface Order {
   twap_orders?: TwapOrder[];
 }
 
+export enum PositionType {
+  LP = "LP",
+  SPOT = "SPOT",
+}
+export interface Position {
+  platform: string;
+  asset: string;
+  value: number;
+  size: number;
+  creation_timestamp: Date;
+  collateral?: number;
+  yield?: number;
+  liquidation_price?: number;
+  asset_prices?: {
+    asset: string;
+    price: number;
+  }[];
+  position_type: PositionType;
+}
+
 export type TwapOrder = Omit<Order, "twap_orders">;
 
 export enum FundStatus {

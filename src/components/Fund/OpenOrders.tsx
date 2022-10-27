@@ -125,7 +125,7 @@ const OpenOrders = (props: {}) => {
 
   const singleOrdersTable = useReactTable<Order>({
     data: singleOrders,
-    columns: commonColumns,
+    columns: commonColumns.concat(actionColumns),
     getCoreRowModel: getCoreRowModel(),
   });
 

@@ -1,4 +1,4 @@
-import { Fund, FundStatus, Order, Pool, PriceFeed } from "./models";
+import { Fund, FundStatus, Order, Pool, Position, PriceFeed } from "./models";
 import { request, gql } from "graphql-request";
 
 export interface APIConfig {
@@ -75,6 +75,10 @@ export class API {
   }
 
   getOpenOrders(): Promise<Order[]> {
+    throw new Error("Not implemented");
+  }
+
+  getPositions(): Promise<Position[]> {
     throw new Error("Not implemented");
   }
 }
