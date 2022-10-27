@@ -13,7 +13,7 @@ export type Action = {
 };
 const ACTIONS: Record<number, Action[]> = {
   42161: [],
-  31337: [
+  421613: [
     {
       name: "Uniswap LP",
       address: getContract(421613, "Uniswap"),
@@ -79,12 +79,15 @@ const ACTIONS: Record<number, Action[]> = {
     },
   ],
 };
+ACTIONS[31337] = ACTIONS[421613];
 
 export function getWhitelistedActions(
   chainId: number,
   actionType?: ActionTypes
 ) {
-  return ACTIONS[chainId]?.filter(
-    (action) => actionType === undefined || action.actionType === actionType
+  return (
+    ACTIONS[chainId]?.filter(
+      (action) => actionType === undefined || action.actionType === actionType
+    ) || []
   );
 }

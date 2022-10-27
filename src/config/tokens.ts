@@ -58,7 +58,7 @@ const tokenList: {
   },
   tokens: [
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "Ethereum",
       symbol: "ETH",
       decimals: 18,
@@ -66,7 +66,7 @@ const tokenList: {
       logoURI: "https://wallet-asset.matic.network/img/tokens/eth.svg",
     },
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "USD Coin",
       symbol: "USDC",
       decimals: 6,
@@ -74,7 +74,7 @@ const tokenList: {
       logoURI: "https://wallet-asset.matic.network/img/tokens/usdc.svg",
     },
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "Tether",
       symbol: "USDT",
       decimals: 6,
@@ -82,7 +82,7 @@ const tokenList: {
       logoURI: "https://wallet-asset.matic.network/img/tokens/usdt.svg",
     },
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "Dai",
       symbol: "DAI",
       decimals: 18,
@@ -90,7 +90,7 @@ const tokenList: {
       logoURI: "https://wallet-asset.matic.network/img/tokens/dai.svg",
     },
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "The Graph",
       symbol: "GRT",
       decimals: 18,
@@ -98,7 +98,7 @@ const tokenList: {
       logoURI: "https://wallet-asset.matic.network/img/tokens/grt.svg",
     },
     {
-      chainId: 42161,
+      chainId: 421613,
       name: "Wrapped Bitcoin",
       symbol: "WBTC",
       decimals: 8,
@@ -658,170 +658,16 @@ const tokenList: {
       logoURI: "ipfs://QmUDc7LQN6zKHon9FChTqZc7WGFvGPZe698Bq5HbSYtfk9",
       tags: ["atokenv2"],
     },
-    {
-      name: "Aave interest bearing YFI",
-      decimals: 18,
-      symbol: "aYFI",
-      address: "0x5165d24277cD063F5ac44Efd447B27025e888f37",
-      chainId: 1,
-      logoURI: "ipfs://QmauhqAKU8YLhDhT4M5ZcPMuqEfqkBrBaC31uWC9UXd1ik",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing ZRX",
-      decimals: 18,
-      symbol: "aZRX",
-      address: "0xDf7FF54aAcAcbFf42dfe29DD6144A69b629f8C9e",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aZRX.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing UNI",
-      decimals: 18,
-      symbol: "aUNI",
-      address: "0xB9D7CB55f463405CDfBe4E90a6D2Df01C2B92BF1",
-      chainId: 1,
-      logoURI: "ipfs://QmYdpeez387RdMw6zEEa5rMXuayi748Uc15eFuoa3QhGEJ",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing AAVE",
-      decimals: 18,
-      symbol: "aAAVE",
-      address: "0xFFC97d72E13E01096502Cb8Eb52dEe56f74DAD7B",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aAAVE.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing BAT",
-      decimals: 18,
-      symbol: "aBAT",
-      address: "0x05Ec93c0365baAeAbF7AefFb0972ea7ECdD39CF1",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aBAT.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing BUSD",
-      decimals: 18,
-      symbol: "aBUSD",
-      address: "0xA361718326c15715591c299427c62086F69923D9",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aBUSD.svg",
-      tags: ["atokenv2", "stablecoin"],
-    },
-    {
-      name: "Aave interest bearing DAI",
-      decimals: 18,
-      symbol: "aDAI",
-      address: "0x028171bCA77440897B824Ca71D1c56caC55b68A3",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aDAI.svg",
-      tags: ["atokenv2", "stablecoin"],
-    },
-    {
-      name: "Aave interest bearing ENJ",
-      decimals: 18,
-      symbol: "aENJ",
-      address: "0xaC6Df26a590F08dcC95D5a4705ae8abbc88509Ef",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aENJ.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing KNC",
-      decimals: 18,
-      symbol: "aKNC",
-      address: "0x39C6b3e42d6A679d7D776778Fe880BC9487C2EDA",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aKNC.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing LINK",
-      decimals: 18,
-      symbol: "aLINK",
-      address: "0xa06bC25B5805d5F8d82847D191Cb4Af5A3e873E0",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aLINK.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing MANA",
-      decimals: 18,
-      symbol: "aMANA",
-      address: "0xa685a61171bb30d4072B338c80Cb7b2c865c873E",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aMANA.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing MKR",
-      decimals: 18,
-      symbol: "aMKR",
-      address: "0xc713e5E149D5D0715DcD1c156a020976e7E56B88",
-      chainId: 1,
-      logoURI: "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aMKR.svg",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing REN",
-      decimals: 18,
-      symbol: "aREN",
-      address: "0xCC12AbE4ff81c9378D670De1b57F8e0Dd228D77a",
-      chainId: 1,
-      logoURI: "ipfs://QmUgE3UECZxZcCAiqd3V9otfFWLi5fxR8uHd94RxkT3iYb",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing SNX",
-      decimals: 18,
-      symbol: "aSNX",
-      address: "0x35f6B052C598d933D69A4EEC4D04c73A191fE6c2",
-      chainId: 1,
-      logoURI: "ipfs://QmXj52EGotmpyep84PBycmQnAgCF2sbqxdXFWP3GPZFbEz",
-      tags: ["atokenv2"],
-    },
-    {
-      name: "Aave interest bearing SUSD",
-      decimals: 18,
-      symbol: "aSUSD",
-      address: "0x6C5024Cd4F8A59110119C56f8933403A539555EB",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aSUSD.svg",
-      tags: ["atokenv2", "stablecoin"],
-    },
-    {
-      name: "Aave interest bearing TUSD",
-      decimals: 18,
-      symbol: "aTUSD",
-      address: "0x101cc05f4A51C0319f570d5E146a8C625198e636",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aTUSD.svg",
-      tags: ["atokenv2", "stablecoin"],
-    },
-    {
-      name: "Aave interest bearing USDC",
-      decimals: 6,
-      symbol: "aUSDC",
-      address: "0xBcca60bB61934080951369a648Fb03DF4F96263C",
-      chainId: 1,
-      logoURI:
-        "ipfs://QmaznB5PRhMC696u8yZuzN6Uwrnp7Zmfa5CydVUMvLJc9i/aUSDC.svg",
-      tags: ["atokenv2", "stablecoin"],
-    },
   ],
   timestamp: "2020-12-11T17:08:18.941Z",
   version: { major: 1, minor: 3, patch: 0 },
 };
+
+tokenList.tokens = tokenList.tokens.concat(
+  tokenList.tokens
+    .filter((t) => t.chainId === 421613)
+    .map((t) => ({ ...t, chainId: 31337 }))
+);
 
 export function getTokens(chainId: number, fundId = null) {
   return tokenList.tokens.filter((token) => token.chainId === chainId);
