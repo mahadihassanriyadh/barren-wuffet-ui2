@@ -27,7 +27,7 @@ export default function FundBanner(props: any) {
   } = selected || {};
 
   return (
-    <div className="container mx-auto my-20">
+    <div className="container mx-auto my-5">
       <div className="bg-gray-dark pt-10 px-8 rounded-xl mx-5">
         <div className="grid grid-cols-2">
           <div className="space-y-6">

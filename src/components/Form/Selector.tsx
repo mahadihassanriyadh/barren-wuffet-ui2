@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import dropDownArrow from "../../img/icons/dropDownArrowGray.svg";
+import { t } from "@lingui/macro";
 
 export default function Selector<
   T extends { name: string; icon?: string; id?: string }
@@ -8,8 +9,9 @@ export default function Selector<
   items: T[];
   selectedItem?: T;
   setSelectedItem: (value: T) => void;
+  buttonLabel?: string;
 }) {
-  const { items, selectedItem, setSelectedItem } = props;
+  const { items, selectedItem, setSelectedItem, buttonLabel } = props;
 
   return (
     <div className="relative">
@@ -19,7 +21,9 @@ export default function Selector<
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
                 {selectedItem?.icon && <img src={selectedItem?.icon} alt="" />}
-                <p className="text-2xl font-bold">{selectedItem?.name}</p>
+                <p className="text-2xl font-bold">
+                  {selectedItem?.name || buttonLabel || t`Select`}
+                </p>
               </div>
 
               <img className="block" src={dropDownArrow} alt="" />

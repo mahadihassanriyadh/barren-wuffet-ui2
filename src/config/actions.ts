@@ -13,7 +13,7 @@ export type Action = {
 };
 const ACTIONS: Record<number, Action[]> = {
   42161: [],
-  421613: [
+  31337: [
     {
       name: "Uniswap LP",
       address: getContract(421613, "Uniswap"),

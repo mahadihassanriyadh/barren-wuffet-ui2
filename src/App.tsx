@@ -40,7 +40,7 @@ function App() {
       <ErrorBoundary>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider chains={chains}>
-            <div>
+            <div className="bg-black text-white">
               <Router>
                 <div className="bg-gray-800">
                   <Header />

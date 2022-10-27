@@ -80,6 +80,10 @@ msgstr "Cancel {0} {orderText}"
 msgid "Change %"
 msgstr "Change %"
 
+#: src/components/Fund/ActionSelector.tsx:30
+msgid "Choose Action"
+msgstr "Choose Action"
+
 #: src/components/Fund/PoolsList.tsx:44
 msgid "Close"
 msgstr "Close"
@@ -269,7 +273,7 @@ msgstr "Or Sell {0}"
 msgid "Order Expiry"
 msgstr "Order Expiry"
 
-#: src/pages/FundTrading/FundTrading.tsx:28
+#: src/pages/FundTrading/FundTrading.tsx:30
 #: src/pages/FundYield/FundYield.tsx:36
 msgid "Orders"
 msgstr "Orders"
@@ -282,7 +286,7 @@ msgstr "Pool"
 msgid "Portfolio Value"
 msgstr "Portfolio Value"
 
-#: src/pages/FundTrading/FundTrading.tsx:24
+#: src/pages/FundTrading/FundTrading.tsx:26
 #: src/pages/FundYield/FundYield.tsx:32
 msgid "Positions"
 msgstr "Positions"
@@ -298,6 +302,10 @@ msgstr "START TRADING"
 #: src/components/Fund/FundsList.tsx:86
 msgid "See Investment"
 msgstr "See Investment"
+
+#: src/components/Form/Selector.tsx:25
+msgid "Select"
+msgstr "Select"
 
 #: src/components/Fund/SwapBox.tsx:83
 #~ msgid "Sell"
