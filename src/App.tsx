@@ -21,6 +21,7 @@ import { defaultLocale, dynamicActivate } from "./lib/i18n";
 import "./App.css";
 import FundManage from "./pages/FundManage/FundManage";
 import Invest from "./pages/Invest/Invest";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 const { chains, wagmiClient } = getWalletConfig();
 
@@ -36,40 +37,38 @@ function App() {
 
   return (
     <I18nProvider i18n={i18n}>
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
-          <div>
-            <Router>
+      <ErrorBoundary>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider chains={chains}>
+            <div>
+              <Router>
+                <div className="bg-gray-800">
+                  <Header />
+                </div>
+                <div>
+                  <ErrorBoundary>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/create-fund" element={<CreateFund />} />
+                      <Route path="/invest" element={<Invest />} />
+                      <Route path="fund" element={<FundManage />}>
+                        <Route path="portfolio" element={<FundPortfolio />} />
+                        <Route path="trading" element={<FundTrading />} />
+                        <Route path="yield" element={<FundYield />} />
+                      </Route>
+                      <Route path="/fund/yield" element={<FundYield />} />
+                    </Routes>
+                  </ErrorBoundary>
+                </div>
+              </Router>
               <div className="bg-gray-800">
-                <Header />
+                <Footer />
               </div>
-              <div>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/create-fund" element={<CreateFund />} />
-                  {/* <Route
-                    path="/fund/portfolio"
-                    element={
-                      <FundPortfolio />
-                    }
-                  /> */}
-                  <Route path="/invest" element={<Invest />} />
-                  <Route path="fund" element={<FundManage />}>
-                    <Route path="portfolio" element={<FundPortfolio />} />
-                    <Route path="trading" element={<FundTrading />} />
-                    <Route path="yield" element={<FundYield />} />
-                  </Route>
-                  <Route path="/fund/yield" element={<FundYield />} />
-                </Routes>
-              </div>
-            </Router>
-            <div className="bg-gray-800">
-              <Footer />
             </div>
-          </div>
-        </RainbowKitProvider>
-      </WagmiConfig>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ErrorBoundary>
     </I18nProvider>
   );
 }
