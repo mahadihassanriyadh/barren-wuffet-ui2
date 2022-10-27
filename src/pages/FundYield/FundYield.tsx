@@ -6,7 +6,7 @@ import { getTokens } from "../../config/tokens";
 
 import SwapBox from "../../components/Fund/SwapBox";
 import ActionSelector from "../../components/Fund/ActionSelector";
-import TradingOrders from "../../components/Fund/TradingOrders";
+import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";

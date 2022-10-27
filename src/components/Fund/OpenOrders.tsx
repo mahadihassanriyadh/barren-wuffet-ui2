@@ -114,7 +114,7 @@ const CancelOrderButton: FunctionComponent<{
   );
 };
 
-const TradingOrders = (props: {}) => {
+const OpenOrders = (props: {}) => {
   const { data, error } = useSWR(
     "/api/orders/open",
     api.getOpenOrders.bind(api)
@@ -154,4 +154,4 @@ const TradingOrders = (props: {}) => {
   );
 };
 
-export default TradingOrders;
+export default OpenOrders;
