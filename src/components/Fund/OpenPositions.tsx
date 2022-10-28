@@ -1,6 +1,6 @@
 import React from "react";
 import { t } from "@lingui/macro";
-import Button from "../Form/Button";
+import Button from "../Button/Button";
 import { formatDate } from "../../data/formatting";
 import {
   createColumnHelper,

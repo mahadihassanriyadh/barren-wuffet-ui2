@@ -5,7 +5,7 @@ import logo from "../../img/logo.svg";
 
 import { NavLink } from "react-router-dom";
 import { t, Trans } from "@lingui/macro";
-import Button from "../Form/Button";
+import Button from "../Button/Button";
 
 export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);

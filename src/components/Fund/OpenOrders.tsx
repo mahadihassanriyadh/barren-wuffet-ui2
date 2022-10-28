@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { t, Trans } from "@lingui/macro";
-import Button from "../Form/Button";
+import Button from "../Button/Button";
 import { formatAmount, formatDate, USD_DECIMALS } from "../../data/formatting";
 import {
   createColumnHelper,

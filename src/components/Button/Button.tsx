@@ -1,4 +1,4 @@
-import { Trans, t } from "@lingui/macro";
+import { Trans } from "@lingui/macro";
 import { FunctionComponent } from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

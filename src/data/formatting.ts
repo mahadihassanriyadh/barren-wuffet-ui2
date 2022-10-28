@@ -74,4 +74,4 @@ export const formatAmount = (
   return amountStr;
 };
 
-export const formatDate = (dt: Date) => dt?.toISOString()?.split("T")[0];
+export const formatDate = (dt: Date) => dt?.toLocaleDateString('en-us', { year:"numeric", month:"short"});

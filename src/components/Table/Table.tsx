@@ -13,7 +13,7 @@ const Table: FC<TableProps<any>> = ({ table, error }) => {
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id}>
+              <th className="text-center font-sans text-xs text-gray-500 font-normal py-8" key={header.id}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
@@ -25,18 +25,16 @@ const Table: FC<TableProps<any>> = ({ table, error }) => {
           </tr>
         ))}
       </thead>
-      <tbody>
+      <tbody className="border-t border-gray-600">
         {error && (
           <tr>
-            <td colSpan={table.getHeaderGroups()[0].headers.length}>
-              {error.toString()}
-            </td>
+            <td colSpan={table.getHeaderGroups()[0].headers.length}>{error}</td>
           </tr>
         )}
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>
+              <td className="mr-4 px-8 py-2 font-sans" key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}

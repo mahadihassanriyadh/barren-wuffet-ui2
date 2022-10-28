@@ -1,6 +1,7 @@
-import React from "react";
+/* eslint-disable no-self-compare */
+import React, { useEffect } from "react";
 
-import { Trans, t } from "@lingui/macro";
+import { t } from "@lingui/macro";
 
 import {
   createColumnHelper,
@@ -10,56 +11,111 @@ import {
   ColumnDef,
 } from "@tanstack/react-table";
 
-import { formatAmount, formatDate, USD_DECIMALS } from "../../data/formatting";
+import { formatDate, numberWithCommas } from "../../data/formatting";
 import Table from "../Table/Table";
 import useSWR from "swr";
 import { Fund, FundStatus } from "../../api/models";
 import { api } from "../../config/env";
+import upIcon from "../../img/icons/upIcon.svg";
+import downIcon from "../../img/icons/downIcon.svg";
+import Button from "../Button/Button";
+import BorderlessButton from "../Button/BorderlessButton";
+
+
+const GenericColumn = (props: {type?: string, status?: string, label?: string, changedPercent?: number, logo?: string, name?: string, row?: any, text?: string}) => {
+  switch (props.type) {
+    case "status":
+      return <>
+        <p className="text-xs font-medium bg-[#1d1d21] text-center py-1.5 px-3 rounded-2xl">
+          {props.status}
+        </p>
+      </>
+    case "changePercent":
+      return <>
+        <div className="flex items-center justify-between space-x-4">
+          <p className="font-bold">
+            {Math.abs(props.changedPercent || 0)}
+          </p>
+          <img className={`${props.changedPercent || 0 >= 0 ? 'bg-[#072213]' : 'bg-[#301616]'} p-1.5 rounded-full`} src={props.changedPercent || 0 >= 0 ? upIcon : downIcon} alt="" />
+        </div>
+      </>
+    case "name":
+      return <>
+        <div className="flex items-center space-x-4">
+          <img src={props.logo} alt="" />
+          <h4 className="font-bold">
+            {props.name}
+          </h4>
+        </div>
+      </>
+    case "amount":
+      const isPos = props.row?.change_percent >= 0 ? true : false
+      return <>
+        <div className="flex items-center justify-between space-x-4">
+          <p className={`text-sm ${isPos ? "text-green-400" : "text-red-400"}`}>
+            {numberWithCommas(props.row?.amount_raised)}
+          </p>
+        </div>
+      </>
+    default:
+      return <>
+        <p className="text-sm text-gray-300">
+          {props.text}
+        </p>
+      </>
+  }
+}
+
+
 
 const columnHelper = createColumnHelper<Fund>();
 
 const columns: ColumnDef<Fund, any>[] = [
-  columnHelper.accessor("name", {
+  columnHelper.accessor((row) => row.name, {
     header: t`Name`,
+    cell: (info) => (
+      // <FundName name={info} />
+      <GenericColumn name={info.getValue()} logo="" type="name" />
+    )
   }),
   columnHelper.accessor("creation_timestamp", {
     header: t`Start Date`,
-    cell: (info) => formatDate(info.getValue()),
+    cell: (info) => <GenericColumn text={formatDate(info.getValue())} />,
   }),
   columnHelper.accessor("close_timestamp", {
     header: t`Maturity Date`,
-    cell: (info) => formatDate(info.getValue()),
+    cell: (info) => <GenericColumn text={formatDate(info.getValue())} />,
   }),
   columnHelper.accessor("change_percent", {
     header: t`Change %`,
-    cell: (info) =>
-      info.getValue() ? (
-        `${Math.round(info.getValue() * 10000) / 100}%`
-      ) : (
-        <span>&#8212;</span>
-      ),
+    cell: (info) => (
+      <GenericColumn changedPercent={info.getValue() ? (
+        Math.round(info.getValue() * 10000) / 100
+      ) : 0} type="changePercent" />
+    )
   }),
-  columnHelper.accessor("amount_raised", {
+  // numberWithCommas(info.getValue())
+  columnHelper.accessor(row => row, {
     header: t`Amount Raised`,
-    cell: (info) => formatAmount(info.getValue(), USD_DECIMALS, 2, true, "0.0"),
+    cell: (info) => <GenericColumn  row={info.getValue()} type="amount" />,
   }),
   columnHelper.accessor("investor_count", {
     header: t`Investors`,
   }),
   columnHelper.accessor("deploy_timestamp", {
     header: t`Fund Raising End Date`,
-    cell: (info) => formatDate(info.getValue()),
+    cell: (info) => <GenericColumn text={formatDate(info.getValue())} />,
   }),
   columnHelper.accessor("admin_fee", {
     header: t`Admin Fee`,
   }),
   columnHelper.accessor("status", {
     header: t`Status`,
-    cell: (info) => FundStatus[info.getValue()],
+    cell: (info) => <GenericColumn status={FundStatus[info.getValue()].toLowerCase()} type="status" />,
   }),
   columnHelper.accessor("manager", {
     header: t`Manager`,
-    cell: (info) => FundStatus[info.getValue()],
+    cell: (info) => info.getValue(),
   }),
   {
     id: "action",
@@ -68,12 +124,11 @@ const columns: ColumnDef<Fund, any>[] = [
       const status = row.getValue("status");
       if (status === FundStatus.RAISING) {
         return (
-          <button
+          <Button
             onClick={() => investInFund(row.getValue("id"))}
-            disabled={false}
-          >
-            <Trans>INVEST</Trans>
-          </button>
+            disabled = { false}
+            label={t`Invest`}
+          />
         );
       } else if (
         status === FundStatus.CLOSED ||
@@ -82,9 +137,7 @@ const columns: ColumnDef<Fund, any>[] = [
         return <></>;
       } else if (status === FundStatus.DEPLOYED) {
         return (
-          <div>
-            <Trans>See Investment</Trans>
-          </div>
+          <BorderlessButton label="See Investment" />
         );
       }
     },
@@ -104,8 +157,11 @@ export default function FundsList() {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   return (
-    <div className="p-2">
+    <div className="container mx-auto">
       <Table table={table} error={error} />
     </div>
   );

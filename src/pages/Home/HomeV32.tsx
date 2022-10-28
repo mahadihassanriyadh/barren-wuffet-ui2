@@ -1,10 +1,10 @@
 import React from "react";
 import { FunctionComponent } from "react";
 import styles from "./HomeV32.module.css";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/macro";
 import { NavLink } from "react-router-dom";
 import FundsList from "../../components/Fund/FundsList";
-import Button from "../../components/Form/Button";
+import Button from "../../components/Button/Button";
 import FAQ from "../../components/FAQ/FAQ";
 import faqs from "../../config/faqs";
 
@@ -133,7 +133,7 @@ const HomeV32: FunctionComponent = () => {
         <Button label={t`Create Fund`} />
       </NavLink>
       <div className={styles.groupDiv24}>
-        <div className={styles.groupDiv25}>
+        {/* <div className={styles.groupDiv25}>
           <div className={styles.textTextMediumMain}>
             <div className={styles.menuTitleDiv}>Markets</div>
           </div>
@@ -154,8 +154,8 @@ const HomeV32: FunctionComponent = () => {
               <div className={styles.tVLDiv}>All</div>
             </div>
           </div>
-        </div>
-        <div>Top funds 🔥</div>
+        </div> */}
+        <h2 className="font-sans text-5xl font-bold">Top funds 🔥</h2>
         <FundsList />
         <div>View all</div>
         <hr />

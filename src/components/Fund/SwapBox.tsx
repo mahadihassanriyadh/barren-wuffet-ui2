@@ -2,7 +2,7 @@ import { t, Trans } from "@lingui/macro";
 import React from "react";
 import { useState } from "react";
 import { Token } from "../../config/tokens";
-import Button from "../Form/Button";
+import Button from "../Button/Button";
 import Checkbox from "../Form/Checkbox";
 import { Input } from "../Form/Input";
 import Selector from "../Form/Selector";

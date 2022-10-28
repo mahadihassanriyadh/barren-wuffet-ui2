@@ -4,7 +4,7 @@ import { Trans, t } from "@lingui/macro";
 import Error from "../ui/Error";
 
 import { Input } from "../Form/Input";
-import Button from "../Form/Button";
+import Button from "../Button/Button";
 import FundsList from "../Fund/FundsList";
 import TokenSelector from "../Form/TokenSelector";
 import { getTokens } from "../../config/tokens";
