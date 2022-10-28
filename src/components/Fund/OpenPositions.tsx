@@ -1,14 +1,7 @@
-import React from "react";
 import { t } from "@lingui/macro";
 import Button from "../Button/Button";
 import { formatDate } from "../../data/formatting";
-import {
-  createColumnHelper,
-  ColumnDef,
-  Row,
-  useReactTable,
-  getCoreRowModel,
-} from "@tanstack/react-table";
+import { createColumnHelper, ColumnDef, Row } from "@tanstack/react-table";
 import Table from "../Table/Table";
 import { Position, PositionType } from "../../api/models";
 import useSWR from "swr";
@@ -31,7 +24,7 @@ const commonColumns: ColumnDef<Position, any>[] = [
   }),
   columnHelper.accessor("collateral", {
     header: t`Collateral`,
-    cell: (info) => f$(info.getValue()),
+    cell: (info) => f$(info.getValue() || 0),
   }),
   columnHelper.accessor("value", {
     header: t`Value`,
@@ -43,7 +36,8 @@ const commonColumns: ColumnDef<Position, any>[] = [
   columnHelper.accessor("asset_prices", {
     header: t`Asset Prices`,
     cell: (info) => {
-      const assetPrices: { asset: string; price: number }[] = info.getValue();
+      const assetPrices: { asset: string; price: number }[] =
+        info.getValue() || [];
       return assetPrices.map((a) => (
         <div>
           {a.asset}: ${a.price}
@@ -78,6 +72,8 @@ const spotActionColumns: ColumnDef<Position, any>[] = [
   },
 ];
 
+const spotPositionsColumns = commonColumns.concat(spotActionColumns);
+
 const lpActionColumns: ColumnDef<Position, any>[] = [
   {
     id: "action",
@@ -88,33 +84,23 @@ const lpActionColumns: ColumnDef<Position, any>[] = [
   },
 ];
 
+const lpPositionsColumns = commonColumns
+  .concat(lpColumns)
+  .concat(lpActionColumns);
+
 const OpenPositions = (props: {}) => {
   const { data, error } = useSWR(
-    "/api/orders/open",
+    "/api/positions/open",
     api.getPositions.bind(api)
   );
 
-  const spotPositions = (data || []).filter(
-    (p) => p.position_type === PositionType.SPOT
-  );
+  const spotPositions = data
+    ? data.filter((p: Position) => p.position_type === PositionType.SPOT)
+    : data;
 
-  const lpPositions = (data || []).filter(
-    (p) => p.position_type === PositionType.LP
-  );
-
-  const spotPositionsTable = useReactTable<Position>({
-    data: spotPositions,
-    columns: commonColumns.concat(spotActionColumns),
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  const lpPositionsTable = useReactTable<Position>({
-    data: lpPositions,
-    columns: commonColumns.concat(lpColumns).concat(lpActionColumns),
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  console.log("hey");
+  const lpPositions = data
+    ? data.filter((p: Position) => p.position_type === PositionType.LP)
+    : data;
 
   return (
     <div>
@@ -122,16 +108,30 @@ const OpenPositions = (props: {}) => {
         options={[
           {
             label: t`Perps/Swaps`,
-            content: <Table table={spotPositionsTable} error={error} />,
+            content: (
+              <Table
+                data={spotPositions}
+                columns={spotPositionsColumns}
+                error={error}
+              />
+            ),
           },
           {
             label: t`LP`,
-            content: <Table table={lpPositionsTable} error={error} />,
+            content: (
+              <Table
+                data={lpPositions}
+                columns={lpPositionsColumns}
+                error={error}
+              />
+            ),
           },
         ]}
       />
     </div>
   );
 };
+
+OpenPositions.whyDidYouRender = true;
 
 export default OpenPositions;

@@ -2,14 +2,7 @@ import React from "react";
 
 import { Trans, t } from "@lingui/macro";
 
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  Row,
-  ColumnDef,
-} from "@tanstack/react-table";
+import { createColumnHelper, Row, ColumnDef } from "@tanstack/react-table";
 
 import { formatAmount, USD_DECIMALS } from "../../data/formatting";
 import Table from "../Table/Table";
@@ -52,15 +45,9 @@ const closePool = (pool: Pool) => {};
 export default function PoolsList() {
   const { data, error } = useSWR("/api/user/123", api.getPools);
 
-  const table = useReactTable<Pool>({
-    data: data || [],
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
   return (
     <div className="p-2">
-      <Table table={table} error={error} />
+      <Table data={data} columns={columns} error={error} />
     </div>
   );
 }

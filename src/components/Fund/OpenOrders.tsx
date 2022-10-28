@@ -1,14 +1,8 @@
-import React, { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { t, Trans } from "@lingui/macro";
 import Button from "../Button/Button";
-import { formatAmount, formatDate, USD_DECIMALS } from "../../data/formatting";
-import {
-  createColumnHelper,
-  ColumnDef,
-  Row,
-  useReactTable,
-  getCoreRowModel,
-} from "@tanstack/react-table";
+import { formatDate } from "../../data/formatting";
+import { createColumnHelper, ColumnDef, Row } from "@tanstack/react-table";
 import Table from "../Table/Table";
 import { Order, TwapOrder } from "../../api/models";
 import useSWR from "swr";
@@ -120,20 +114,8 @@ const OpenOrders = (props: {}) => {
     api.getOpenOrders.bind(api)
   );
 
-  const singleOrders = (data || []).filter((o) => !o.twap_orders?.length);
-  const twapOrders = (data || []).filter((o) => o.twap_orders?.length);
-
-  const singleOrdersTable = useReactTable<Order>({
-    data: singleOrders,
-    columns: commonColumns.concat(actionColumns),
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  const twapOrdersTable = useReactTable<Order>({
-    data: twapOrders,
-    columns: commonColumns.concat(twapColumns).concat(actionColumns),
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const singleOrders = data ? data.filter((o) => !o.twap_orders?.length) : [];
+  const twapOrders = data ? data.filter((o) => o.twap_orders?.length) : [];
 
   return (
     <div>
@@ -142,11 +124,25 @@ const OpenOrders = (props: {}) => {
         options={[
           {
             label: t`Trigger Orders`,
-            content: <Table table={singleOrdersTable} error={error} />,
+            content: (
+              <Table
+                columns={commonColumns.concat(actionColumns)}
+                data={singleOrders}
+                error={error}
+              />
+            ),
           },
           {
             label: t`Twap Orders`,
-            content: <Table table={twapOrdersTable} error={error} />,
+            content: (
+              <Table
+                columns={commonColumns
+                  .concat(twapColumns)
+                  .concat(actionColumns)}
+                data={twapOrders}
+                error={error}
+              />
+            ),
           },
         ]}
       />

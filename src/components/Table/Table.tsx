@@ -1,19 +1,35 @@
 import React, { FC } from "react";
-import { flexRender, Table as TableType } from "@tanstack/react-table";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  Table as TableType,
+  useReactTable,
+} from "@tanstack/react-table";
 
 interface TableProps<T> {
-  table: TableType<T>;
+  data?: T[];
+  columns: ColumnDef<T, any>[];
   error: string | null;
 }
 
-const Table: FC<TableProps<any>> = ({ table, error }) => {
+const Table: FC<TableProps<any>> = ({ data, columns, error }) => {
+  const table = useReactTable<any>({
+    data: data || [],
+    columns: columns || [],
+    getCoreRowModel: getCoreRowModel(),
+  });
+
   return (
     <table>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th className="text-center font-sans text-xs text-gray-500 font-normal py-8" key={header.id}>
+              <th
+                className="text-center font-sans text-xs text-gray-500 font-normal py-8"
+                key={header.id}
+              >
                 {header.isPlaceholder
                   ? null
                   : flexRender(
