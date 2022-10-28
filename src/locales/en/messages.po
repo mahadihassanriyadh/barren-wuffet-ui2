@@ -22,7 +22,7 @@ msgstr "About"
 msgid "About This Fund"
 msgstr "About This Fund"
 
-#: src/components/Fund/FundsList.tsx:142
+#: src/components/Fund/FundsList.tsx:85
 #: src/components/Fund/OpenOrders.tsx:84
 #: src/components/Fund/OpenPositions.tsx:63
 #: src/components/Fund/OpenPositions.tsx:80
@@ -33,7 +33,7 @@ msgstr "Action"
 msgid "Add Collateral"
 msgstr "Add Collateral"
 
-#: src/components/Fund/FundsList.tsx:125
+#: src/components/Fund/FundsList.tsx:68
 msgid "Admin Fee"
 msgstr "Admin Fee"
 
@@ -41,7 +41,7 @@ msgstr "Admin Fee"
 #~ msgid "Amount"
 #~ msgstr "Amount"
 
-#: src/components/Fund/FundsList.tsx:114
+#: src/components/Fund/FundsList.tsx:51
 msgid "Amount Raised"
 msgstr "Amount Raised"
 
@@ -56,6 +56,10 @@ msgstr "Amount to send"
 #: src/components/CreateFund/CreateFundForm.tsx:176
 msgid "Amounts being raised $"
 msgstr "Amounts being raised $"
+
+#: src/pages/Home/Home.tsx:17
+msgid "Anybody who thinks they are a good trader can set up a defi fund that does not require KYC"
+msgstr "Anybody who thinks they are a good trader can set up a defi fund that does not require KYC"
 
 #: src/components/Fund/OpenPositions.tsx:23
 msgid "Asset"
@@ -100,7 +104,7 @@ msgstr "Cancel"
 msgid "Cancel {0} {orderText}"
 msgstr "Cancel {0} {orderText}"
 
-#: src/components/Fund/FundsList.tsx:102
+#: src/components/Fund/FundsList.tsx:40
 msgid "Change %"
 msgstr "Change %"
 
@@ -128,9 +132,8 @@ msgstr "Confirm"
 
 #: src/components/CreateFund/CreateFundForm.tsx:241
 #: src/components/Header/Header.tsx:92
-#: src/pages/Home/About.tsx:128
-#: src/pages/Home/About.tsx:132
-#: src/pages/Home/HomeV32.tsx:133
+#: src/pages/Home/About.tsx:63
+#: src/pages/Home/Home.tsx:28
 msgid "Create Fund"
 msgstr "Create Fund"
 
@@ -146,6 +149,10 @@ msgstr "Data updated: {dataUpdated} ago"
 #: src/components/Fund/OpenPositions.tsx:49
 msgid "Date Created"
 msgstr "Date Created"
+
+#: src/pages/Home/Home.tsx:14
+msgid "Decentralized Fund Management Platform"
+msgstr "Decentralized Fund Management Platform"
 
 #: src/components/CreateFund/CreateFundForm.tsx:160
 #: src/components/CreateFund/CreateFundForm.tsx:162
@@ -184,7 +191,7 @@ msgstr "Fund Fees"
 msgid "Fund Name"
 msgstr "Fund Name"
 
-#: src/components/Fund/FundsList.tsx:121
+#: src/components/Fund/FundsList.tsx:64
 msgid "Fund Raising End Date"
 msgstr "Fund Raising End Date"
 
@@ -229,7 +236,7 @@ msgstr "Information about your fund"
 msgid "Interval"
 msgstr "Interval"
 
-#: src/components/Fund/FundsList.tsx:150
+#: src/components/Fund/FundsList.tsx:93
 #: src/components/Header/Header.tsx:87
 #: src/components/Invest/InvestForm.tsx:61
 msgid "Invest"
@@ -253,7 +260,7 @@ msgstr "Investment Amount"
 msgid "Investment Amount $"
 msgstr "Investment Amount $"
 
-#: src/components/Fund/FundsList.tsx:118
+#: src/components/Fund/FundsList.tsx:61
 msgid "Investors"
 msgstr "Investors"
 
@@ -289,11 +296,11 @@ msgstr "Limit Sell Price"
 msgid "Manage Fund"
 msgstr "Manage Fund"
 
-#: src/components/Fund/FundsList.tsx:137
+#: src/components/Fund/FundsList.tsx:80
 msgid "Manager"
 msgstr "Manager"
 
-#: src/components/Fund/FundsList.tsx:98
+#: src/components/Fund/FundsList.tsx:36
 msgid "Maturity Date"
 msgstr "Maturity Date"
 
@@ -305,7 +312,7 @@ msgstr "Min. Amount to receive"
 msgid "Min. {0} Amount"
 msgstr "Min. {0} Amount"
 
-#: src/components/Fund/FundsList.tsx:87
+#: src/components/Fund/FundsList.tsx:26
 msgid "Name"
 msgstr "Name"
 
@@ -361,9 +368,9 @@ msgstr "Rewards tAPY"
 msgid "START TRADING"
 msgstr "START TRADING"
 
-#: src/components/Fund/FundsList.tsx:86
-#~ msgid "See Investment"
-#~ msgstr "See Investment"
+#: src/components/Fund/FundsList.tsx:102
+msgid "See Investment"
+msgstr "See Investment"
 
 #: src/components/Form/Selector.tsx:25
 msgid "Select"
@@ -381,7 +388,7 @@ msgstr "Sign in with your wallet, and click invest button at the top. Then pick 
 msgid "Size"
 msgstr "Size"
 
-#: src/components/Fund/FundsList.tsx:94
+#: src/components/Fund/FundsList.tsx:32
 msgid "Start Date"
 msgstr "Start Date"
 
@@ -389,7 +396,7 @@ msgstr "Start Date"
 msgid "Starting value: ${0}"
 msgstr "Starting value: ${0}"
 
-#: src/components/Fund/FundsList.tsx:128
+#: src/components/Fund/FundsList.tsx:71
 msgid "Status"
 msgstr "Status"
 
