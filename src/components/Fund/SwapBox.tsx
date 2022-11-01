@@ -8,9 +8,7 @@ import { Input } from "../Form/Input";
 import Selector from "../Form/Selector";
 import Slider from "../Form/Slider";
 import TokenSelector from "../Form/TokenSelector";
-import calendarIcon from "../../img/icons/calendarYellowIcon.svg";
 import TradeOptionSelector from "./TradeOptionSelector";
-import { formatDate } from "../../data/formatting";
 import { TradeOptions } from "../../api/models";
 
 const twapIntervals = ["Min", "Hour", "Day"];
@@ -27,7 +25,7 @@ function TwapOptions() {
         id="batchSize"
         value={batchSize * 100}
         placeholder={t`Batch Size`}
-        onChange={(value) => setBatchSize(parseFloat(value) / 100)}
+        onChange={(value) => setBatchSize(value / 100)}
         required
       />
       %
@@ -42,7 +40,7 @@ function TwapOptions() {
         id="interval"
         value={interval / 60}
         placeholder={t`Interval`}
-        onChange={(value) => setInterval(parseFloat(value) * 60)} // need to adjust based on selector
+        onChange={(value) => setInterval(value * 60)} // need to adjust based on selector
         required
       />
       <Trans>Estimated Completion: {interval / batchSize / 60} minutes</Trans>
@@ -98,7 +96,7 @@ function OCOOptions(props: {
           id="triggerBuyPrice"
           value={triggerBuyPrice}
           placeholder={t`Trigger Buy Price`}
-          onChange={(value) => setTriggerBuyPrice(parseFloat(value))}
+          onChange={(value) => setTriggerBuyPrice(value)}
           required
         />
         <Input
@@ -107,7 +105,7 @@ function OCOOptions(props: {
           id="limitBuyPrice"
           value={limitBuyPrice}
           placeholder={t`Limit Buy Price`}
-          onChange={(value) => setLimitBuyPrice(parseFloat(value))}
+          onChange={(value) => setLimitBuyPrice(value)}
           required
         />
         <MinAmountInput
@@ -138,7 +136,7 @@ function OCOOptions(props: {
           id="triggerSellPrice"
           value={triggerSellPrice}
           placeholder={t`Trigger Sell Price`}
-          onChange={(value) => setTriggerSellPrice(parseFloat(value))}
+          onChange={(value) => setTriggerSellPrice(value)}
           required
         />
         <Input
@@ -147,7 +145,7 @@ function OCOOptions(props: {
           id="limitSellPrice"
           value={limitSellPrice}
           placeholder={t`Limit Sell Price`}
-          onChange={(value) => setLimitSellPrice(parseFloat(value))}
+          onChange={(value) => setLimitSellPrice(value)}
           required
         />
         <MinAmountInput
@@ -182,7 +180,7 @@ function TrailingStopOptions(props: {
         id="triggerPrice"
         value={triggerPrice}
         placeholder={t`Trigger Price`}
-        onChange={(value) => setTriggerPrice(parseFloat(value))}
+        onChange={(value) => setTriggerPrice(value)}
         required
       />
       <div>
@@ -192,7 +190,7 @@ function TrailingStopOptions(props: {
           id="trailingPercent"
           value={trailingPercent || 0}
           placeholder={t`Trailing Percent`}
-          onChange={(value) => setTrailingPercent(parseFloat(value))}
+          onChange={(value) => setTrailingPercent(value)}
           required
         />
         <span>%</span>
@@ -214,7 +212,7 @@ function LimitTriggerOptions(props: {
         id="triggerPrice"
         value={triggerPrice}
         placeholder={t`Trigger Price`}
-        onChange={(value) => setTriggerPrice(parseFloat(value))}
+        onChange={(value) => setTriggerPrice(value)}
         required
       />
     </div>
@@ -231,13 +229,11 @@ function OrderExpiryInput(props: {
       {
         <Input
           type="date"
-          icon={calendarIcon}
-          value={formatDate(expiryDate)}
+          value={expiryDate}
           name={t`Order Expiry`}
           id="orderExpiry"
           placeholder={t`Order Expiry`}
-          onChange={(value) => {
-            const newDate = new Date(value);
+          onChange={(newDate: Date) => {
             if (newDate.getTime() > new Date().getTime()) {
               setExpiryDate(newDate);
             }
@@ -263,7 +259,7 @@ function LimitPriceInput(props: {
           id="limitPrice"
           value={price}
           placeholder={t`Limit Price`}
-          onChange={(value) => setPrice(parseFloat(value))}
+          onChange={(value) => setPrice(value)}
           required
         />
       }
@@ -288,7 +284,7 @@ function MinAmountInput(props: {
         id="amountReceived"
         value={amount}
         placeholder={t`Min. Amount to receive`}
-        onChange={(value) => onChange(parseFloat(value))}
+        onChange={(value) => onChange(value)}
         required
         disabled={!isEnabled}
       />
@@ -322,7 +318,7 @@ function AmountToSendInput(props: {
           placeholder={t`Amount to send`}
           onChange={(value) =>
             amountFromAvailable &&
-            setAmountToSend(Math.min(amountFromAvailable, parseFloat(value)))
+            setAmountToSend(Math.min(amountFromAvailable, value))
           }
           required
         />

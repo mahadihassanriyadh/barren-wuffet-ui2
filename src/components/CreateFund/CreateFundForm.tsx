@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from "react";
 import telegramIcon from "../../img/icons/telegramYellowIcon.svg";
 import twitterIcon from "../../img/icons/twitterYellowIcon.svg";
 import discordIcon from "../../img/icons/discordYellowIcon.svg";
-import calendarIcon from "../../img/icons/calendarYellowIcon.svg";
 import percentageIcon from "../../img/icons/parcentageYellowIcon.svg";
 import { Trans, t } from "@lingui/macro";
 
@@ -11,7 +10,6 @@ import { Link } from "react-router-dom";
 import { Input } from "../Form/Input";
 import Button from "../Button/Button";
 import { TextArea } from "../Form/TextArea";
-import { formatDate } from "../../data/formatting";
 import MultiSelector from "../Form/MultiSelector";
 import { useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
 import { getContract } from "../../config/addresses";
@@ -62,7 +60,7 @@ const CreateFundForm: FunctionComponent = () => {
           ? [0, getEthToken(chain.id), 0]
           : [0, "0x0000000000000000000000000000000000000000", 0],
       },
-      fees,
+      fees * 100,
       [], // whitelisted tokens
     ],
   });
@@ -174,19 +172,17 @@ const CreateFundForm: FunctionComponent = () => {
               id="amountRaised"
               value={amountRaised}
               placeholder={t`Amounts being raised $`}
-              onChange={(val) => setAmountRaised(parseFloat(val))}
+              onChange={(val) => setAmountRaised(val)}
               required
             />
             <div className="flex justify-between space-x-8">
               <Input
                 type="date"
-                icon={calendarIcon}
-                value={formatDate(closeDate)}
+                value={closeDate}
                 name={t`Closing Date of the Fund`}
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
-                onChange={(value) => {
-                  const newDate = new Date(value);
+                onChange={(newDate) => {
                   if (newDate.getTime() > new Date().getTime()) {
                     setCloseDate(newDate);
                   }
@@ -195,15 +191,13 @@ const CreateFundForm: FunctionComponent = () => {
               />
               <Input
                 type="date"
-                icon={calendarIcon}
-                value={formatDate(lockin)}
+                value={lockin}
                 name={t`Withdrawal Date from the fund`}
                 id="lockin"
                 placeholder={t`Fund withdrawal date`}
-                onChange={(value) => {
-                  const newDate = new Date(value);
+                onChange={(newDate) => {
                   if (newDate.getTime() > new Date().getTime()) {
-                    setLockin(lockin);
+                    setLockin(newDate);
                   }
                 }}
                 required
@@ -215,8 +209,7 @@ const CreateFundForm: FunctionComponent = () => {
                 name={t`Fund Fees`}
                 id="fees"
                 placeholder={t`Fees`}
-                onChange={(value) => {
-                  const val = parseFloat(value);
+                onChange={(val) => {
                   setFees(val < 100 && val >= 0 ? val : 0);
                 }}
                 required
