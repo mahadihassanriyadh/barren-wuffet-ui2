@@ -6,7 +6,7 @@ import { createColumnHelper, Row, ColumnDef } from "@tanstack/react-table";
 
 import { formatAmount, USD_DECIMALS } from "../../data/formatting";
 import Table from "../Table/Table";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import { Pool } from "../../api/models";
 import { api } from "../../config/env";
 
@@ -43,7 +43,7 @@ const columns: ColumnDef<Pool, any>[] = [
 const closePool = (pool: Pool) => {};
 
 export default function PoolsList() {
-  const { data, error } = useSWR("/api/user/123", api.getPools);
+  const { data, error } = useQuery<Pool[], string>(["/user/123"], api.getPools);
 
   return (
     <div className="p-2">

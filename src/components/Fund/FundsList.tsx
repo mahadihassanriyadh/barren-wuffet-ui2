@@ -12,7 +12,7 @@ import {
 
 import { formatDate } from "../../data/formatting";
 import Table from "../Table/Table";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import { Fund, FundStatus } from "../../api/models";
 import { api } from "../../config/env";
 import Button from "../Button/Button";
@@ -110,7 +110,10 @@ function investInFund(fundId: string): void {
 }
 
 export default function FundsList() {
-  const { data, error } = useSWR("/api/funds", api.getFunds.bind(api));
+  const { data, error } = useQuery<Fund[] | undefined, string>(
+    ["funds"],
+    api.getFunds.bind(api)
+  );
 
   return (
     <div className="container mx-auto">

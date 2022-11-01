@@ -4,7 +4,7 @@ import { formatDate } from "../../data/formatting";
 import { createColumnHelper, ColumnDef, Row } from "@tanstack/react-table";
 import Table from "../Table/Table";
 import { Position, PositionType } from "../../api/models";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../../config/env";
 import Tabs from "../Tabs/Tabs";
 
@@ -89,8 +89,8 @@ const lpPositionsColumns = commonColumns
   .concat(lpActionColumns);
 
 const OpenPositions = (props: {}) => {
-  const { data, error } = useSWR(
-    "/api/positions/open",
+  const { data, error } = useQuery<Position[], string>(
+    ["positions/open"],
     api.getPositions.bind(api)
   );
 

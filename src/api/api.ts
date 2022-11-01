@@ -1,5 +1,9 @@
 import { Fund, FundStatus, Order, Pool, Position, PriceFeed } from "./models";
 import { request, gql } from "graphql-request";
+import { Fund as Graph_Fund } from "../../.graphclient";
+import { BigNumber as BN } from "ethers";
+
+const toDate = (ts: BigInt) => new Date(BN.from(ts).toNumber() * 1000);
 
 export interface APIConfig {
   graphUrl: string;
@@ -15,8 +19,8 @@ export class API {
     throw new Error("Not implemented");
   }
 
-  async getFunds(params: string): Promise<Fund[] | undefined> {
-    const data = await request<{ funds: Fund[] }>(
+  async getFunds(): Promise<Fund[] | undefined> {
+    const data = await request<{ funds: Graph_Fund[] }>(
       this.graphUrl,
       gql`
         {
@@ -41,31 +45,23 @@ export class API {
       `
     );
     return Promise.resolve(
-      data.funds.map((fund) => ({
-        ...fund,
-        // @ts-ignore
+      data.funds.map((fund: Graph_Fund) => ({
+        id: fund.id,
+        name: fund.name,
+        amount_raised: fund.total_collateral_raised,
+        subscriptions: fund.subscriptions?.map((s) => s.address),
+        rules: fund.rules?.map((r) => r.id),
+        positions: fund.positions?.map((p) => p.id),
         status: fund.closed_timestamp ? FundStatus.CLOSED : FundStatus.RAISING,
-        // @ts-ignore
         admin_fee: fund.manager_fee_percentage,
-        // @ts-ignore
         manager: fund.manager.id,
-        // @ts-ignore
-        creation_timestamp:
-          fund.creation_timestamp &&
-          // @ts-ignore
-          new Date(parseInt(fund.creation_timestamp) * 1000),
-        // @ts-ignore
-        deploy_timestamp:
-          // @ts-ignore
-          fund.subscription_constraints.deadline &&
-          // @ts-ignore
-          new Date(parseInt(fund.subscription_constraints.deadline)),
-        // @ts-ignore
-        close_timestamp:
-          // @ts-ignore
-          fund.subscription_constraints.lockin &&
-          // @ts-ignore
-          new Date(parseInt(fund.subscription_constraints.lockin)),
+        creation_timestamp: toDate(fund.creation_timestamp),
+        deploy_timestamp: new Date(
+          parseInt(fund.subscription_constraints.deadline || "")
+        ),
+        close_timestamp: new Date(
+          parseInt(fund.subscription_constraints.lockin || "")
+        ),
       }))
     );
   }

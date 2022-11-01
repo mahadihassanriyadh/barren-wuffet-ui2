@@ -17,12 +17,11 @@ export interface Fund {
   creation_timestamp: Date;
   close_timestamp?: Date | null;
   deploy_timestamp: Date;
+  rules: string[];
   amount_raised: number;
   admin_fee: number;
   status: FundStatus;
   subscriptions: string[];
-  actions: string[];
-  rules: string[];
   positions: string[];
   change_percent?: number;
   investor_count?: number;

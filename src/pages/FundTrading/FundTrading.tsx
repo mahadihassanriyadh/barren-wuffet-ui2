@@ -56,7 +56,7 @@ const FundTrading = () => {
   const toTokenAddress = tokens[1]?.address;
 
   // const indexPricesUrl = getServerUrl(chainId, "/prices");
-  // const { data: indexPrices } = useSWR([indexPricesUrl], {
+  // const { data: indexPrices } = useQuery([indexPricesUrl], {
   //   fetcher: (...args) => fetch(...args).then((res) => res.json()),
   //   refreshInterval: 500,
   //   refreshWhenHidden: true,

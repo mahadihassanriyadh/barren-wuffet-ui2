@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { createChart, LineStyle, CrosshairMode } from "lightweight-charts";
 import { api } from "../../config/env";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 
 const PriceChart: FunctionComponent<{
   title: string;
@@ -16,10 +16,7 @@ const PriceChart: FunctionComponent<{
   const gridColor = "#444";
   const borderColor = "#71649C";
   const chartContainerRef = useRef({} as HTMLDivElement);
-  const { data: priceFeedData, error } = useSWR(
-    "/api/priceFeed",
-    api.getPriceFeed
-  );
+  const { data: priceFeedData } = useQuery(["priceFeed"], api.getPriceFeed);
 
   useEffect(() => {
     const handleResize = () => {

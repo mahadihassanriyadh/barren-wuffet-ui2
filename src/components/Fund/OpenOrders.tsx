@@ -5,7 +5,7 @@ import { formatDate } from "../../data/formatting";
 import { createColumnHelper, ColumnDef, Row } from "@tanstack/react-table";
 import Table from "../Table/Table";
 import { Order, TwapOrder } from "../../api/models";
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../../config/env";
 import Tabs from "../Tabs/Tabs";
 
@@ -109,8 +109,8 @@ const CancelOrderButton: FunctionComponent<{
 };
 
 const OpenOrders = (props: {}) => {
-  const { data, error } = useSWR(
-    "/api/orders/open",
+  const { data, error } = useQuery<Order[], string>(
+    ["orders/open"],
     api.getOpenOrders.bind(api)
   );
 
