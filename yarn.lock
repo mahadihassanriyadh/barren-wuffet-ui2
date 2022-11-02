@@ -1878,37 +1878,6 @@
     "@repeaterjs/repeater" "^3.0.4"
     tslib "^2.4.0"
 
-"@graphprotocol/graph-cli@0.33.1":
-  version "0.33.1"
-  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-cli/-/graph-cli-0.33.1.tgz#09c10f59005702fc4b3075dcfd80f4c96394bcf5"
-  integrity sha512-wv8PuDA1xrnRz52bkvo4R1XDj+5F0Oin879ogd7obOCSniXurkzHa4SjaomjHz7yyHQduorYarnXCZ+MVHuSGg==
-  dependencies:
-    assemblyscript "0.19.10"
-    binary-install-raw "0.0.13"
-    chalk "3.0.0"
-    chokidar "3.5.1"
-    debug "4.3.1"
-    docker-compose "0.23.4"
-    dockerode "2.5.8"
-    fs-extra "9.0.0"
-    glob "7.1.6"
-    gluegun "https://github.com/edgeandnode/gluegun#v4.3.1-pin-colors-dep"
-    graphql "15.5.0"
-    immutable "3.8.2"
-    ipfs-http-client "34.0.0"
-    jayson "3.6.6"
-    js-yaml "3.13.1"
-    node-fetch "2.6.0"
-    pkginfo "0.4.1"
-    prettier "1.19.1"
-    request "2.88.2"
-    semver "7.3.5"
-    sync-request "6.1.0"
-    tmp-promise "3.0.2"
-    web3-eth-abi "1.7.0"
-    which "2.0.2"
-    yaml "1.9.2"
-
 "@graphprotocol/graph-cli@^0.35.0":
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@graphprotocol/graph-cli/-/graph-cli-0.35.0.tgz#2f3c688f47ce763c2e8c6d8b86817fb21b3a367d"
@@ -1939,13 +1908,6 @@
     web3-eth-abi "1.7.0"
     which "2.0.2"
     yaml "1.9.2"
-
-"@graphprotocol/graph-ts@0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-ts/-/graph-ts-0.27.0.tgz#948fe1716f6082964a01a63a19bcbf9ac44e06ff"
-  integrity sha512-r1SPDIZVQiGMxcY8rhFSM0y7d/xAbQf5vHMWUf59js1KgoyWpM6P3tczZqmQd7JTmeyNsDGIPzd9FeaxllsU4w==
-  dependencies:
-    assemblyscript "0.19.10"
 
 "@graphprotocol/graph-ts@^0.28.1":
   version "0.28.1"
@@ -5006,12 +4968,6 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
-
-"barren-wuffet@file:./subgraph":
-  version "0.1.0"
-  dependencies:
-    "@graphprotocol/graph-cli" "0.33.1"
-    "@graphprotocol/graph-ts" "0.27.0"
 
 base-64@^0.1.0:
   version "0.1.0"

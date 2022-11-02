@@ -18,7 +18,6 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "autoprefixer": "^10.4.12",
-    "barren-wuffet": "file:./subgraph/",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
