@@ -2,6 +2,7 @@
 // It needs to be replaced by getting fund specific tokens
 // from the fund contract.
 
+type Address = `0x${string}`;
 export interface Token {
   chainId: number;
   name: string;
@@ -673,6 +674,6 @@ export function getTokens(chainId: number, fundId = null) {
   return tokenList.tokens.filter((token) => token.chainId === chainId);
 }
 
-export function getEthToken(chainId: number) {
+export function getEthToken(chainId: number): Address {
   return "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 }

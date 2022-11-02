@@ -1,8 +1,8 @@
 import { useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { Abi as AbiType } from "abitype";
-import { BigNumber } from "ethers";
+import { BigNumber as BN } from "ethers";
 
-import BWContract from "../contracts/BarrenWuffet.json";
+import BWContract from "../contracts/types/BarrenWuffet";
+
 import { getContract } from "../config/addresses";
 import { ERC20_DECIMALS } from "../config/constants";
 import { getEthToken } from "../config/tokens";
@@ -21,24 +21,30 @@ export function usePrepareCreateFund(values: {
 
   const factoryContract = chain ? getContract(chain.id, "BarrenWuffet") : "";
 
+  const depositToken = {
+    t: 0,
+    addr: chain
+      ? getEthToken(chain.id)
+      : "0x0000000000000000000000000000000000000000",
+    id: BN.from(0).mul(ERC20_DECIMALS),
+  };
+
   const { config } = usePrepareContractWrite({
     address: factoryContract,
-    abi: factoryContractABI as AbiType,
+    abi: factoryContractABI,
     functionName: "createFund",
     args: [
       fundName,
       {
-        minCollateralPerSub: BigNumber.from(0).mul(ERC20_DECIMALS),
-        maxCollateralPerSub: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
-        minCollateralTotal: BigNumber.from(0).mul(ERC20_DECIMALS),
-        maxCollateralTotal: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
-        deadline: closeDate.getTime(),
-        lockin: lockin.getTime(),
-        allowedDepositToken: chain
-          ? [0, getEthToken(chain.id), 0]
-          : [0, "0x0000000000000000000000000000000000000000", 0],
+        minCollateralPerSub: BN.from(0).mul(ERC20_DECIMALS),
+        maxCollateralPerSub: BN.from(amountRaised).mul(ERC20_DECIMALS),
+        minCollateralTotal: BN.from(0).mul(ERC20_DECIMALS),
+        maxCollateralTotal: BN.from(amountRaised).mul(ERC20_DECIMALS),
+        deadline: BN.from(closeDate.getTime()),
+        lockin: BN.from(lockin.getTime()),
+        allowedDepositToken: depositToken,
       },
-      fees * 100,
+      BN.from(fees * 100).mul(ERC20_DECIMALS),
       [], // whitelisted tokens
     ],
   });
