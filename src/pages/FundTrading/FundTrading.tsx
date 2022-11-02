@@ -7,7 +7,7 @@ import { USD_DECIMALS, formatAmount } from "../../data/formatting";
 
 import { getContract } from "../../config/addresses";
 import { getTokens } from "../../config/tokens";
-import SwapBox from "../../components/Fund/SwapBox";
+import SwapBox from "../../components/SwapBox/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
 import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";

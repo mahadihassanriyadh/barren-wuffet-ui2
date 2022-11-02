@@ -4,7 +4,7 @@ import { useNetwork } from "wagmi";
 
 import { getTokens } from "../../config/tokens";
 
-import SwapBox from "../../components/Fund/SwapBox";
+import SwapBox from "../../components/SwapBox/SwapBox";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";
