@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import telegramIcon from "../../img/icons/telegramYellowIcon.svg";
 import twitterIcon from "../../img/icons/twitterYellowIcon.svg";
 import discordIcon from "../../img/icons/discordYellowIcon.svg";
@@ -12,10 +12,21 @@ import Button from "../Button/Button";
 import { TextArea } from "../Form/TextArea";
 import MultiSelector from "../Form/MultiSelector";
 import { usePrepareCreateFund } from "../../api/rpc";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
 const DISCORD_PREFIX = "https://discord.gg/";
+
+const handleSocialFn = (prefix: string) => {
+  return (value: string) => {
+    if (value.startsWith(prefix)) {
+      return value;
+    }
+    return prefix + value;
+  };
+};
 
 const CreateFundForm: FunctionComponent = () => {
   const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
@@ -30,6 +41,10 @@ const CreateFundForm: FunctionComponent = () => {
     new Date(new Date().getTime() + 86400000 * 10)
   );
   const [fees, setFees] = useState(1);
+  const [isSaving, setIsSaving] = useState(false);
+  const { isConnected } = useAccount();
+
+  const { openConnectModal } = useConnectModal();
 
   const { data, isLoading, error, isSuccess, status, write } =
     usePrepareCreateFund({
@@ -40,14 +55,20 @@ const CreateFundForm: FunctionComponent = () => {
       amountRaised,
     });
 
-  const handleSocialFn = (prefix: string) => {
-    return (value: string) => {
-      if (value.startsWith(prefix)) {
-        return value;
-      }
-      return prefix + value;
-    };
-  };
+  useEffect(() => {
+    if (!isSaving) {
+      return;
+    }
+    if (!isConnected) {
+      openConnectModal?.();
+      return;
+    }
+    if (write) {
+      write();
+      setIsSaving(false);
+      return;
+    }
+  }, [isSaving, isConnected, setIsSaving, openConnectModal, write]);
 
   const handleTelegram = (v: string) => {
     setTelegram(handleSocialFn(TELEGRAM_PREFIX)(v));
@@ -60,7 +81,7 @@ const CreateFundForm: FunctionComponent = () => {
   };
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    write?.();
+    setIsSaving(true);
   };
 
   return (
@@ -68,6 +89,13 @@ const CreateFundForm: FunctionComponent = () => {
       <CreateFundThanks isHidden={!isSuccess} />
       <div className={!isSuccess ? "" : "hidden"}>
         <form onSubmit={handleFormSubmit}>
+          {isSaving && isConnected && !write && (
+            <Error
+              error={
+                "Unable to send transaction to network. Please check your wallet settings"
+              }
+            />
+          )}
           {isLoading && <div>Submitting form..</div>}
           {error && <Error error={error.message} />}
           <p className="text-lg font-bold">
