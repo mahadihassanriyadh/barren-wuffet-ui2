@@ -1,4 +1,4 @@
-import { API } from "../api/api";
+import { API } from "../api/graph";
 import { DummyAPI } from "../test/data/dummyAPI";
 
 export function isDevelopment() {

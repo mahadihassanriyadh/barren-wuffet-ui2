@@ -11,19 +11,11 @@ import { Input } from "../Form/Input";
 import Button from "../Button/Button";
 import { TextArea } from "../Form/TextArea";
 import MultiSelector from "../Form/MultiSelector";
-import { useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { getContract } from "../../config/addresses";
-import BWContract from "../../contracts/BarrenWuffet.json";
-import { Abi as AbiType } from "abitype";
-import { BigNumber, ethers } from "ethers";
-import { ERC20_DECIMALS } from "../../config/constants";
-import { getEthToken } from "../../config/tokens";
+import { usePrepareCreateFund } from "../../api/rpc";
 
 const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
 const DISCORD_PREFIX = "https://discord.gg/";
-
-const factoryContractABI = BWContract.abi;
 
 const CreateFundForm: FunctionComponent = () => {
   const [telegram, setTelegram] = useState(TELEGRAM_PREFIX);
@@ -39,34 +31,14 @@ const CreateFundForm: FunctionComponent = () => {
   );
   const [fees, setFees] = useState(1);
 
-  const { chain } = useNetwork();
-
-  const factoryContract = chain ? getContract(chain.id, "BarrenWuffet") : "";
-
-  const { config } = usePrepareContractWrite({
-    address: factoryContract,
-    abi: factoryContractABI as AbiType,
-    functionName: "createFund",
-    args: [
-      fundName,
-      {
-        minCollateralPerSub: BigNumber.from(0).mul(ERC20_DECIMALS),
-        maxCollateralPerSub: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
-        minCollateralTotal: BigNumber.from(0).mul(ERC20_DECIMALS),
-        maxCollateralTotal: BigNumber.from(amountRaised).mul(ERC20_DECIMALS),
-        deadline: closeDate.getTime(),
-        lockin: lockin.getTime(),
-        allowedDepositToken: chain
-          ? [0, getEthToken(chain.id), 0]
-          : [0, "0x0000000000000000000000000000000000000000", 0],
-      },
-      fees * 100,
-      [], // whitelisted tokens
-    ],
-  });
-
   const { data, isLoading, error, isSuccess, status, write } =
-    useContractWrite(config);
+    usePrepareCreateFund({
+      fundName,
+      closeDate,
+      lockin,
+      fees,
+      amountRaised,
+    });
 
   const handleSocialFn = (prefix: string) => {
     return (value: string) => {

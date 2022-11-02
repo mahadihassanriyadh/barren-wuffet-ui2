@@ -1,4 +1,4 @@
-import { API, APIConfig } from "../../api/api";
+import { API, APIConfig } from "../../api/graph";
 import { Fund, Order, Position } from "../../api/models";
 import { funds } from "./funds";
 import { pools } from "./pools";
