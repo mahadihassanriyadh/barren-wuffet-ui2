@@ -1,9 +1,8 @@
-// @ts-nocheck
 import { ethers } from "ethers";
 
-export const USD_DECIMALS = 30;
+const USD_DECIMALS = 30;
 
-export function numberWithCommas(x) {
+export function numberWithCommas(x: string | number | undefined) {
   if (!x) {
     return "...";
   }
@@ -12,7 +11,10 @@ export function numberWithCommas(x) {
   return parts.join(".");
 }
 
-export const limitDecimals = (amount, maxDecimals) => {
+export const limitDecimals = (
+  amount: string,
+  maxDecimals: number | undefined
+) => {
   let amountStr = amount.toString();
   if (maxDecimals === undefined) {
     return amountStr;
@@ -33,7 +35,7 @@ export const limitDecimals = (amount, maxDecimals) => {
   return amountStr;
 };
 
-export const padDecimals = (amount, minDecimals) => {
+export const padDecimals = (amount: string, minDecimals: number) => {
   let amountStr = amount.toString();
   const dotIndex = amountStr.indexOf(".");
   if (dotIndex !== -1) {
@@ -51,10 +53,9 @@ export const padDecimals = (amount, minDecimals) => {
 };
 
 export const formatAmount = (
-  amount,
-  tokenDecimals,
-  displayDecimals,
-  useCommas,
+  amount: ethers.BigNumberish | undefined,
+  displayDecimals: number | undefined,
+  useCommas: boolean,
   defaultValue = "..."
 ) => {
   if (amount === undefined || amount.toString().length === 0) {
@@ -63,7 +64,7 @@ export const formatAmount = (
   if (displayDecimals === undefined) {
     displayDecimals = 4;
   }
-  let amountStr = ethers.utils.formatUnits(amount, tokenDecimals);
+  let amountStr = ethers.utils.formatUnits(amount, USD_DECIMALS);
   amountStr = limitDecimals(amountStr, displayDecimals);
   if (displayDecimals !== 0) {
     amountStr = padDecimals(amountStr, displayDecimals);

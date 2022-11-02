@@ -2,7 +2,10 @@
 // It needs to be replaced by getting fund specific tokens
 // from the fund contract.
 
-type Address = `0x${string}`;
+import { BigNumber, constants } from "ethers";
+
+export type Address = `0x${string}`;
+
 export interface Token {
   chainId: number;
   name: string;
@@ -12,6 +15,28 @@ export interface Token {
   logoURI?: string;
   tags?: string[];
 }
+
+export const ETH_ADDRESS: Address =
+  "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+export const USD_ADDRESS: Address = constants.AddressZero;
+
+export enum TOKEN_TYPE {
+  NATIVE = 0,
+  ERC721 = 1,
+  ERC20 = 2,
+}
+
+export interface ContractToken {
+  t: TOKEN_TYPE;
+  addr: Address;
+  id: BigNumber;
+}
+
+export const ETH_TOKEN: ContractToken = {
+  t: TOKEN_TYPE.NATIVE,
+  addr: ETH_ADDRESS,
+  id: BigNumber.from(0),
+};
 
 const tokenList: {
   name: string;
@@ -674,6 +699,6 @@ export function getTokens(chainId: number, fundId = null) {
   return tokenList.tokens.filter((token) => token.chainId === chainId);
 }
 
-export function getEthToken(chainId: number): Address {
-  return "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+export function getEthToken(chainId: number = 1) {
+  return ETH_TOKEN;
 }

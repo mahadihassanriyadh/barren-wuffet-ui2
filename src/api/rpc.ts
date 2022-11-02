@@ -1,13 +1,14 @@
 import { useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
-import { BigNumber as BN } from "ethers";
+import { BigNumber, BigNumber as BN } from "ethers";
 
 import BWContract from "../contracts/types/BarrenWuffet";
 
 import { getContract } from "../config/addresses";
-import { ERC20_DECIMALS } from "../config/constants";
+import { ERC20_DECIMALS } from "../config/numbers";
 import { getEthToken } from "../config/tokens";
 
 const factoryContractABI = BWContract.abi;
+const toTokenVal = (val: number) => BN.from(val).mul(ERC20_DECIMALS);
 
 export function usePrepareCreateFund(values: {
   fundName: string;
@@ -19,15 +20,9 @@ export function usePrepareCreateFund(values: {
   const { fundName, amountRaised, closeDate, lockin, fees } = values;
   const { chain } = useNetwork();
 
-  const factoryContract = chain ? getContract(chain.id, "BarrenWuffet") : "";
+  const factoryContract = chain && getContract(chain.id, "BarrenWuffet");
 
-  const depositToken = {
-    t: 0,
-    addr: chain
-      ? getEthToken(chain.id)
-      : "0x0000000000000000000000000000000000000000",
-    id: BN.from(0).mul(ERC20_DECIMALS),
-  };
+  const depositToken = getEthToken(chain?.id);
 
   const { config } = usePrepareContractWrite({
     address: factoryContract,
@@ -36,10 +31,10 @@ export function usePrepareCreateFund(values: {
     args: [
       fundName,
       {
-        minCollateralPerSub: BN.from(0).mul(ERC20_DECIMALS),
-        maxCollateralPerSub: BN.from(amountRaised).mul(ERC20_DECIMALS),
-        minCollateralTotal: BN.from(0).mul(ERC20_DECIMALS),
-        maxCollateralTotal: BN.from(amountRaised).mul(ERC20_DECIMALS),
+        minCollateralPerSub: toTokenVal(0),
+        maxCollateralPerSub: toTokenVal(amountRaised),
+        minCollateralTotal: toTokenVal(0),
+        maxCollateralTotal: toTokenVal(amountRaised),
         deadline: BN.from(closeDate.getTime()),
         lockin: BN.from(lockin.getTime()),
         allowedDepositToken: depositToken,

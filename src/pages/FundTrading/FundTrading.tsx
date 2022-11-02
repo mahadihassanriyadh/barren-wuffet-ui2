@@ -1,11 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
-import { ethers } from "ethers";
 import { useNetwork } from "wagmi";
 
-import { USD_DECIMALS, formatAmount } from "../../data/formatting";
-
-import { getContract } from "../../config/addresses";
 import { getTokens } from "../../config/tokens";
 import SwapBox from "../../components/SwapBox/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
@@ -14,8 +10,6 @@ import Tabs from "../../components/Tabs/Tabs";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import { Action, ActionTypes } from "../../config/actions";
 import OpenPositions from "../../components/Fund/OpenPositions";
-
-const { AddressZero } = ethers.constants;
 
 const OrderList: FunctionComponent = (props) => {
   return (

@@ -4,7 +4,7 @@ import { Trans, t } from "@lingui/macro";
 
 import { createColumnHelper, Row, ColumnDef } from "@tanstack/react-table";
 
-import { formatAmount, USD_DECIMALS } from "../../data/formatting";
+import { formatAmount } from "../../data/formatting";
 import Table from "../Table/Table";
 import { useQuery } from "@tanstack/react-query";
 import { Pool } from "../../api/models";
@@ -27,7 +27,7 @@ const columns: ColumnDef<Pool, any>[] = [
   }),
   columnHelper.accessor("tvl", {
     header: t`TVL`,
-    cell: (info) => formatAmount(info.getValue(), USD_DECIMALS, 2, true, "0.0"),
+    cell: (info) => formatAmount(info.getValue(), 2, true, "0.0"),
   }),
   {
     id: "close",
