@@ -9,6 +9,7 @@ import { getEthToken } from "../config/tokens";
 
 const factoryContractABI = BWContract.abi;
 const toTokenVal = (val: number) => BN.from(val).mul(ERC20_DECIMALS);
+const toSeconds = (val: Date) => BN.from(Math.round(val.getTime() / 1000));
 
 export function usePrepareCreateFund(values: {
   fundName: string;
@@ -24,7 +25,7 @@ export function usePrepareCreateFund(values: {
 
   const depositToken = getEthToken(chain?.id);
 
-  const { config } = usePrepareContractWrite({
+  const { config, error, isError } = usePrepareContractWrite({
     address: factoryContract,
     abi: factoryContractABI,
     functionName: "createFund",
@@ -35,14 +36,21 @@ export function usePrepareCreateFund(values: {
         maxCollateralPerSub: toTokenVal(amountRaised),
         minCollateralTotal: toTokenVal(0),
         maxCollateralTotal: toTokenVal(amountRaised),
-        deadline: BN.from(closeDate.getTime()),
-        lockin: BN.from(lockin.getTime()),
+        deadline: toSeconds(closeDate),
+        lockin: toSeconds(lockin),
         allowedDepositToken: depositToken,
       },
-      BN.from(fees * 100).mul(ERC20_DECIMALS),
+      BN.from(fees * 100),
       [], // whitelisted tokens
     ],
+    enabled: !!(fundName && amountRaised && closeDate && lockin),
   });
 
-  return useContractWrite(config);
+  const resp = useContractWrite(config);
+  return {
+    ...resp,
+    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
+    error,
+    isError,
+  };
 }

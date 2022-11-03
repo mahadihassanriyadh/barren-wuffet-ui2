@@ -19,6 +19,9 @@ const TELEGRAM_PREFIX = "https://t.me/";
 const TWITTER_PREFIX = "https://twitter.com/";
 const DISCORD_PREFIX = "https://discord.gg/";
 
+const TOMORROW = new Date(new Date().getTime() + 86400000);
+const AFTER_30_DAYS = new Date(TOMORROW.getTime() + 86400000 * 29);
+
 const handleSocialFn = (prefix: string) => {
   return (value: string) => {
     if (value.startsWith(prefix)) {
@@ -36,24 +39,21 @@ const CreateFundForm: FunctionComponent = () => {
   const [about, setAbout] = useState("");
   const [strategy, setStrategy] = useState("");
   const [amountRaised, setAmountRaised] = useState(10000);
-  const [closeDate, setCloseDate] = useState(new Date());
-  const [lockin, setLockin] = useState(
-    new Date(new Date().getTime() + 86400000 * 10)
-  );
+  const [closeDate, setCloseDate] = useState(TOMORROW);
+  const [lockin, setLockin] = useState(AFTER_30_DAYS);
   const [fees, setFees] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
   const { isConnected } = useAccount();
 
   const { openConnectModal } = useConnectModal();
 
-  const { data, isLoading, error, isSuccess, status, write } =
-    usePrepareCreateFund({
-      fundName,
-      closeDate,
-      lockin,
-      fees,
-      amountRaised,
-    });
+  const { isLoading, error, isSuccess, write } = usePrepareCreateFund({
+    fundName,
+    closeDate,
+    lockin,
+    fees,
+    amountRaised,
+  });
 
   useEffect(() => {
     if (!isSaving) {
@@ -92,7 +92,7 @@ const CreateFundForm: FunctionComponent = () => {
           {isSaving && isConnected && !write && (
             <Error
               error={
-                "Unable to send transaction to network. Please check your wallet settings"
+                "Unable to send transaction to network. This could be an error in your wallet settings or the data being sent to the network"
               }
             />
           )}
@@ -172,7 +172,7 @@ const CreateFundForm: FunctionComponent = () => {
               id="amountRaised"
               value={amountRaised}
               placeholder={t`Amounts being raised $`}
-              onChange={(val) => setAmountRaised(val)}
+              onChange={(val) => val && setAmountRaised(val)}
               required
             />
             <div className="flex justify-between space-x-8">
@@ -183,7 +183,10 @@ const CreateFundForm: FunctionComponent = () => {
                 id="durationOfRaise"
                 placeholder={t`Duration of raise`}
                 onChange={(newDate) => {
-                  if (newDate.getTime() > new Date().getTime()) {
+                  if (
+                    newDate.getTime() > new Date().getTime() &&
+                    newDate.getTime() < lockin.getTime()
+                  ) {
                     setCloseDate(newDate);
                   }
                 }}
@@ -196,7 +199,10 @@ const CreateFundForm: FunctionComponent = () => {
                 id="lockin"
                 placeholder={t`Fund withdrawal date`}
                 onChange={(newDate) => {
-                  if (newDate.getTime() > new Date().getTime()) {
+                  if (
+                    newDate.getTime() > new Date().getTime() &&
+                    newDate.getTime() > closeDate.getTime()
+                  ) {
                     setLockin(newDate);
                   }
                 }}
