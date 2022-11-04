@@ -11,7 +11,7 @@ import { Input } from "../Form/Input";
 import Button from "../Button/Button";
 import { TextArea } from "../Form/TextArea";
 import MultiSelector from "../Form/MultiSelector";
-import { usePrepareCreateFund } from "../../api/rpc";
+import { useConnectAndWrite, usePrepareCreateFund } from "../../api/rpc";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
@@ -43,32 +43,25 @@ const CreateFundForm: FunctionComponent = () => {
   const [lockin, setLockin] = useState(AFTER_30_DAYS);
   const [fees, setFees] = useState(1);
   const [isSaving, setIsSaving] = useState(false);
+  const [fundId, setFundId] = useState<string>("");
   const { isConnected } = useAccount();
 
-  const { openConnectModal } = useConnectModal();
+  const { isLoading, error, isSuccess, write, data, status } =
+    usePrepareCreateFund({
+      fundName,
+      closeDate,
+      lockin,
+      fees,
+      amountRaised,
+      eventCallback: ({ owner, fund, name }) => {
+        setFundId(fund || "");
+        console.log(
+          `Owner: ${owner}, Fund Address: ${fund}, Fund Name: ${name}`
+        );
+      },
+    });
 
-  const { isLoading, error, isSuccess, write } = usePrepareCreateFund({
-    fundName,
-    closeDate,
-    lockin,
-    fees,
-    amountRaised,
-  });
-
-  useEffect(() => {
-    if (!isSaving) {
-      return;
-    }
-    if (!isConnected) {
-      openConnectModal?.();
-      return;
-    }
-    if (write) {
-      write();
-      setIsSaving(false);
-      return;
-    }
-  }, [isSaving, isConnected, setIsSaving, openConnectModal, write]);
+  useConnectAndWrite(isSaving, setIsSaving, write);
 
   const handleTelegram = (v: string) => {
     setTelegram(handleSocialFn(TELEGRAM_PREFIX)(v));
@@ -86,7 +79,7 @@ const CreateFundForm: FunctionComponent = () => {
 
   return (
     <div className="bg-gray-dark mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
-      <CreateFundThanks isHidden={!isSuccess} />
+      <CreateFundThanks isHidden={!isSuccess} fundId={fundId} />
       <div className={!isSuccess ? "" : "hidden"}>
         <form onSubmit={handleFormSubmit}>
           {isSaving && isConnected && !write && (
@@ -96,7 +89,7 @@ const CreateFundForm: FunctionComponent = () => {
               }
             />
           )}
-          {isLoading && <div>Submitting form..</div>}
+          {(isSaving || isLoading) && <div>Submitting form..</div>}
           {error && <Error error={error.message} />}
           <p className="text-lg font-bold">
             <Trans>Information about your fund</Trans>
@@ -245,18 +238,18 @@ const CreateFundForm: FunctionComponent = () => {
   );
 };
 
-function CreateFundThanks(props: { isHidden: boolean }) {
-  const { isHidden } = props;
+function CreateFundThanks(props: { isHidden: boolean; fundId: string }) {
+  const { isHidden, fundId } = props;
   return (
     <div className={isHidden ? "hidden" : ""}>
       <div>
         <p className="text-6xl text-center py-2">🎉</p>
         <p className="mt-4 text-center text-xl py-1.5 rounded-md font-medium bg-green-800 bg-opacity-40">
-          ✅ <Trans>Thank you! Your Fund was created!</Trans>
+          ✅ <Trans>Thank you! Your Fund ({fundId}) was created!</Trans>
         </p>
       </div>
       <div className="mt-14">
-        <Link to="/fund/portfolio">
+        <Link to={`/fund/${fundId}/portfolio`}>
           <Button label={t`START TRADING`} />
         </Link>
       </div>
