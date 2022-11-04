@@ -2,7 +2,7 @@ import { Fund, FundStatus } from "../../api/models";
 
 export const funds: Fund[] = [
   {
-    id: "1",
+    id: "0x641162c1ee009e544031aF1157E6fc608edB4e01",
     name: "Raising Fund",
     manager: "0x123",
     amount_raised: 0,

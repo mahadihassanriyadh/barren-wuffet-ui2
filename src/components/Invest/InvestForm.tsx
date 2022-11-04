@@ -5,11 +5,13 @@ import Error from "../ui/Error";
 
 import { Input } from "../Form/Input";
 import Button from "../Button/Button";
-import FundsList from "../Fund/FundsList";
+import { SelectFundsList } from "../Fund/FundsList";
 import TokenSelector from "../Form/TokenSelector";
 import { getTokens } from "../../config/tokens";
-import { useNetwork } from "wagmi";
+import { ContractResultDecodeError, useAccount, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { useConnectAndWrite, usePrepareSubscribeToFund } from "../../api/rpc";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const InvestForm: FunctionComponent = () => {
   const [investmentAmount, setInvestmentAmount] = useState(100);
@@ -18,27 +20,41 @@ const InvestForm: FunctionComponent = () => {
   const { chain } = useNetwork();
   const tokens = chain ? getTokens(chain.id) : [];
   const [investmentToken, setInvestmentToken] = useState(tokens[0]);
+  const [selectedFundId, setSelectedFundId] = useState<string | undefined>(
+    undefined
+  );
+  const [isSaving, setIsSaving] = useState(false);
+  const { isConnected } = useAccount();
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  useEffect(() => {
-    // this might not be the best way to do this. check React Router Form and redirect
-    if (isSubmitted) {
-      navigate("/fund/portfolio");
-    }
-  }, [isSubmitted, navigate]);
-  const [error, setError] = useState("");
+  const { openConnectModal } = useConnectModal();
+
+  const { isLoading, error, isSuccess, write } = usePrepareSubscribeToFund({
+    fundId: selectedFundId,
+    // investmentToken,
+    amount: investmentAmount,
+    eventCallback: ({ sender, token, amount }) => {},
+  });
+
+  useConnectAndWrite(isSaving, setIsSaving, write);
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setError("");
+    setIsSaving(true);
   };
   return (
     <div className="bg-gray-dark mt-10 py-20 px-14 rounded-2xl shadow-xl text-white mx-6">
-      <FundsList />
-      <div className={isSubmitted ? "hidden" : ""}>
+      {isSuccess && (
+        <div>
+          ✅ <Trans>Thank you! {investmentAmount} has been invested</Trans>
+        </div>
+      )}
+      <SelectFundsList
+        selectedFundId={selectedFundId}
+        setSelectedFundId={setSelectedFundId}
+      />
+      <div className={isSaving ? "hidden" : ""}>
         <form onSubmit={handleFormSubmit}>
-          {error && <Error error={error} />}
+          {error && <Error error={error.message} />}
 
           <div className="mt-4 space-y-3">
             <TokenSelector

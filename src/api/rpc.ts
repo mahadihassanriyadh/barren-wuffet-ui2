@@ -120,8 +120,13 @@ export function usePrepareCreateFund(values: {
 export function usePrepareSubscribeToFund(values: {
   fundId?: string;
   amount: number;
+  eventCallback?: (params: {
+    sender: Address | null;
+    token: Address | null;
+    amount: number | null;
+  }) => void;
 }) {
-  const { fundId, amount } = values;
+  const { fundId, amount, eventCallback } = values;
   const { chain } = useNetwork();
 
   const depositToken = getEthToken(chain?.id);
@@ -139,6 +144,16 @@ export function usePrepareSubscribeToFund(values: {
   });
 
   const resp = useContractWrite(config);
+
+  useContractEvent({
+    address: fundId,
+    abi: fundContractABI,
+    eventName: "Deposit",
+    listener(sender, token, amount) {
+      eventCallback?.({ sender, token, amount });
+    },
+  });
+
   return {
     ...resp,
     // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
