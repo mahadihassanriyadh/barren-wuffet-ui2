@@ -15,7 +15,6 @@ import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const InvestForm: FunctionComponent = () => {
   const [investmentAmount, setInvestmentAmount] = useState(100);
-  const navigate = useNavigate();
 
   const { chain } = useNetwork();
   const tokens = chain ? getTokens(chain.id) : [];
@@ -24,9 +23,6 @@ const InvestForm: FunctionComponent = () => {
     undefined
   );
   const [isSaving, setIsSaving] = useState(false);
-  const { isConnected } = useAccount();
-
-  const { openConnectModal } = useConnectModal();
 
   const { isLoading, error, isSuccess, write } = usePrepareSubscribeToFund({
     fundId: selectedFundId,
@@ -68,7 +64,7 @@ const InvestForm: FunctionComponent = () => {
               id="investmentAmount"
               value={investmentAmount}
               placeholder={t`Investment Amount $`}
-              onChange={(value) => setInvestmentAmount(value)}
+              onChange={(value) => value && setInvestmentAmount(value)}
               required
             />
           </div>

@@ -17,11 +17,13 @@ import { ERC20_DECIMALS } from "../config/numbers";
 import { Address, getEthToken } from "../config/tokens";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
+import { parseEther } from "ethers/lib/utils";
 
 const factoryContractABI = BWContract.abi;
 const fundContractABI = FundContract.abi;
 
-const toTokenVal = (val: number) => BN.from(val).mul(ERC20_DECIMALS);
+// TODO: THIS IS NOT QUITE CORRECT. USDC has 6 decimals, not 18.
+const toTokenVal = (val: number) => parseEther(val.toString()); //BN.from(val).mul(ERC20_DECIMALS);
 const toSeconds = (val: Date) => BN.from(Math.round(val.getTime() / 1000));
 
 export function useConnectAndWrite(

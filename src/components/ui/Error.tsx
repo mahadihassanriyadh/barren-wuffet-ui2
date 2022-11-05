@@ -8,7 +8,7 @@ const Error = ({ error }: Props) => {
     <div>
       <p className="mb-4 bg-red-500 bg-opacity-25 py-1.5 px-4 rounded-md font-medium text-gray-300">
         ❗️
-        <span>{error.substring(0, 100)}</span>
+        <span>{error?.substring(0, 100)}</span>
         <details>{error}</details>
       </p>
     </div>
