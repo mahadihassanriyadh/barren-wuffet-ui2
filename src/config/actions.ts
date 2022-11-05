@@ -78,6 +78,29 @@ const ACTIONS: Record<number, Action[]> = {
         "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     },
   ],
+  5: [
+    {
+      name: "Sushi LP Add",
+      address: getContract(5, "SushiAddLiquidity"),
+      actionType: ActionTypes.Yield,
+      imageUrl:
+        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    },
+    {
+      name: "Sushi LP Remove",
+      address: getContract(5, "SushiRemoveLiquidity"),
+      actionType: ActionTypes.Yield,
+      imageUrl:
+        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    },
+    {
+      name: "Sushi Swap",
+      address: getContract(5, "SushiSwapExactXForY"),
+      actionType: ActionTypes.Trading,
+      imageUrl:
+        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    },
+  ],
 };
 ACTIONS[31337] = ACTIONS[421613];
 
