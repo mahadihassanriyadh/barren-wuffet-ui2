@@ -91,6 +91,7 @@ export function usePrepareCreateFund(values: {
         deadline: toSeconds(closeDate),
         lockin: toSeconds(lockin),
         allowedDepositToken: depositToken,
+        onlyWhitelistedInvestors: false,
       },
       BN.from(fees * 100),
       [], // whitelisted tokens
