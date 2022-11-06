@@ -17,10 +17,10 @@ const CONTRACTS: Record<number, Record<string, string>> = {
   },
   5: {
     // eth goerli
-    BarrenWuffet: "0x47561E20a515cD27aC0375e6Ec2eb60506788023",
-    SushiSwapExactXForY: "0xE9CD6f8a5f357e04dc6671F4d0E6d744ce8f9CA5",
-    SushiAddLiquidity: "0xe0794Fe43536f34C474Ab4EBAf07A4A6fD4F418D",
-    SushiRemoveLiquidity: "0x4dEb760BE280AF16717928Be9797BA30c72AEC54",
+    BarrenWuffet: "0x15733B508E25FD5EA53404e391BC3cDA9DBd5F7E",
+    SushiSwapExactXForY: "0xdacdf9a4B94E37fD3E775268EBe736fFFd08220F",
+    SushiAddLiquidity: "0xb17EfEd80d8785BAd09cfB5db97B1b91AA4bfaad",
+    SushiRemoveLiquidity: "0xdb3E60189101b016D5239B4C11126aD8B6E6a1b5",
   },
   31337: {
     BarrenWuffet: "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
