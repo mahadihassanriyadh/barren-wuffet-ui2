@@ -8,10 +8,8 @@ import Button from "../Button/Button";
 import { SelectFundsList } from "../Fund/FundsList";
 import TokenSelector from "../Form/TokenSelector";
 import { getTokens } from "../../config/tokens";
-import { ContractResultDecodeError, useAccount, useNetwork } from "wagmi";
-import { useNavigate } from "react-router-dom";
+import { useNetwork } from "wagmi";
 import { useConnectAndWrite, usePrepareSubscribeToFund } from "../../api/rpc";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 const InvestForm: FunctionComponent = () => {
   const [investmentAmount, setInvestmentAmount] = useState(100);
@@ -48,7 +46,7 @@ const InvestForm: FunctionComponent = () => {
         selectedFundId={selectedFundId}
         setSelectedFundId={setSelectedFundId}
       />
-      <div className={isSaving ? "hidden" : ""}>
+      <div className={isSaving || !selectedFundId ? "hidden" : ""}>
         <form onSubmit={handleFormSubmit}>
           {error && <Error error={error.message} />}
 
