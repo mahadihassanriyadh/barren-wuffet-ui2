@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import telegramIcon from "../../img/icons/telegramYellowIcon.svg";
 import twitterIcon from "../../img/icons/twitterYellowIcon.svg";
 import discordIcon from "../../img/icons/discordYellowIcon.svg";
@@ -12,7 +12,6 @@ import Button from "../Button/Button";
 import { TextArea } from "../Form/TextArea";
 import MultiSelector from "../Form/MultiSelector";
 import { useConnectAndWrite, usePrepareCreateFund } from "../../api/rpc";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
 const TELEGRAM_PREFIX = "https://t.me/";
@@ -46,20 +45,17 @@ const CreateFundForm: FunctionComponent = () => {
   const [fundId, setFundId] = useState<string>("");
   const { isConnected } = useAccount();
 
-  const { isLoading, error, isSuccess, write, data, status } =
-    usePrepareCreateFund({
-      fundName,
-      closeDate,
-      lockin,
-      fees,
-      amountRaised,
-      eventCallback: ({ owner, fund, name }) => {
-        setFundId(fund || "");
-        console.log(
-          `Owner: ${owner}, Fund Address: ${fund}, Fund Name: ${name}`
-        );
-      },
-    });
+  const { isLoading, error, isSuccess, write } = usePrepareCreateFund({
+    fundName,
+    closeDate,
+    lockin,
+    fees,
+    amountRaised,
+    eventCallback: ({ owner, fund, name }) => {
+      setFundId(fund || "");
+      console.log(`Owner: ${owner}, Fund Address: ${fund}, Fund Name: ${name}`);
+    },
+  });
 
   useConnectAndWrite(isSaving, setIsSaving, write);
 
@@ -72,6 +68,33 @@ const CreateFundForm: FunctionComponent = () => {
   const handleDiscord = (v: string) => {
     setDiscord(handleSocialFn(DISCORD_PREFIX)(v));
   };
+
+  const handleAmountRaised = (val: number) => {
+    val && val > 0 && setAmountRaised(val);
+  };
+
+  const handleCloseDate = (newDate: Date) => {
+    if (
+      newDate.getTime() > new Date().getTime() &&
+      newDate.getTime() < lockin.getTime()
+    ) {
+      setCloseDate(newDate);
+    }
+  };
+
+  const handleLockin = (newDate: Date) => {
+    if (
+      newDate.getTime() > new Date().getTime() &&
+      newDate.getTime() > closeDate.getTime()
+    ) {
+      setLockin(newDate);
+    }
+  };
+
+  const handleFees = (val: number) => {
+    setFees(val < 100 && val >= 0 ? val : 0);
+  };
+
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsSaving(true);
@@ -100,7 +123,7 @@ const CreateFundForm: FunctionComponent = () => {
               name={t`Fund Name`}
               id="fundName"
               value={fundName}
-              onChange={(value) => setFundName(value)}
+              onChange={setFundName}
               placeholder={t`Your Fund Name`}
               required
             />
@@ -110,13 +133,13 @@ const CreateFundForm: FunctionComponent = () => {
               value={about}
               placeholder={t`About`}
               required
-              onChange={(value) => setAbout(value)}
+              onChange={setAbout}
             />
             <TextArea
               name={t`Fund Strategy`}
               id="strategy"
               value={strategy}
-              onChange={(value) => setStrategy(value)}
+              onChange={setStrategy}
               placeholder={t`Strategy`}
               required
             />
@@ -165,40 +188,26 @@ const CreateFundForm: FunctionComponent = () => {
               id="amountRaised"
               value={amountRaised}
               placeholder={t`Amounts being raised $`}
-              onChange={(val) => val && setAmountRaised(val)}
+              onChange={handleAmountRaised}
               required
             />
             <div className="flex justify-between space-x-8">
-              <Input
-                type="date"
-                value={closeDate}
-                name={t`Closing Date of the Fund`}
-                id="durationOfRaise"
-                placeholder={t`Duration of raise`}
-                onChange={(newDate) => {
-                  if (
-                    newDate.getTime() > new Date().getTime() &&
-                    newDate.getTime() < lockin.getTime()
-                  ) {
-                    setCloseDate(newDate);
-                  }
-                }}
-                required
-              />
               <Input
                 type="date"
                 value={lockin}
                 name={t`Withdrawal Date from the fund`}
                 id="lockin"
                 placeholder={t`Fund withdrawal date`}
-                onChange={(newDate) => {
-                  if (
-                    newDate.getTime() > new Date().getTime() &&
-                    newDate.getTime() > closeDate.getTime()
-                  ) {
-                    setLockin(newDate);
-                  }
-                }}
+                onChange={handleLockin}
+                required
+              />
+              <Input
+                type="date"
+                value={closeDate}
+                name={t`Closing Date of the Fund`}
+                id="durationOfRaise"
+                placeholder={t`Duration of raise`}
+                onChange={handleCloseDate}
                 required
               />
               <Input
@@ -208,9 +217,7 @@ const CreateFundForm: FunctionComponent = () => {
                 name={t`Fund Fees`}
                 id="fees"
                 placeholder={t`Fees`}
-                onChange={(val) => {
-                  setFees(val < 100 && val >= 0 ? val : 0);
-                }}
+                onChange={handleFees}
                 required
               />
             </div>
