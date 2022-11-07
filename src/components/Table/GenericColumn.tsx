@@ -24,11 +24,21 @@ export const GenericColumn = (props: {
           </p>
         </>
       );
+    case "percent":
+      return (
+        <>
+          <div className="flex items-center justify-between space-x-4">
+            <p className="font-bold">
+              {props.amount ? props.amount / 100 : 0}%
+            </p>
+          </div>
+        </>
+      );
     case "changePercent":
       return (
         <>
           <div className="flex items-center justify-between space-x-4">
-            <p className="font-bold">{Math.abs(props.changedPercent || 0)}</p>
+            <p className="font-bold">{Math.abs(props.changedPercent || 0)}%</p>
             <img
               className={`${
                 isProfitable ? "bg-[#072213]" : "bg-[#301616]"

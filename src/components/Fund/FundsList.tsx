@@ -67,6 +67,7 @@ const columns: ColumnDef<Fund, any>[] = [
   }),
   columnHelper.accessor("admin_fee", {
     header: t`Admin Fee`,
+    cell: (info) => <GenericColumn amount={info.getValue()} type="percent" />,
   }),
   columnHelper.accessor("status", {
     header: t`Status`,
