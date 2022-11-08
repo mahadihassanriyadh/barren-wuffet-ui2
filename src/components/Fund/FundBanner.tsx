@@ -1,13 +1,10 @@
 import { t, Trans } from "@lingui/macro";
 import copyIcon from "../../img/icons/carbonCopyIcon.svg";
-import qrCodeIcon from "../../img/icons/carbonQrCodeIcon.svg";
-import updateNowIcon from "../../img/icons/carbonUpdateNowIcon.svg";
 import telegramIcon from "../../img/icons/telegramYellowIcon.svg";
 import twitterIcon from "../../img/icons/twitterYellowIcon.svg";
 import { numberWithCommas } from "../../data/formatting";
 import FundSelector from "./FundSelector";
 import { NavLink, useParams } from "react-router-dom";
-import { useState } from "react";
 import FundActionTab from "./FundActionTab";
 import { Fund, FundDetails } from "../../api/models";
 
@@ -21,14 +18,16 @@ export default function FundBanner(props: {
   const { fundId } = useParams();
 
   const {
-    expiresIn,
     investor_count,
     id,
     portfolioValue,
     total_collateral_raised,
+    close_timestamp,
     newlyAddedMoney,
     upPercentage,
   } = selectedFund || {};
+
+  const expiresIn = close_timestamp?.toDateString();
 
   return (
     <div className="bg-gray-dark pt-10 px-8 rounded-xl mx-5">
@@ -43,9 +42,9 @@ export default function FundBanner(props: {
             <>
               <div className="flex space-x-12">
                 <p className="text-xs font-medium text-gray-400">
-                  <Trans>Expiry in:</Trans>
+                  <Trans>Expires On:</Trans>
                   <span className="bg-gray-light py-1 px-2 rounded-xl ml-2">
-                    <Trans>{expiresIn} days</Trans>
+                    <Trans>{expiresIn}</Trans>
                   </span>
                 </p>
                 <p className="text-xs font-medium text-gray-400">

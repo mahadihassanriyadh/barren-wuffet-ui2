@@ -22,7 +22,6 @@ const FundManage = () => {
     return api.getFundDetails.bind(api)(fundId);
   });
 
-  console.log(dataUpdatedAt);
   return (
     <div className="container mx-auto my-5">
       {!funds && <div>No funds available</div>}

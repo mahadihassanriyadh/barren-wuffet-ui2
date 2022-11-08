@@ -28,8 +28,7 @@ export interface Fund {
 }
 
 export interface FundDetails extends Fund {
-  logo: string;
-  expiresIn: number;
+  logo?: string;
   portfolioValue: number;
   newlyAddedMoney: number;
   upPercentage: number;

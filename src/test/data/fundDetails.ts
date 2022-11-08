@@ -13,8 +13,6 @@ export const fundDetails: FundDetails[] = [
     ...(funds.find(
       (f: Fund) => f.id === "0x641162c1ee009e544031aF1157E6fc608edB4e01"
     ) as Fund),
-    logo: openSeaLogo,
-    expiresIn: 751,
     portfolioValue: 234567,
     newlyAddedMoney: 2560.78,
     upPercentage: 14.67,
@@ -59,7 +57,6 @@ export const fundDetails: FundDetails[] = [
       (f) => f.id === "0x741162c1ee009e544031aF1157E6fc608edB4e01"
     ) as Fund),
     logo: funConLogo,
-    expiresIn: 677,
     portfolioValue: 459032,
     newlyAddedMoney: 3511.78,
     upPercentage: 23.67,
@@ -104,7 +101,6 @@ export const fundDetails: FundDetails[] = [
       (f) => f.id === "0x841162c1ee009e544031aF1157E6fc608edB4e01"
     ) as Fund),
     logo: netFineLogo,
-    expiresIn: 952,
     portfolioValue: 314589,
     newlyAddedMoney: 856.98,
     upPercentage: 18.45,
