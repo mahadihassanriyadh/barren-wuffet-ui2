@@ -99,7 +99,11 @@ const linkAction = columnHelper.display({
     } else if (status === FundStatus.CLOSED || status === FundStatus.CLOSABLE) {
       return <></>;
     } else if (status === FundStatus.DEPLOYED) {
-      return <BorderlessButton label={t`See Investment`} />;
+      return (
+        <Link className="block" to={`/fund/${row.original.id}/portfolio`}>
+          <BorderlessButton label={t`See Investment`} />
+        </Link>
+      );
     }
   },
 });
