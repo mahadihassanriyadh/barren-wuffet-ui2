@@ -11,14 +11,14 @@ import { getTokens } from "../../config/tokens";
 import { useNetwork } from "wagmi";
 import { useConnectAndWrite, usePrepareSubscribeToFund } from "../../api/rpc";
 
-const InvestForm: FunctionComponent = () => {
+const InvestForm: FunctionComponent<{ selectedFundId?: string }> = (props) => {
   const [investmentAmount, setInvestmentAmount] = useState(100);
 
   const { chain } = useNetwork();
   const tokens = chain ? getTokens(chain.id) : [];
   const [investmentToken, setInvestmentToken] = useState(tokens[0]);
   const [selectedFundId, setSelectedFundId] = useState<string | undefined>(
-    undefined
+    props.selectedFundId
   );
   const [isSaving, setIsSaving] = useState(false);
 

@@ -19,6 +19,7 @@ import Button from "../Button/Button";
 import BorderlessButton from "../Button/BorderlessButton";
 import { GenericColumn } from "../Table/GenericColumn";
 import Checkbox from "../Form/Checkbox";
+import { Link } from "react-router-dom";
 
 const columnHelper = createColumnHelper<Fund>();
 
@@ -91,11 +92,9 @@ const linkAction = columnHelper.display({
     const status = row.original.status;
     if (status === FundStatus.RAISING) {
       return (
-        <Button
-          onClick={() => investInFund(row.original.id)}
-          disabled={false}
-          label={t`Invest`}
-        />
+        <Link className="block" to={`/invest/${row.original.id}`}>
+          <Button label={t`Invest`} />
+        </Link>
       );
     } else if (status === FundStatus.CLOSED || status === FundStatus.CLOSABLE) {
       return <></>;
@@ -104,10 +103,6 @@ const linkAction = columnHelper.display({
     }
   },
 });
-
-function investInFund(fundId: string): void {
-  throw new Error("Function not implemented.");
-}
 
 export default function FundsList() {
   const { data, error } = useQuery<Fund[] | undefined, string>(
