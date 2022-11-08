@@ -67,7 +67,7 @@ export class API {
           // try and get this from the gmx stuff.
           // It will be actually be best to everything as BN all the way till the actual display to user.
           // then we just have to figure it out at the TextBox.
-          amount_raised: parseFloat(
+          total_collateral_raised: parseFloat(
             ethers.utils.formatEther(fund.total_collateral_raised)
           ),
           investor_count: fund.subscriptions.length,
@@ -77,7 +77,7 @@ export class API {
           status: fund.closed_timestamp
             ? FundStatus.CLOSED
             : FundStatus.RAISING,
-          admin_fee: fund.manager_fee_percentage,
+          manager_fee_percentage: fund.manager_fee_percentage,
           manager: fund.manager.id,
           creation_timestamp: toDate(fund.creation_timestamp) || new Date(),
           deploy_timestamp:

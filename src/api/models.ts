@@ -18,8 +18,8 @@ export interface Fund {
   close_timestamp?: Date | null;
   deploy_timestamp: Date;
   rules: string[];
-  amount_raised: number;
-  admin_fee: number;
+  total_collateral_raised: number;
+  manager_fee_percentage: number;
   status: FundStatus;
   subscriptions: string[];
   positions: string[];
@@ -27,19 +27,13 @@ export interface Fund {
   investor_count?: number;
 }
 
-export interface FundDetails {
-  id: string;
-  name: string;
+export interface FundDetails extends Fund {
   logo: string;
-  investor_count: number;
   expiresIn: number;
   portfolioValue: number;
-  startingValue: number;
-  dataUpdated: string;
   newlyAddedMoney: number;
   upPercentage: number;
   wallet: number;
-  walletAddress: string;
   assetBalances: object;
   protocolBalances: object;
 }

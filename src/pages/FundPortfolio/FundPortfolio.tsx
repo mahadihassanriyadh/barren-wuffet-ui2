@@ -16,10 +16,10 @@ export default function FundPortfolio(props: any) {
       <div className="mx-5 mb-10 rounded-xl px-8 py-12 bg-gray-dark">
         <div className="grid grid-cols-3 gap-16">
           {assetBalances?.map((asset: any) => (
-            <AssetBox asset={asset}></AssetBox>
+            <AssetBox asset={asset} key={asset.name}></AssetBox>
           ))}
           {protocolBalances?.map((asset: any) => (
-            <AssetBox asset={asset}></AssetBox>
+            <AssetBox asset={asset} key={asset.name}></AssetBox>
           ))}
         </div>
         {/* <hr className="" /> */}

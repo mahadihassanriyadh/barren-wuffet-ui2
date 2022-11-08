@@ -14,13 +14,15 @@ const FundManage = () => {
     string
   >(["funds"], api.getFunds.bind(api));
 
-  const { data: fund, isError } = useQuery<FundDetails | undefined, string>(
-    ["fundDetails", fundId],
-    () => {
-      return api.getFundDetails.bind(api)(fundId);
-    }
-  );
+  const {
+    data: fund,
+    isError,
+    dataUpdatedAt,
+  } = useQuery<FundDetails | undefined, string>(["fundDetails", fundId], () => {
+    return api.getFundDetails.bind(api)(fundId);
+  });
 
+  console.log(dataUpdatedAt);
   return (
     <div className="container mx-auto my-5">
       {!funds && <div>No funds available</div>}
@@ -29,10 +31,11 @@ const FundManage = () => {
         <div>
           <FundBanner
             funds={funds} // stick to FundType till we sort out the types
-            selected={fund}
+            selectedFund={fund}
             setSelected={(newFund: FundDetails) =>
               navigate(`/fund/${newFund.id}/portfolio`)
             }
+            dataUpdatedAt={dataUpdatedAt}
           ></FundBanner>
           <Outlet context={[fund]} />
         </div>

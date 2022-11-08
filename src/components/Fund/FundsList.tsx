@@ -53,7 +53,7 @@ const columns: ColumnDef<Fund, any>[] = [
     header: t`Amount Raised`,
     cell: (info) => (
       <GenericColumn
-        amount={info.getValue().amount_raised}
+        amount={info.getValue().total_collateral_raised}
         changedPercent={info.getValue().change_percent}
         type="amount"
       />
@@ -66,7 +66,7 @@ const columns: ColumnDef<Fund, any>[] = [
     header: t`Fund Raising End Date`,
     cell: (info) => <GenericColumn text={formatDate(info.getValue())} />,
   }),
-  columnHelper.accessor("admin_fee", {
+  columnHelper.accessor("manager_fee_percentage", {
     header: t`Admin Fee`,
     cell: (info) => <GenericColumn amount={info.getValue()} type="percent" />,
   }),
