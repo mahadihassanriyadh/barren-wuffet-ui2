@@ -63,6 +63,11 @@ function App() {
                         <Route path="/invest" element={<Invest />}>
                           <Route path=":fundId" element={<Invest />} />
                         </Route>
+                        <Route path="fund" element={<FundManage />}>
+                          <Route path="portfolio" element={<div />} />
+                          <Route path="trading" element={<div />} />
+                          <Route path="yield" element={<div />} />
+                        </Route>
                         <Route path="fund/:fundId" element={<FundManage />}>
                           <Route path="portfolio" element={<FundPortfolio />} />
                           <Route path="trading" element={<FundTrading />} />

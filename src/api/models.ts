@@ -27,11 +27,11 @@ export interface Fund {
   investor_count?: number;
 }
 
-export interface FundType {
-  id: number;
+export interface FundDetails {
+  id: string;
   name: string;
   logo: string;
-  investors: number;
+  investor_count: number;
   expiresIn: number;
   portfolioValue: number;
   startingValue: number;

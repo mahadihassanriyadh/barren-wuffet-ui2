@@ -1,16 +1,17 @@
+import { Fund, FundDetails } from "../../api/models";
 import Selector from "../Form/Selector";
 
 const FundSelector = (props: {
-  infos: any;
-  selected: any;
+  funds: Fund[];
+  selected?: FundDetails;
   setSelected: any;
 }) => {
-  const { infos, selected, setSelected } = props;
+  const { funds, selected, setSelected } = props;
 
   return (
     <Selector
-      items={infos.map((info: any) => ({ ...info, icon: info.logo }))}
-      selectedItem={{ ...selected, icon: selected.logo }}
+      items={funds.map((info: any) => ({ ...info, icon: info?.logo }))}
+      selectedItem={{ ...selected, icon: selected?.logo }}
       setSelectedItem={setSelected}
     />
   );

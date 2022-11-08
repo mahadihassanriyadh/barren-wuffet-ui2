@@ -9,10 +9,11 @@ import FundSelector from "./FundSelector";
 import { NavLink, useParams } from "react-router-dom";
 import { useState } from "react";
 import FundActionTab from "./FundActionTab";
+import { Fund, FundDetails } from "../../api/models";
 
 export default function FundBanner(props: {
-  funds: any;
-  selected: any;
+  funds: Fund[];
+  selected?: FundDetails;
   setSelected: any;
 }) {
   const { funds, selected, setSelected } = props;
@@ -20,7 +21,7 @@ export default function FundBanner(props: {
 
   const {
     expiresIn,
-    investors,
+    investor_count,
     walletAddress,
     portfolioValue,
     startingValue,
@@ -36,7 +37,7 @@ export default function FundBanner(props: {
           <FundSelector
             selected={selected}
             setSelected={setSelected}
-            infos={funds}
+            funds={funds}
           ></FundSelector>
           <div className="flex space-x-12">
             <p className="text-xs font-medium text-gray-400">
@@ -48,7 +49,7 @@ export default function FundBanner(props: {
             <p className="text-xs font-medium text-gray-400">
               <Trans>Investors:</Trans>
               <span className="bg-gray-light py-1 px-2 rounded-xl ml-2">
-                <Trans>{investors}</Trans>
+                <Trans>{investor_count}</Trans>
               </span>
             </p>
           </div>

@@ -1,4 +1,12 @@
-import { Fund, FundStatus, Order, Pool, Position, PriceFeed } from "./models";
+import {
+  Fund,
+  FundStatus,
+  FundDetails,
+  Order,
+  Pool,
+  Position,
+  PriceFeed,
+} from "./models";
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
@@ -89,6 +97,10 @@ export class API {
   }
 
   getPositions(): Promise<Position[]> {
+    throw new Error("Not implemented");
+  }
+
+  getFundDetails(fundId?: string): Promise<FundDetails | undefined> {
     throw new Error("Not implemented");
   }
 }
