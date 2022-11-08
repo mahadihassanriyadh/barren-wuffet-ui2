@@ -11,7 +11,7 @@ import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
 
-const toDate = (ts: BigInt) =>
+const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
 
 export interface APIConfig {
@@ -100,8 +100,88 @@ export class API {
     throw new Error("Not implemented");
   }
 
-  getFundDetails(fundId?: string): Promise<FundDetails | undefined> {
-    throw new Error("Not implemented");
+  async getFundDetails(fundId?: string): Promise<FundDetails | undefined> {
+    const { fund } = await request<{ fund: Graph_Fund }>(
+      this.graphUrl,
+      gql`
+        {
+          fund(id: "${fundId}") {
+            id
+            name
+            creation_timestamp
+            closed_timestamp
+            manager_fee_percentage
+            total_collateral_raised
+            subscriptions {
+              id
+            }
+            manager {
+              id
+            }
+            subscription_constraints {
+              id
+              lockin
+              deadline
+            }
+            rules
+            positions
+          }
+        }
+      `
+    );
+    return Promise.resolve({
+      id: fund.id,
+      name: fund.name,
+      total_collateral_raised: parseFloat(
+        ethers.utils.formatEther(fund.total_collateral_raised)
+      ),
+      investor_count: fund.subscriptions.length,
+      subscriptions: fund.subscriptions?.map((s) => s.address),
+      rules: fund.rules?.map((r) => r.id),
+      positions: fund.positions?.map((p) => p.id),
+      status: fund.closed_timestamp ? FundStatus.CLOSED : FundStatus.RAISING,
+      manager_fee_percentage: fund.manager_fee_percentage,
+      manager: fund.manager.id,
+      creation_timestamp: toDate(fund.creation_timestamp) || new Date(),
+      deploy_timestamp:
+        toDate(fund.subscription_constraints.deadline) || new Date(),
+      close_timestamp: toDate(fund.subscription_constraints.lockin),
+      // TODO: calculate the rest of the fields
+      portfolioValue: 0,
+      newlyAddedMoney: 0,
+      upPercentage: 0,
+      wallet: 0,
+      assetBalances: [
+        {
+          name: "Dummy Asset A",
+          shortName: "wBTC",
+          balance: 0,
+          dollarValue: 0,
+          down: 0,
+          percentage: 0,
+        },
+        {
+          name: "Dummy Asset E",
+          shortName: "ETH",
+          balance: 0,
+          dollarValue: 0,
+          down: 0,
+          percentage: 0,
+        },
+      ],
+      protocolBalances: [
+        {
+          name: "Dummy Protocol A",
+          dollarValue: 0,
+          percentage: 0,
+        },
+        {
+          name: "Dummy Protocol B",
+          dollarValue: 0,
+          percentage: 0,
+        },
+      ],
+    });
   }
 }
 
