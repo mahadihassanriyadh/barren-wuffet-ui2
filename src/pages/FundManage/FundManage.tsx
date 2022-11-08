@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
 import FundBanner from "../../components/Fund/FundBanner";
 import openSeaLogo from "../../img/fundLogos/openSeaLogo.png";
 import netFineLogo from "../../img/fundLogos/netFineLogo.png";
@@ -9,6 +9,8 @@ import ethImg from "../../img/icons/ETHIcon.svg";
 import curveImg from "../../img/icons/curveIcon.svg";
 import dopexImg from "../../img/icons/dopexIcon.svg";
 import { FundType } from "../../api/models";
+import { t } from "@lingui/macro";
+import Error from "../../components/ui/Error";
 
 const funds: FundType[] = [
   {
@@ -158,15 +160,26 @@ const funds: FundType[] = [
 ];
 
 const FundManage = () => {
-  const [selected, setSelected] = useState(funds[0]);
+  const { fundId } = useParams();
+  const navigate = useNavigate();
+  const fund = funds.find((fund) => fund.id === Number(fundId));
+
   return (
-    <div>
-      <FundBanner
-        funds={funds}
-        selected={selected}
-        setSelected={setSelected}
-      ></FundBanner>
-      <Outlet context={[selected]} />
+    <div className="container mx-auto my-5">
+      {fund ? (
+        <div>
+          <FundBanner
+            funds={funds}
+            selected={fund}
+            setSelected={(newFund: FundType) =>
+              navigate(`/fund/${newFund.id}/portfolio`)
+            }
+          ></FundBanner>
+          <Outlet context={[fund]} />
+        </div>
+      ) : (
+        <Navigate to={`/fund/${funds[0].id}/portfolio`} />
+      )}
     </div>
   );
 };
