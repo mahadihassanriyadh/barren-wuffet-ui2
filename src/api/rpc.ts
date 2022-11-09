@@ -15,21 +15,24 @@ import FundContract from "../contracts/types/Fund";
 
 import { getContract } from "../config/addresses";
 import { ERC20_DECIMALS } from "../config/numbers";
-import { Address, ETH_ADDRESS, getEthToken, Token } from "../config/tokens";
+import {
+  Address,
+  ETH_ADDRESS,
+  getEthToken,
+  Token,
+  toTokenVal,
+} from "../config/tokens";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
-import { parseEther } from "ethers/lib/utils";
 
 const factoryContractABI = BWContract.abi;
 const fundContractABI = FundContract.abi;
 
-// TODO: THIS IS NOT QUITE CORRECT. USDC has 6 decimals, not 18.
-const toTokenVal = (val: number) => parseEther(val.toString()); //BN.from(val).mul(ERC20_DECIMALS);
 const toSeconds = (val: Date) => BN.from(Math.round(val.getTime() / 1000));
 
-export function useFundBalance(fundId: Address, tokenAddress: Address) {
+export function useFundBalance(fundId: Address, tokenAddress?: Address) {
   return useBalance({
-    addressOrName: fundId,
+    addressOrName: !!tokenAddress ? fundId : undefined, // we dont want it to run if no tokenAddress
     token: tokenAddress === ETH_ADDRESS ? undefined : tokenAddress,
   });
 }

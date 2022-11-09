@@ -2,15 +2,16 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
-import { getTokens } from "../../config/tokens";
+import { Address, getTokens } from "../../config/tokens";
 
 import SwapBox from "../../components/SwapBox/SwapBox";
 import ActionSelector from "../../components/Fund/ActionSelector";
-import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";
 import PoolsList from "../../components/Fund/PoolsList";
+import { useParams } from "react-router-dom";
+import OpenOrders from "../../components/Fund/OpenOrders";
 
 const FundYield = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const FundYield = () => {
   }, []);
 
   const { chain } = useNetwork();
+  const { fundId } = useParams<{ fundId: Address }>();
   const [actionToPerform, setActionToPerform] = useState<Action>();
 
   const tokens = chain ? getTokens(chain.id) : [];
@@ -30,7 +32,7 @@ const FundYield = () => {
             options={[
               {
                 label: t`Positions`,
-                content: <TradingOrders />,
+                content: <OpenOrders />,
               },
               {
                 label: t`Orders`,
@@ -75,7 +77,7 @@ const FundYield = () => {
           </div>
         </div>
         <div className="Exchange-right">
-          <SwapBox tokens={tokens} />
+          {fundId && <SwapBox fundId={fundId} tokens={tokens} />}
         </div>
         <div className="Exchange-lists small">
           <OrderList />

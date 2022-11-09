@@ -93,11 +93,11 @@ export class API {
     throw new Error("Not implemented");
   }
 
-  getOpenOrders(): Promise<Order[]> {
+  async getOpenOrders(): Promise<Order[]> {
     throw new Error("Not implemented");
   }
 
-  getPositions(): Promise<Position[]> {
+  async getPositions(): Promise<Position[]> {
     throw new Error("Not implemented");
   }
 

@@ -3,6 +3,7 @@
 // from the fund contract.
 
 import { BigNumber, constants } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 export type Address = `0x${string}`;
 
@@ -692,6 +693,14 @@ const tokenList: {
       chainId: 5,
       logoURI: "https://wallet-asset.matic.network/img/tokens/usdc.svg",
     },
+    {
+      name: "Ethereum",
+      decimals: 18,
+      symbol: "ETH",
+      address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      chainId: 5,
+      logoURI: "https://wallet-asset.matic.network/img/tokens/usdc.svg",
+    },
   ],
   timestamp: "2020-12-11T17:08:18.941Z",
   version: { major: 1, minor: 3, patch: 0 },
@@ -710,3 +719,9 @@ export function getTokens(chainId: number, fundId = null) {
 export function getEthToken(chainId: number = 1) {
   return ETH_TOKEN;
 }
+
+export function toTokenVal(val: number, decimals?: 18) {
+  return parseUnits(val.toString(), decimals);
+}
+
+export const fromTokenVal = formatUnits;

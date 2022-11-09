@@ -6,6 +6,7 @@ import { Input } from "../Form/Input";
 import { calculateAmountReceived, calculateAmountToSend } from "./SwapBox";
 import { AmountToSendInput } from "./AmountToSendInput";
 import { MinAmountInput } from "./MinAmountInput";
+import { BigNumber as BN } from "ethers";
 
 export function OCOOptions(props: {
   fromToken?: Token;
@@ -13,8 +14,8 @@ export function OCOOptions(props: {
   price: number;
   tokenInPriceUSD?: number;
   tokenOutPriceUSD?: number;
-  amountFromAvailable: number;
-  amountToAvailable: number;
+  amountFromAvailable?: BN;
+  amountToAvailable?: BN;
 }) {
   const {
     fromToken,
@@ -32,8 +33,15 @@ export function OCOOptions(props: {
   const [amountToSendBuy, setAmountToSendBuy] = useState(amountFromAvailable);
   const [amountToSendSell, setAmountToSendSell] = useState(amountToAvailable);
 
-  const toBuyAmount = calculateAmountReceived(amountToSendBuy, limitBuyPrice);
+  const toBuyAmount = calculateAmountReceived(
+    fromToken,
+    toToken,
+    amountToSendBuy,
+    limitBuyPrice
+  );
   const toSellAmount = calculateAmountReceived(
+    fromToken,
+    toToken,
     amountToSendSell,
     1 / limitSellPrice
   );
@@ -73,8 +81,13 @@ export function OCOOptions(props: {
           price={limitBuyPrice}
           tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={true}
-          onChange={(value: number) => {
-            const swapAmt = calculateAmountToSend(value, limitBuyPrice);
+          onChange={(value: BN) => {
+            const swapAmt = calculateAmountToSend(
+              fromToken,
+              toToken,
+              value,
+              limitBuyPrice
+            );
             swapAmt && setAmountToSendBuy(swapAmt);
           }}
         />
@@ -113,8 +126,13 @@ export function OCOOptions(props: {
           price={limitSellPrice}
           tokenOutPriceUSD={tokenInPriceUSD}
           isEnabled={true}
-          onChange={(value: number) => {
-            const swapAmt = calculateAmountToSend(value, 1 / limitSellPrice);
+          onChange={(value: BN) => {
+            const swapAmt = calculateAmountToSend(
+              fromToken,
+              toToken,
+              value,
+              1 / limitSellPrice
+            );
             swapAmt && setAmountToSendSell(swapAmt);
           }}
         />

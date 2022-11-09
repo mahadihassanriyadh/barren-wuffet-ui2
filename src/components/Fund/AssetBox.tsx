@@ -12,7 +12,7 @@ const AssetBox = (props: {
     percentage?: any;
     address: Address;
   };
-  fundId: any;
+  fundId: Address;
 }) => {
   const { img, name, dollarValue, down, percentage, address } = props.asset;
   const fundId = props.fundId;

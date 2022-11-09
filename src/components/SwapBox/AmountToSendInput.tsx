@@ -1,4 +1,5 @@
 import { t } from "@lingui/macro";
+import { BigNumber as BN } from "ethers";
 import React from "react";
 import { Token } from "../../config/tokens";
 import { Input } from "../Form/Input";
@@ -6,9 +7,9 @@ import Slider from "../Form/Slider";
 
 export function AmountToSendInput(props: {
   fromToken?: Token;
-  amountToSend?: number;
-  setAmountToSend: (val: number) => void;
-  amountFromAvailable?: number;
+  amountToSend?: BN;
+  setAmountToSend: (val: BN) => void;
+  amountFromAvailable?: BN;
 }) {
   const { fromToken, amountToSend, setAmountToSend, amountFromAvailable } =
     props;
@@ -16,31 +17,39 @@ export function AmountToSendInput(props: {
   const sliderVal =
     (amountToSend &&
       amountFromAvailable &&
-      Math.round((amountToSend * 100) / amountFromAvailable)) ||
+      !amountFromAvailable.isZero() &&
+      Math.round(amountToSend.mul(100).div(amountFromAvailable).toNumber())) ||
     0;
   return (
-    <div>
-      <div className="mt-4 space-y-3">
-        <Input
-          type="number"
-          name={t`${fromToken?.name} Amount`}
-          id="amountToSend"
-          value={amountToSend}
-          placeholder={t`Amount to send`}
-          onChange={(value) =>
-            amountFromAvailable &&
-            setAmountToSend(Math.min(amountFromAvailable, value))
-          }
-          required
-        />
-      </div>
-      <Slider
-        value={sliderVal}
-        onChange={(val) =>
-          amountFromAvailable &&
-          setAmountToSend(Math.round((val / 100) * amountFromAvailable))
-        }
-      />
-    </div>
+    <>
+      {fromToken && (
+        <div>
+          <div className="mt-4 space-y-3">
+            <Input
+              type="bignumber"
+              name={t`${fromToken.name} Amount`}
+              id="amountToSend"
+              value={amountToSend}
+              decimals={fromToken.decimals}
+              placeholder={t`Amount to send`}
+              onChange={(value) =>
+                amountFromAvailable &&
+                setAmountToSend(
+                  amountFromAvailable.lte(value) ? amountFromAvailable : value
+                )
+              }
+              required
+            />
+          </div>
+          <Slider
+            value={sliderVal}
+            onChange={(val) =>
+              amountFromAvailable &&
+              setAmountToSend(amountFromAvailable.mul(val).div(100))
+            }
+          />
+        </div>
+      )}
+    </>
   );
 }

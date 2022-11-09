@@ -104,34 +104,34 @@ const OpenPositions = (props: {}) => {
 
   return (
     <div>
-      <Tabs
-        options={[
-          {
-            label: t`Perps/Swaps`,
-            content: (
-              <Table
-                data={spotPositions}
-                columns={spotPositionsColumns}
-                error={error}
-              />
-            ),
-          },
-          {
-            label: t`LP`,
-            content: (
-              <Table
-                data={lpPositions}
-                columns={lpPositionsColumns}
-                error={error}
-              />
-            ),
-          },
-        ]}
-      />
+      {data && (
+        <Tabs
+          options={[
+            {
+              label: t`Perps/Swaps`,
+              content: (
+                <Table
+                  data={spotPositions}
+                  columns={spotPositionsColumns}
+                  error={error}
+                />
+              ),
+            },
+            {
+              label: t`LP`,
+              content: (
+                <Table
+                  data={lpPositions}
+                  columns={lpPositionsColumns}
+                  error={error}
+                />
+              ),
+            },
+          ]}
+        />
+      )}
     </div>
   );
 };
-
-OpenPositions.whyDidYouRender = true;
 
 export default OpenPositions;

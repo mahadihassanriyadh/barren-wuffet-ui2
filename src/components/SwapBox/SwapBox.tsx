@@ -1,7 +1,7 @@
 import { t, Trans } from "@lingui/macro";
 import React from "react";
 import { useState } from "react";
-import { Token } from "../../config/tokens";
+import { Address, Token } from "../../config/tokens";
 import Button from "../Button/Button";
 import Checkbox from "../Form/Checkbox";
 import TokenSelector from "../Form/TokenSelector";
@@ -15,38 +15,65 @@ import { LimitPriceInput } from "./LimitPriceInput";
 import { MinAmountInput } from "./MinAmountInput";
 import { AmountToSendInput } from "./AmountToSendInput";
 import { TwapOptions } from "./TwapOptions";
+import { useFundBalance } from "../../api/rpc";
+import { BigNumber as BN, BigNumberish } from "ethers";
+import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 
-function isNumber(n: any): boolean {
-  return !isNaN(parseFloat(n)) && !isNaN(n - 0);
-}
-
+const pow = (decimals: number) => BN.from(10).pow(decimals);
 export function calculateAmountReceived(
-  amountToSend: any,
-  price: any
-): number | undefined {
-  if (!isNumber(price) || !isNumber(amountToSend)) return undefined;
-  return amountToSend * price;
+  tokenToSend?: Token,
+  tokenToReceive?: Token,
+  amountToSend?: BN,
+  price?: BigNumberish
+): BN | undefined {
+  if (
+    price === undefined ||
+    tokenToSend === undefined ||
+    tokenToReceive === undefined
+  )
+    return undefined;
+  return amountToSend
+    ?.mul(price)
+    .mul(pow(tokenToReceive.decimals))
+    .div(pow(tokenToSend.decimals));
 }
 
 export function calculateAmountToSend(
-  amountToReceive: any,
-  price: any
-): number | undefined {
-  if (!isNumber(price) || !isNumber(amountToReceive)) return undefined;
-  return amountToReceive / price;
+  tokenToSend?: Token,
+  tokenToReceive?: Token,
+  amountToReceive?: BN,
+  price?: BigNumberish
+): BN | undefined {
+  if (
+    price === undefined ||
+    tokenToSend === undefined ||
+    tokenToReceive === undefined
+  )
+    return undefined;
+  return amountToReceive
+    ?.mul(pow(tokenToSend.decimals))
+    .div(pow(tokenToReceive.decimals))
+    .div(price);
 }
 
-export default function SwapBox(props: { tokens: Token[] }) {
-  const spotPrice = 20;
-  const amountFromAvailable = 100;
-  const amountToAvailable = 20;
+export default function SwapBox(props: { tokens: Token[]; fundId: Address }) {
+  const { tokens, fundId } = props;
+
+  const spotPrice = 2000;
   const tokenOutPriceUSD = 1;
   const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
 
-  const { tokens } = props;
   const [fromToken, setFromToken] = useState<Token | undefined>(tokens[0]);
   const [toToken, setToToken] = useState<Token | undefined>(tokens[0]);
-  const [amountToSend, setAmountToSend] = useState(10);
+  const { data: balanceFrom } = useFundBalance(fundId, fromToken?.address);
+  const { data: balanceTo } = useFundBalance(fundId, toToken?.address);
+  const amountFromAvailable = balanceFrom?.value;
+  const amountToAvailable = balanceTo?.value;
+
+  const [amountToSend, setAmountToSend] = useState<BN>(
+    amountFromAvailable || BN.from(0)
+  );
+
   const [useTwap, setUseTwap] = useState(false);
   const [tradeOption, setTradeOption] = useState(TradeOptions.LIMIT);
   const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
@@ -73,7 +100,12 @@ export default function SwapBox(props: { tokens: Token[] }) {
       (1 - (trailingPercent || 0) / 100) * (limitPrice || 0)) ||
     undefined;
   const enableToAmount = !!toPrice;
-  const toAmount = calculateAmountReceived(amountToSend, toPrice);
+  const toAmount = calculateAmountReceived(
+    fromToken,
+    toToken,
+    amountToSend,
+    toPrice
+  );
 
   return (
     <div>
@@ -87,10 +119,18 @@ export default function SwapBox(props: { tokens: Token[] }) {
         />
 
         <span>
-          <Trans>
-            {amountFromAvailable} available (${" "}
-            {tokenInPriceUSD * amountFromAvailable})
-          </Trans>
+          {amountFromAvailable && fromToken && (
+            <Trans>
+              {formatUnits(amountFromAvailable, fromToken.decimals)} available
+              (${" "}
+              {tokenInPriceUSD &&
+                formatUnits(
+                  amountFromAvailable.mul(tokenInPriceUSD),
+                  fromToken.decimals
+                )}
+              )
+            </Trans>
+          )}
         </span>
       </div>
       {tradeOption !== TradeOptions.OCO && (
@@ -107,10 +147,17 @@ export default function SwapBox(props: { tokens: Token[] }) {
         />
       </div>
       <span>
-        <Trans>
-          {amountToAvailable} available (${" "}
-          {tokenOutPriceUSD * amountToAvailable})
-        </Trans>
+        {amountToAvailable && toToken && (
+          <Trans>
+            {formatUnits(amountToAvailable, toToken.decimals)} available (${" "}
+            {tokenOutPriceUSD &&
+              formatUnits(
+                amountToAvailable.mul(tokenOutPriceUSD),
+                toToken.decimals
+              )}
+            )
+          </Trans>
+        )}
       </span>
       <div>
         <Trans>Current Price: {spotPrice}</Trans>
@@ -159,8 +206,13 @@ export default function SwapBox(props: { tokens: Token[] }) {
           price={toPrice}
           tokenOutPriceUSD={tokenOutPriceUSD}
           isEnabled={enableToAmount}
-          onChange={(value: number) => {
-            const swapAmt = calculateAmountToSend(value, toPrice);
+          onChange={(value: BN) => {
+            const swapAmt = calculateAmountToSend(
+              fromToken,
+              toToken,
+              value,
+              toPrice
+            );
             swapAmt && setAmountToSend(swapAmt);
           }}
         />

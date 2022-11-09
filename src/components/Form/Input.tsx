@@ -1,9 +1,17 @@
+import { BigNumber } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 import debounce from "lodash.debounce";
 
 import { FunctionComponent, useMemo, useState } from "react";
 import calendarIcon from "../../img/icons/calendarYellowIcon.svg";
 
-type InputType = "number" | "text" | "password" | "email" | "date";
+type InputType =
+  | "number"
+  | "text"
+  | "password"
+  | "email"
+  | "date"
+  | "bignumber";
 
 interface InputPropsTemplate<T>
   extends Omit<
@@ -25,11 +33,20 @@ interface NumberInputProps extends InputPropsTemplate<number> {
   type: "number";
 }
 
+interface BigNumberInputProps extends InputPropsTemplate<BigNumber> {
+  type: "bignumber";
+  decimals: number;
+}
+
 interface DateInputProps extends InputPropsTemplate<Date> {
   type: "date";
 }
 
-type InputProps = DateInputProps | TextInputProps | NumberInputProps;
+type InputProps =
+  | DateInputProps
+  | TextInputProps
+  | NumberInputProps
+  | BigNumberInputProps;
 
 export const Input: FunctionComponent<InputProps> = (props) => {
   const { id, name } = props || {};
@@ -49,6 +66,7 @@ export const Input: FunctionComponent<InputProps> = (props) => {
           />
         )}
         {props.type === "date" && <DateInput {...props} />}
+        {props.type === "bignumber" && <BigNumberInput {...props} />}
         {props.type === "number" && <NumberInput {...props} />}
         {["text", "password", "email", undefined].includes(props.type) && (
           <DefaultInput {...props} />
@@ -94,6 +112,17 @@ const NumberInput: FunctionComponent<NumberInputProps> = (props) => {
       {...props}
       value={props.value?.toString()}
       onChange={(value) => props.onChange(parseFloat(value))}
+    />
+  );
+};
+
+const BigNumberInput: FunctionComponent<BigNumberInputProps> = (props) => {
+  return (
+    <DefaultInput
+      {...props}
+      type="text"
+      value={props.value ? formatUnits(props.value, props.decimals) : ""}
+      onChange={(value) => props.onChange(parseUnits(value, props.decimals))}
     />
   );
 };

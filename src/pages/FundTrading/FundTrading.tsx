@@ -2,14 +2,15 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
-import { getTokens } from "../../config/tokens";
+import { Address, getTokens } from "../../config/tokens";
 import SwapBox from "../../components/SwapBox/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
-import TradingOrders from "../../components/Fund/OpenOrders";
 import Tabs from "../../components/Tabs/Tabs";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import { Action, ActionTypes } from "../../config/actions";
+import { useParams } from "react-router-dom";
 import OpenPositions from "../../components/Fund/OpenPositions";
+import OpenOrders from "../../components/Fund/OpenOrders";
 
 const OrderList: FunctionComponent = (props) => {
   return (
@@ -27,7 +28,7 @@ const OrderList: FunctionComponent = (props) => {
             },
             {
               label: t`Orders`,
-              content: <TradingOrders />,
+              content: <OpenOrders />,
             },
           ]}
         />
@@ -43,6 +44,7 @@ const FundTrading = () => {
   }, []);
 
   const { chain } = useNetwork();
+  const { fundId } = useParams<{ fundId: Address }>();
 
   const tokens = chain ? getTokens(chain.id) : [];
 
@@ -84,7 +86,7 @@ const FundTrading = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
-            <SwapBox tokens={tokens} />
+            {fundId && <SwapBox fundId={fundId} tokens={tokens} />}
           </div>
         </div>
       </div>
