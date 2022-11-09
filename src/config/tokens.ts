@@ -11,7 +11,7 @@ export interface Token {
   name: string;
   symbol: string;
   decimals: number;
-  address: string;
+  address: Address;
   logoURI?: string;
   tags?: string[];
 }

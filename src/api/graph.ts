@@ -10,6 +10,7 @@ import {
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
+import { Address } from "../config/tokens";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
@@ -60,7 +61,7 @@ export class API {
     return Promise.resolve(
       data.funds.map(
         (fund: Graph_Fund): Fund => ({
-          id: fund.id,
+          id: fund.id as Address,
           name: fund.name,
           // formatUnits(number, decimals) is the right way to do this.
           // but we need to store a map of the decimals for the asset in question
@@ -130,7 +131,7 @@ export class API {
       `
     );
     return Promise.resolve({
-      id: fund.id,
+      id: fund.id as Address,
       name: fund.name,
       total_collateral_raised: parseFloat(
         ethers.utils.formatEther(fund.total_collateral_raised)
@@ -153,17 +154,17 @@ export class API {
       wallet: 0,
       assetBalances: [
         {
+          address: "0x124",
           name: "Dummy Asset A",
           shortName: "wBTC",
-          balance: 0,
           dollarValue: 0,
           down: 0,
           percentage: 0,
         },
         {
+          address: "0x224",
           name: "Dummy Asset E",
           shortName: "ETH",
-          balance: 0,
           dollarValue: 0,
           down: 0,
           percentage: 0,
@@ -171,11 +172,13 @@ export class API {
       ],
       protocolBalances: [
         {
+          address: "0x555",
           name: "Dummy Protocol A",
           dollarValue: 0,
           percentage: 0,
         },
         {
+          address: "0x666",
           name: "Dummy Protocol B",
           dollarValue: 0,
           percentage: 0,

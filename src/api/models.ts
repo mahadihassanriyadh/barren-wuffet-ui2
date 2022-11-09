@@ -1,3 +1,5 @@
+import { Address } from "../config/tokens";
+
 export interface Pool {
   key: string;
   indexToken: {
@@ -11,7 +13,7 @@ export interface Pool {
 }
 
 export interface Fund {
-  id: string;
+  id: Address;
   name: string;
   manager: string;
   creation_timestamp: Date;

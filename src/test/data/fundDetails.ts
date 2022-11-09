@@ -19,6 +19,7 @@ export const fundDetails: FundDetails[] = [
     wallet: 8323,
     assetBalances: [
       {
+        address: "0x123",
         name: "Bitcoin",
         shortName: "wBTC",
         balance: 30,
@@ -28,6 +29,7 @@ export const fundDetails: FundDetails[] = [
         img: btcImg,
       },
       {
+        address: "0x234",
         name: "Ethereum",
         shortName: "ETH",
         balance: 40,
@@ -39,12 +41,14 @@ export const fundDetails: FundDetails[] = [
     ],
     protocolBalances: [
       {
+        address: "0x455",
         name: "Curve",
         dollarValue: 564,
         percentage: 23.6,
         img: curveImg,
       },
       {
+        address: "0x645",
         name: "Dopex",
         dollarValue: 2348,
         percentage: 5.8,
@@ -63,8 +67,8 @@ export const fundDetails: FundDetails[] = [
     wallet: 5643,
     assetBalances: [
       {
+        address: "0x123",
         name: "Bitcoin",
-        shortName: "wBTC",
         balance: 53,
         dollarValue: 584993431,
         down: 600,
@@ -72,8 +76,8 @@ export const fundDetails: FundDetails[] = [
         img: btcImg,
       },
       {
+        address: "0x234",
         name: "Ethereum",
-        shortName: "ETH",
         balance: 49,
         dollarValue: 293429,
         down: 50,
@@ -83,12 +87,14 @@ export const fundDetails: FundDetails[] = [
     ],
     protocolBalances: [
       {
+        address: "0x455",
         name: "Curve",
         dollarValue: 5634,
         percentage: 23.6,
         img: curveImg,
       },
       {
+        address: "0x645",
         name: "Dopex",
         dollarValue: 2348,
         percentage: 14.8,
@@ -107,6 +113,7 @@ export const fundDetails: FundDetails[] = [
     wallet: 6732,
     assetBalances: [
       {
+        address: "0x123",
         name: "Bitcoin",
         shortName: "wBTC",
         balance: 49,
@@ -116,6 +123,7 @@ export const fundDetails: FundDetails[] = [
         img: btcImg,
       },
       {
+        address: "0x234",
         name: "Ethereum",
         shortName: "ETH",
         balance: 38,
@@ -127,12 +135,14 @@ export const fundDetails: FundDetails[] = [
     ],
     protocolBalances: [
       {
+        address: "0x455",
         name: "Curve",
         dollarValue: 343242,
         percentage: 29.6,
         img: curveImg,
       },
       {
+        address: "0x645",
         name: "Dopex",
         dollarValue: 754352,
         percentage: 12.8,
