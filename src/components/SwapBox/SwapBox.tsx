@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { t, Trans } from "@lingui/macro";
 import { useState } from "react";
-import { Address, Token } from "../../config/tokens";
+import { Address, Token, toTokenVal } from "../../config/tokens";
 import Button from "../Button/Button";
 import Checkbox from "../Form/Checkbox";
 import TokenSelector from "../Form/TokenSelector";
@@ -19,7 +19,10 @@ import Error from "../ui/Error";
 import { useConnectAndWrite, useFundBalance } from "../../api/rpc";
 import { BigNumber as BN, BigNumberish } from "ethers";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
-import { usePrepareCreateSwapRule } from "../../api/trading";
+import {
+  usePrepareCreateAndActivateSwapRule,
+  usePrepareCreateSwapRule,
+} from "../../api/trading";
 
 const pow = (decimals: number) => BN.from(10).pow(decimals);
 export function calculateAmountReceived(
@@ -111,6 +114,7 @@ export default function SwapBox({
     (tradeOption === TradeOptions.TRAILING_STOP &&
       (1 - (trailingPercent || 0) / 100) * (limitPrice || 0)) ||
     undefined;
+
   const enableToAmount = !!toPrice;
   const toAmount = calculateAmountReceived(
     fromToken,
@@ -120,15 +124,15 @@ export default function SwapBox({
   );
   const [isSaving, setIsSaving] = useState(false);
 
-  const { isLoading, error, isSuccess, write } = usePrepareCreateSwapRule({
-    fundId,
-    fromToken: fromToken,
-    toToken: toToken,
-    limitPrice: amountToSend,
-    eventCallback: ({ ruleHash }) => {
-      console.log(ruleHash);
-    },
-  });
+  const { isLoading, error, isSuccess, write } =
+    usePrepareCreateAndActivateSwapRule({
+      fundId,
+      fromToken: fromToken,
+      toToken: toToken,
+      limitPrice: toTokenVal(toPrice || spotPrice),
+      collateral: amountToSend,
+      fees: BN.from(0),
+    });
 
   useConnectAndWrite(isSaving, setIsSaving, write);
 

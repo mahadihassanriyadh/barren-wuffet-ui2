@@ -20,6 +20,9 @@ import {
 } from "../config/tokens";
 import { GT, TIMESTAMP_TRIGGER_TYPE } from "./models";
 import { AmountToSendInput } from "../components/SwapBox/AmountToSendInput";
+import { useEffect, useState } from "react";
+import { useConnectAndWrite } from "./rpc";
+import { write } from "fs";
 
 function createSushiSwapAction(
   callee: Address,
@@ -42,6 +45,65 @@ function createSushiSwapAction(
     ) as Address,
     inputTokens: [toContractToken(tokenIn)],
     outputTokens: [toContractToken(tokenOut)],
+  };
+}
+
+export function usePrepareCreateAndActivateSwapRule(values: {
+  fundId: Address;
+  fromToken: Token;
+  toToken: Token;
+  limitPrice: BN;
+  collateral: BN;
+  fees: BN;
+}) {
+  const { fundId, collateral, fees } = values;
+  const [ruleId, setRuleId] = useState<Address | undefined>(undefined);
+  const [isSwapInitiated, setIsSwapInitiated] = useState<boolean>(false);
+
+  const resp = usePrepareCreateSwapRule({
+    ...values,
+    eventCallback: ({ ruleHash }) => {
+      console.log(`Rule hash: ${ruleHash}`);
+      // this is not a good idea, because the listener will be called on prepare and might give old rules hashes.
+      // we need to call it after write, and make sure it only returns a new hash.
+      setRuleId(ruleHash);
+    },
+  });
+
+  const { writeAsync: writeCollateralAsync } = usePrepareAddRuleCollateral({
+    fundId,
+    ruleId,
+    collateral,
+    fees,
+  });
+
+  const { writeAsync: writeActivateAsync } = usePrepareActivateRule({
+    fundId,
+    ruleId,
+  });
+
+  useEffect(() => {
+    if (ruleId && isSwapInitiated) {
+      if (writeCollateralAsync && writeActivateAsync) {
+        writeCollateralAsync().then(() => {
+          writeActivateAsync();
+        });
+        setIsSwapInitiated(false);
+      }
+    }
+  }, [ruleId, isSwapInitiated, writeCollateralAsync, writeActivateAsync]);
+
+  const newWrite = (write: any) => () => {
+    if (write) {
+      write();
+      setRuleId(undefined);
+      setIsSwapInitiated(true);
+    }
+  };
+
+  return {
+    ...resp,
+    write: resp?.write ? newWrite(resp.write) : undefined,
   };
 }
 
@@ -73,9 +135,8 @@ export function usePrepareCreateSwapRule(values: {
     callee: chain ? getContract(chain.id, "TimestampTrigger") : "0x",
   };
 
-  const sushiSwapExactXForY = chain
-    ? getContract(chain.id, "SushiSwapExactXForY")
-    : "0x";
+  const sushiSwapExactXForY =
+    chain && getContract(chain.id, "SushiSwapExactXForY");
 
   const { config, error, isError } = usePrepareContractWrite({
     address: fundId,
@@ -85,11 +146,11 @@ export function usePrepareCreateSwapRule(values: {
       [trueTrigger],
       [
         createSushiSwapAction(
-          sushiSwapExactXForY,
+          sushiSwapExactXForY ?? "0x",
           fromToken,
           toToken,
           limitPrice,
-          getWethToken(chain?.id)?.address || "0x"
+          getWethToken(chain?.id)?.address ?? "0x"
         ),
       ],
     ],
@@ -115,27 +176,47 @@ export function usePrepareCreateSwapRule(values: {
   };
 }
 
-export function usePrepareAddRuleCollateral(
-  fundId: Address,
-  ruleId: Address,
-  collateral: BN,
-  fees: BN
-) {
-  usePrepareContractWrite({
+export function usePrepareAddRuleCollateral(values: {
+  fundId: Address;
+  ruleId?: Address;
+  collateral?: BN;
+  fees?: BN;
+}) {
+  const { fundId, ruleId, collateral, fees } = values;
+  const { config, error, isError } = usePrepareContractWrite({
     address: fundId,
     abi: FundContract.abi,
     functionName: "addRuleCollateral",
-    args: [ruleId, [collateral], [fees]],
+    args: [ruleId ?? "0x", [collateral ?? BN.from(0)], [fees ?? BN.from(0)]],
     enabled: !!(ruleId && fundId),
   });
+  const resp = useContractWrite(config);
+
+  return {
+    ...resp,
+    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
+    error,
+    isError,
+  };
 }
 
-export function usePrepareActivateRule(fundId: Address, ruleId: Address) {
-  return usePrepareContractWrite({
+export function usePrepareActivateRule(values: {
+  fundId: Address;
+  ruleId?: Address;
+}) {
+  const { fundId, ruleId } = values;
+  const { config, error, isError } = usePrepareContractWrite({
     address: fundId,
     abi: FundContract.abi,
     functionName: "activateRule",
-    args: [ruleId],
+    args: [ruleId ?? "0x"],
     enabled: !!(ruleId && fundId),
   });
+  const resp = useContractWrite(config);
+  return {
+    ...resp,
+    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
+    error,
+    isError,
+  };
 }
