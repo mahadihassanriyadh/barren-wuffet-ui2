@@ -1,4 +1,6 @@
-const CONTRACTS: Record<number, Record<string, string>> = {
+import { Address } from "./tokens";
+
+const CONTRACTS: Record<number, Record<string, Address>> = {
   421613: {
     // arbitrum testnet
     BarrenWuffet: "0x0000000000000000000000000000000000000000",
@@ -21,6 +23,8 @@ const CONTRACTS: Record<number, Record<string, string>> = {
     SushiSwapExactXForY: "0xdacdf9a4B94E37fD3E775268EBe736fFFd08220F",
     SushiAddLiquidity: "0xb17EfEd80d8785BAd09cfB5db97B1b91AA4bfaad",
     SushiRemoveLiquidity: "0xdb3E60189101b016D5239B4C11126aD8B6E6a1b5",
+    TimestampTrigger: "0x9C17d6CdAa4A73dc4872613E6E6C29F147605903",
+    PriceTrigger: "0xA0f79d5995312d8ceD07aF8Aa44eb3DcFb3846cf",
   },
   31337: {
     BarrenWuffet: "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
@@ -31,7 +35,7 @@ const CONTRACTS: Record<number, Record<string, string>> = {
   },
 };
 
-export function getContract(chainId: number, name: string) {
+export function getContract(chainId: number, name: string): Address {
   if (!CONTRACTS[chainId]) {
     throw new Error(`Unknown chainId ${chainId}`);
   }

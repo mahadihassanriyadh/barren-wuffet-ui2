@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
-import { Address, getTokens } from "../../config/tokens";
+import { Address, getTokens, Token } from "../../config/tokens";
 import SwapBox from "../../components/SwapBox/SwapBox";
 import PriceChart from "../../components/Charts/PriceChart";
 import Tabs from "../../components/Tabs/Tabs";
@@ -46,10 +46,10 @@ const FundTrading = () => {
   const { chain } = useNetwork();
   const { fundId } = useParams<{ fundId: Address }>();
 
-  const tokens = chain ? getTokens(chain.id) : [];
+  const tokens = chain ? getTokens(chain.id, fundId) : [];
 
-  const fromTokenAddress = tokens[0]?.address;
-  const toTokenAddress = tokens[1]?.address;
+  const [fromToken, setFromToken] = useState<Token>(tokens[0]);
+  const [toToken, setToToken] = useState<Token>(tokens[0]);
 
   // const indexPricesUrl = getServerUrl(chainId, "/prices");
   // const { data: indexPrices } = useQuery([indexPricesUrl], {
@@ -67,18 +67,18 @@ const FundTrading = () => {
               <ActionSelector
                 chainId={chain.id}
                 selectedAction={actionToPerform}
-                onSelectAction={(action: Action) => setActionToPerform(action)}
+                onSelectAction={setActionToPerform}
                 actionType={ActionTypes.Trading}
               />
             )}
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-5 py-1">
-            <PriceChart
+            {/* <PriceChart
               title={"USD/ETH"}
               priceFeed={() => []}
-              fromToken={fromTokenAddress}
-              toToken={toTokenAddress}
-            />
+              fromToken={fromToken?.address}
+              toToken={toToken?.address}
+            /> */}
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             <OrderList />
@@ -86,7 +86,16 @@ const FundTrading = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
-            {fundId && <SwapBox fundId={fundId} tokens={tokens} />}
+            {fundId && tokens?.length > 0 && (
+              <SwapBox
+                tokens={tokens}
+                fundId={fundId}
+                fromToken={fromToken || tokens[0]}
+                toToken={toToken || tokens[0]}
+                setFromToken={setFromToken}
+                setToToken={setToToken}
+              />
+            )}
           </div>
         </div>
       </div>

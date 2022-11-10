@@ -701,6 +701,14 @@ const tokenList: {
       chainId: 5,
       logoURI: "https://wallet-asset.matic.network/img/tokens/usdc.svg",
     },
+    {
+      name: "Wrapped Ethereum",
+      decimals: 18,
+      symbol: "WETH",
+      address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      chainId: 5,
+      logoURI: "https://wallet-asset.matic.network/img/tokens/usdc.svg",
+    },
   ],
   timestamp: "2020-12-11T17:08:18.941Z",
   version: { major: 1, minor: 3, patch: 0 },
@@ -712,7 +720,7 @@ tokenList.tokens = tokenList.tokens.concat(
     .map((t) => ({ ...t, chainId: 31337 }))
 );
 
-export function getTokens(chainId: number, fundId = null) {
+export function getTokens(chainId: number, fundId?: Address) {
   return tokenList.tokens.filter((token) => token.chainId === chainId);
 }
 
@@ -720,8 +728,22 @@ export function getEthToken(chainId: number = 1) {
   return ETH_TOKEN;
 }
 
+export function getWethToken(chainId: number = 1) {
+  return tokenList.tokens.find(
+    (t) => t.chainId === chainId && t.symbol === "WETH"
+  );
+}
+
 export function toTokenVal(val: number, decimals?: 18) {
   return parseUnits(val.toString(), decimals);
+}
+
+export function toContractToken(token: Token): ContractToken {
+  return {
+    addr: token.address,
+    id: BigNumber.from(0), // this will have value for NFTs
+    t: token.address === ETH_ADDRESS ? TOKEN_TYPE.NATIVE : TOKEN_TYPE.ERC20,
+  };
 }
 
 export const fromTokenVal = formatUnits;

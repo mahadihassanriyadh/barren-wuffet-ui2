@@ -76,9 +76,7 @@ const FundYield = () => {
             <PoolsList />
           </div>
         </div>
-        <div className="Exchange-right">
-          {fundId && <SwapBox fundId={fundId} tokens={tokens} />}
-        </div>
+        <div className="Exchange-right">Side bar</div>
         <div className="Exchange-lists small">
           <OrderList />
         </div>

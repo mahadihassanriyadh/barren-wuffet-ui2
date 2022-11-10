@@ -1,5 +1,5 @@
-import { t, Trans } from "@lingui/macro";
 import React from "react";
+import { t, Trans } from "@lingui/macro";
 import { useState } from "react";
 import { Address, Token } from "../../config/tokens";
 import Button from "../Button/Button";
@@ -15,9 +15,11 @@ import { LimitPriceInput } from "./LimitPriceInput";
 import { MinAmountInput } from "./MinAmountInput";
 import { AmountToSendInput } from "./AmountToSendInput";
 import { TwapOptions } from "./TwapOptions";
-import { useFundBalance } from "../../api/rpc";
+import Error from "../ui/Error";
+import { useConnectAndWrite, useFundBalance } from "../../api/rpc";
 import { BigNumber as BN, BigNumberish } from "ethers";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
+import { usePrepareCreateSwapRule } from "../../api/trading";
 
 const pow = (decimals: number) => BN.from(10).pow(decimals);
 export function calculateAmountReceived(
@@ -56,15 +58,25 @@ export function calculateAmountToSend(
     .div(price);
 }
 
-export default function SwapBox(props: { tokens: Token[]; fundId: Address }) {
-  const { tokens, fundId } = props;
-
+export default function SwapBox({
+  tokens,
+  fundId,
+  fromToken,
+  toToken,
+  setFromToken,
+  setToToken,
+}: {
+  tokens: Token[];
+  fundId: Address;
+  fromToken: Token;
+  toToken: Token;
+  setFromToken: (token: Token) => void;
+  setToToken: (token: Token) => void;
+}) {
   const spotPrice = 2000;
   const tokenOutPriceUSD = 1;
   const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
 
-  const [fromToken, setFromToken] = useState<Token | undefined>(tokens[0]);
-  const [toToken, setToToken] = useState<Token | undefined>(tokens[0]);
   const { data: balanceFrom } = useFundBalance(fundId, fromToken?.address);
   const { data: balanceTo } = useFundBalance(fundId, toToken?.address);
   const amountFromAvailable = balanceFrom?.value;
@@ -106,133 +118,167 @@ export default function SwapBox(props: { tokens: Token[]; fundId: Address }) {
     amountToSend,
     toPrice
   );
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { isLoading, error, isSuccess, write } = usePrepareCreateSwapRule({
+    fundId,
+    fromToken: fromToken,
+    toToken: toToken,
+    limitPrice: amountToSend,
+    eventCallback: ({ ruleHash }) => {
+      console.log(ruleHash);
+    },
+  });
+
+  useConnectAndWrite(isSaving, setIsSaving, write);
+
+  const handleFormSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setIsSaving(true);
+  };
 
   return (
     <div>
-      <div className="mt-4 space-y-3">
-        <Trans>Token In:</Trans>
+      <form onSubmit={handleFormSubmit}>
+        <div className="mt-4 space-y-3">
+          {error && <Error error={error.message} />}
+          <Trans>Token In:</Trans>
 
-        <TokenSelector
-          tokens={tokens}
-          selectedToken={fromToken}
-          setSelectedToken={setFromToken}
-        />
+          <TokenSelector
+            tokens={tokens}
+            selectedToken={fromToken}
+            setSelectedToken={setFromToken}
+          />
 
+          <span>
+            {amountFromAvailable && fromToken && (
+              <Trans>
+                {formatUnits(amountFromAvailable, fromToken.decimals)} available
+                (${" "}
+                {tokenInPriceUSD &&
+                  formatUnits(
+                    amountFromAvailable.mul(tokenInPriceUSD),
+                    fromToken.decimals
+                  )}
+                )
+              </Trans>
+            )}
+          </span>
+        </div>
+        {tradeOption !== TradeOptions.OCO && (
+          <AmountToSendInput
+            {...{
+              fromToken,
+              amountToSend,
+              setAmountToSend,
+              amountFromAvailable,
+            }}
+          />
+        )}
+        <div className="mt-4 space-y-3">
+          <Trans>Token Out:</Trans>
+          <TokenSelector
+            tokens={tokens}
+            selectedToken={toToken}
+            setSelectedToken={setToToken}
+          />
+        </div>
         <span>
-          {amountFromAvailable && fromToken && (
+          {amountToAvailable && toToken && (
             <Trans>
-              {formatUnits(amountFromAvailable, fromToken.decimals)} available
-              (${" "}
-              {tokenInPriceUSD &&
+              {formatUnits(amountToAvailable, toToken.decimals)} available (${" "}
+              {tokenOutPriceUSD &&
                 formatUnits(
-                  amountFromAvailable.mul(tokenInPriceUSD),
-                  fromToken.decimals
+                  amountToAvailable.mul(tokenOutPriceUSD),
+                  toToken.decimals
                 )}
               )
             </Trans>
           )}
         </span>
-      </div>
-      {tradeOption !== TradeOptions.OCO && (
-        <AmountToSendInput
-          {...{ fromToken, amountToSend, setAmountToSend, amountFromAvailable }}
+        <div>
+          <Trans>Current Price: {spotPrice}</Trans>
+        </div>
+        <TradeOptionSelector
+          selected={tradeOption}
+          setSelected={setTradeOption}
         />
-      )}
-      <div className="mt-4 space-y-3">
-        <Trans>Token Out:</Trans>
-        <TokenSelector
-          tokens={tokens}
-          selectedToken={toToken}
-          setSelectedToken={setToToken}
-        />
-      </div>
-      <span>
-        {amountToAvailable && toToken && (
-          <Trans>
-            {formatUnits(amountToAvailable, toToken.decimals)} available (${" "}
-            {tokenOutPriceUSD &&
-              formatUnits(
-                amountToAvailable.mul(tokenOutPriceUSD),
-                toToken.decimals
-              )}
-            )
-          </Trans>
+        {tradeOption === TradeOptions.OCO && (
+          <OCOOptions
+            fromToken={fromToken}
+            toToken={toToken}
+            price={spotPrice}
+            tokenInPriceUSD={tokenInPriceUSD}
+            tokenOutPriceUSD={tokenOutPriceUSD}
+            amountFromAvailable={amountFromAvailable}
+            amountToAvailable={amountToAvailable}
+          />
         )}
-      </span>
-      <div>
-        <Trans>Current Price: {spotPrice}</Trans>
-      </div>
-      <TradeOptionSelector
-        selected={tradeOption}
-        setSelected={setTradeOption}
-      />
-      {tradeOption === TradeOptions.OCO && (
-        <OCOOptions
-          fromToken={fromToken}
-          toToken={toToken}
-          price={spotPrice}
-          tokenInPriceUSD={tokenInPriceUSD}
-          tokenOutPriceUSD={tokenOutPriceUSD}
-          amountFromAvailable={amountFromAvailable}
-          amountToAvailable={amountToAvailable}
-        />
-      )}
-      {tradeOption === TradeOptions.LIMIT_TRIGGER && (
-        <LimitTriggerOptions
-          triggerPrice={triggerPrice}
-          setTriggerPrice={setTriggerPrice}
-        />
-      )}
-      {tradeOption === TradeOptions.TRAILING_STOP && (
-        <TrailingStopOptions
-          triggerPrice={triggerPrice}
-          setTriggerPrice={setTriggerPrice}
-          trailingPercent={trailingPercent}
-          setTrailingPercent={setTrailingPercent}
-        />
-      )}
-      {[TradeOptions.LIMIT, TradeOptions.LIMIT_TRIGGER].includes(
-        tradeOption
-      ) && (
-        <LimitPriceInput
-          price={limitPrice}
-          setPrice={(val) => setLimitPrice(val)}
-        />
-      )}
-      {tradeOption !== TradeOptions.OCO && (
-        <MinAmountInput
-          token={toToken}
-          amount={toAmount}
-          price={toPrice}
-          tokenOutPriceUSD={tokenOutPriceUSD}
-          isEnabled={enableToAmount}
-          onChange={(value: BN) => {
-            const swapAmt = calculateAmountToSend(
-              fromToken,
-              toToken,
-              value,
-              toPrice
-            );
-            swapAmt && setAmountToSend(swapAmt);
-          }}
-        />
-      )}
+        {tradeOption === TradeOptions.LIMIT_TRIGGER && (
+          <LimitTriggerOptions
+            triggerPrice={triggerPrice}
+            setTriggerPrice={setTriggerPrice}
+          />
+        )}
+        {tradeOption === TradeOptions.TRAILING_STOP && (
+          <TrailingStopOptions
+            triggerPrice={triggerPrice}
+            setTriggerPrice={setTriggerPrice}
+            trailingPercent={trailingPercent}
+            setTrailingPercent={setTrailingPercent}
+          />
+        )}
+        {[TradeOptions.LIMIT, TradeOptions.LIMIT_TRIGGER].includes(
+          tradeOption
+        ) && (
+          <LimitPriceInput
+            price={limitPrice}
+            setPrice={(val) => setLimitPrice(val)}
+          />
+        )}
+        {tradeOption !== TradeOptions.OCO && (
+          <MinAmountInput
+            token={toToken}
+            amount={toAmount}
+            price={toPrice}
+            tokenOutPriceUSD={tokenOutPriceUSD}
+            isEnabled={enableToAmount}
+            onChange={(value: BN) => {
+              const swapAmt = calculateAmountToSend(
+                fromToken,
+                toToken,
+                value,
+                toPrice
+              );
+              swapAmt && setAmountToSend(swapAmt);
+            }}
+          />
+        )}
 
-      <OrderExpiryInput expiryDate={expiryDate} setExpiryDate={setExpiryDate} />
-
-      <Checkbox
-        isChecked={useTwap}
-        label={"Enable TWAP"}
-        setIsChecked={setUseTwap}
-      />
-      {useTwap && (
-        <TwapOptions
-          {...{ batchSize, setBatchSize, intervalSeconds, setIntervalSeconds }}
+        <OrderExpiryInput
+          expiryDate={expiryDate}
+          setExpiryDate={setExpiryDate}
         />
-      )}
-      <div className="flex justify-center mt-10">
-        <Button type="submit" label={t`Confirm`} />
-      </div>
+
+        <Checkbox
+          isChecked={useTwap}
+          label={"Enable TWAP"}
+          setIsChecked={setUseTwap}
+        />
+        {useTwap && (
+          <TwapOptions
+            {...{
+              batchSize,
+              setBatchSize,
+              intervalSeconds,
+              setIntervalSeconds,
+            }}
+          />
+        )}
+        <div className="flex justify-center mt-10">
+          <Button type="submit" label={t`Confirm`} />
+        </div>
+      </form>
     </div>
   );
 }

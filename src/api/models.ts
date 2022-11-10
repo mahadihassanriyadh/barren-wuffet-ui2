@@ -87,6 +87,7 @@ export enum FundStatus {
   CLOSABLE = 2, // deposits not possible, withdraws not possible, manager can't move funds
   CLOSED = 3, // deposits not possible, withdraws possible (outputTokens), manager can take out managementFee but not move funds
 }
+
 export interface PriceFeed {
   time: string;
   open: number;
@@ -94,3 +95,8 @@ export interface PriceFeed {
   low: number;
   close: number;
 }
+
+export const GT = 0;
+export const LT = 1;
+export const PRICE_TRIGGER_TYPE = 1;
+export const TIMESTAMP_TRIGGER_TYPE = 2;
