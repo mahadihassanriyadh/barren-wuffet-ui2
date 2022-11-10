@@ -662,7 +662,6 @@ type Rule {
   actions(skip: Int = 0, first: Int = 100, orderBy: Action_orderBy, orderDirection: OrderDirection, where: Action_filter): [Action!]!
   triggers(skip: Int = 0, first: Int = 100, orderBy: Trigger_orderBy, orderDirection: OrderDirection, where: Trigger_filter): [Trigger!]!
   outputs: [BigInt!]!
-  incentive: BigInt!
   collaterals: [BigInt!]
   fund: Fund!
 }
@@ -720,14 +719,6 @@ input Rule_filter {
   outputs_contains_nocase: [BigInt!]
   outputs_not_contains: [BigInt!]
   outputs_not_contains_nocase: [BigInt!]
-  incentive: BigInt
-  incentive_not: BigInt
-  incentive_gt: BigInt
-  incentive_lt: BigInt
-  incentive_gte: BigInt
-  incentive_lte: BigInt
-  incentive_in: [BigInt!]
-  incentive_not_in: [BigInt!]
   collaterals: [BigInt!]
   collaterals_not: [BigInt!]
   collaterals_contains: [BigInt!]
@@ -769,7 +760,6 @@ enum Rule_orderBy {
   actions
   triggers
   outputs
-  incentive
   collaterals
   fund
 }

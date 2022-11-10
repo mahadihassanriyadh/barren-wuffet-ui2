@@ -3,6 +3,6 @@ sources:
   - name: barren-wuffet
     handler:
       graphql:
-        endpoint: http://localhost:8000/subgraphs/name/barren-wuffet
+        endpoint: https://api.thegraph.com/subgraphs/name/psyf/bw-goerli-v1-0
 # documents:
 #   - ./src/example-query.graphql

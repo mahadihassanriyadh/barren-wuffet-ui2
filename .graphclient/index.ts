@@ -686,7 +686,6 @@ export type Rule = {
   actions: Array<Action>;
   triggers: Array<Trigger>;
   outputs: Array<Scalars['BigInt']>;
-  incentive: Scalars['BigInt'];
   collaterals?: Maybe<Array<Scalars['BigInt']>>;
   fund: Fund;
 };
@@ -762,14 +761,6 @@ export type Rule_filter = {
   outputs_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
   outputs_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
   outputs_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
-  incentive?: InputMaybe<Scalars['BigInt']>;
-  incentive_not?: InputMaybe<Scalars['BigInt']>;
-  incentive_gt?: InputMaybe<Scalars['BigInt']>;
-  incentive_lt?: InputMaybe<Scalars['BigInt']>;
-  incentive_gte?: InputMaybe<Scalars['BigInt']>;
-  incentive_lte?: InputMaybe<Scalars['BigInt']>;
-  incentive_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  incentive_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals_not?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals_contains?: InputMaybe<Array<Scalars['BigInt']>>;
@@ -811,7 +802,6 @@ export type Rule_orderBy =
   | 'actions'
   | 'triggers'
   | 'outputs'
-  | 'incentive'
   | 'collaterals'
   | 'fund';
 
@@ -1628,7 +1618,6 @@ export type RuleResolvers<ContextType = MeshContext, ParentType extends Resolver
   actions?: Resolver<Array<ResolversTypes['Action']>, ParentType, ContextType, RequireFields<RuleactionsArgs, 'skip' | 'first'>>;
   triggers?: Resolver<Array<ResolversTypes['Trigger']>, ParentType, ContextType, RequireFields<RuletriggersArgs, 'skip' | 'first'>>;
   outputs?: Resolver<Array<ResolversTypes['BigInt']>, ParentType, ContextType>;
-  incentive?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   collaterals?: Resolver<Maybe<Array<ResolversTypes['BigInt']>>, ParentType, ContextType>;
   fund?: Resolver<ResolversTypes['Fund'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1781,7 +1770,7 @@ const barrenWuffetTransforms = [];
 const additionalTypeDefs = [] as any[];
 const barrenWuffetHandler = new GraphqlHandler({
               name: "barren-wuffet",
-              config: {"endpoint":"http://localhost:8000/subgraphs/name/barren-wuffet"},
+              config: {"endpoint":"https://api.thegraph.com/subgraphs/name/psyf/bw-goerli-v1-0"},
               baseDir,
               cache,
               pubsub,

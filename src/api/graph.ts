@@ -124,8 +124,25 @@ export class API {
               lockin
               deadline
             }
-            rules
-            positions
+            rules {
+              id
+              creation_timestamp
+              activation_timestamps            
+              deactivation_timestamps
+              execution_timestamp
+              redemption_timestamp
+              actions
+              triggers
+              outputs
+              collaterals
+            }
+            positions {
+              id
+              next_actions
+              fund
+              creation_timestamp
+              closed_timestamp
+            }
           }
         }
       `

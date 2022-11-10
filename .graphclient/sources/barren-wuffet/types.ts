@@ -668,7 +668,6 @@ export type Rule = {
   actions: Array<Action>;
   triggers: Array<Trigger>;
   outputs: Array<Scalars['BigInt']>;
-  incentive: Scalars['BigInt'];
   collaterals?: Maybe<Array<Scalars['BigInt']>>;
   fund: Fund;
 };
@@ -744,14 +743,6 @@ export type Rule_filter = {
   outputs_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
   outputs_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
   outputs_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
-  incentive?: InputMaybe<Scalars['BigInt']>;
-  incentive_not?: InputMaybe<Scalars['BigInt']>;
-  incentive_gt?: InputMaybe<Scalars['BigInt']>;
-  incentive_lt?: InputMaybe<Scalars['BigInt']>;
-  incentive_gte?: InputMaybe<Scalars['BigInt']>;
-  incentive_lte?: InputMaybe<Scalars['BigInt']>;
-  incentive_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  incentive_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals_not?: InputMaybe<Array<Scalars['BigInt']>>;
   collaterals_contains?: InputMaybe<Array<Scalars['BigInt']>>;
@@ -793,7 +784,6 @@ export type Rule_orderBy =
   | 'actions'
   | 'triggers'
   | 'outputs'
-  | 'incentive'
   | 'collaterals'
   | 'fund';
 
