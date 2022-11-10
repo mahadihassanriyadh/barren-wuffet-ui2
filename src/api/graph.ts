@@ -131,8 +131,19 @@ export class API {
               deactivation_timestamps
               execution_timestamp
               redemption_timestamp
-              actions
-              triggers
+              actions {
+                id
+                callee
+                data
+                input_tokens
+                output_tokens
+              }
+              triggers {
+                id
+                callee
+                type
+                create_time_params
+              }
               outputs
               collaterals
             }
