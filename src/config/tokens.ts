@@ -20,6 +20,7 @@ export interface Token {
 export const ETH_ADDRESS: Address =
   "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 export const USD_ADDRESS: Address = constants.AddressZero;
+export const PRICE_DECIMALS = 18;
 
 export enum TOKEN_TYPE {
   NATIVE = 0,

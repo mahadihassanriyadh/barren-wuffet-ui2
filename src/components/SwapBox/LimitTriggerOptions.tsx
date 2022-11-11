@@ -1,16 +1,19 @@
 import { t } from "@lingui/macro";
+import { BigNumber } from "ethers";
 import React from "react";
+import { PRICE_DECIMALS } from "../../config/tokens";
 import { Input } from "../Form/Input";
 
 export function LimitTriggerOptions(props: {
-  triggerPrice: number | undefined;
-  setTriggerPrice: (val: number) => void;
+  triggerPrice: BigNumber | undefined;
+  setTriggerPrice: (val: BigNumber) => void;
 }) {
   const { triggerPrice, setTriggerPrice } = props;
   return (
     <div className="mt-4 space-y-3">
       <Input
-        type="number"
+        type="bignumber"
+        decimals={PRICE_DECIMALS}
         name={t`Trigger Price`}
         id="triggerPrice"
         value={triggerPrice}

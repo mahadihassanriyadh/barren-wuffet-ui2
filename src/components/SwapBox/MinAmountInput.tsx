@@ -8,8 +8,8 @@ import { Input } from "../Form/Input";
 export function MinAmountInput(props: {
   token?: Token;
   amount?: BigNumber;
-  price?: number;
-  tokenOutPriceUSD?: number;
+  price?: BigNumber;
+  tokenOutPriceUSD?: BigNumber;
   isEnabled: boolean;
   onChange: (val: BigNumber) => void;
 }) {

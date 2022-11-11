@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { t, Trans } from "@lingui/macro";
 import { useState } from "react";
-import { Address, Token, toTokenVal } from "../../config/tokens";
+import {
+  Address,
+  PRICE_DECIMALS,
+  Token,
+  toTokenVal,
+} from "../../config/tokens";
 import Button from "../Button/Button";
 import Checkbox from "../Form/Checkbox";
 import TokenSelector from "../Form/TokenSelector";
@@ -25,14 +30,13 @@ import {
   usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
 import { useSushiAmountOut } from "../../api/sushi";
-
-const pow = (decimals: number) => BN.from(10).pow(decimals);
+import { getRelativePrice, invertPrice, mulPrice, pow } from "../../data/math";
 
 export function calculateAmountReceived(
   tokenToSend?: Token,
   tokenToReceive?: Token,
   amountToSend?: BN,
-  price?: BigNumberish
+  price?: BN
 ): BN | undefined {
   if (
     price === undefined ||
@@ -40,10 +44,12 @@ export function calculateAmountReceived(
     tokenToReceive === undefined
   )
     return undefined;
-  return amountToSend
-    ?.mul(price)
-    .mul(pow(tokenToReceive.decimals))
-    .div(pow(tokenToSend.decimals));
+  return (
+    amountToSend &&
+    mulPrice(amountToSend, price)
+      .mul(pow(tokenToReceive.decimals))
+      .div(pow(tokenToSend.decimals))
+  );
 }
 
 export function calculateAmountToSend(
@@ -79,7 +85,7 @@ export default function SwapBox({
   setFromToken: (token: Token) => void;
   setToToken: (token: Token) => void;
 }) {
-  const tokenOutPriceUSD = 1;
+  const tokenOutPriceUSD: BN = BN.from(1);
 
   const { data: balanceFrom } = useFundBalance(fundId, fromToken?.address);
   const { data: balanceTo } = useFundBalance(fundId, toToken?.address);
@@ -93,10 +99,8 @@ export default function SwapBox({
 
   const [useTwap, setUseTwap] = useState(false);
   const [tradeOption, setTradeOption] = useState(TradeOptions.LIMIT);
-  const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
-    undefined
-  );
-  const [limitPrice, setLimitPrice] = useState<number | undefined>(undefined);
+  const [triggerPrice, setTriggerPrice] = useState<BN | undefined>(undefined);
+  const [limitPrice, setLimitPrice] = useState<BN | undefined>(undefined);
   const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
     undefined
   );
@@ -110,17 +114,17 @@ export default function SwapBox({
 
   const toAmount = useSushiAmountOut(fromToken, toToken, amountToSend);
   const spotPrice = amountToSend?.isZero()
-    ? 0
-    : toAmount.div(amountToSend).toNumber();
+    ? BN.from(0)
+    : getRelativePrice(toAmount, toToken, amountToSend, fromToken);
 
-  const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
+  const tokenInPriceUSD = spotPrice.div(tokenOutPriceUSD);
 
   const toPrice =
-    (tradeOption === TradeOptions.LIMIT_TRIGGER && limitPrice) ||
-    (tradeOption === TradeOptions.LIMIT && limitPrice) ||
-    (tradeOption === TradeOptions.TRAILING_STOP &&
-      (1 - (trailingPercent || 0) / 100) * (limitPrice || 0)) ||
-    undefined;
+    (tradeOption === TradeOptions.LIMIT_TRIGGER ? limitPrice : undefined) ||
+    (tradeOption === TradeOptions.LIMIT ? limitPrice : undefined) ||
+    (tradeOption === TradeOptions.TRAILING_STOP
+      ? limitPrice?.mul(1 - (trailingPercent || 0) / 100)
+      : undefined);
 
   const enableToAmount = !!toPrice;
 
@@ -130,7 +134,7 @@ export default function SwapBox({
     fundId,
     fromToken: fromToken,
     toToken: toToken,
-    limitPrice: toTokenVal(limitPrice || toPrice || spotPrice),
+    limitPrice: limitPrice || toPrice || spotPrice,
     collateral: amountToSend,
     fees: BN.from(0),
   });
@@ -202,7 +206,7 @@ export default function SwapBox({
           )}
         </span>
         <div>
-          <Trans>Current Price: {spotPrice}</Trans>
+          <Trans>Current Price: {formatUnits(spotPrice, PRICE_DECIMALS)}</Trans>
         </div>
         <TradeOptionSelector
           selected={tradeOption}

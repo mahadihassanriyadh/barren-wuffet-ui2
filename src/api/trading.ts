@@ -20,7 +20,8 @@ function getTrueTrigger(currentTime: number, chainId?: number) {
   return {
     createTimeParams: utils.defaultAbiCoder.encode(
       ["uint8", "uint256"],
-      [GT, currentTime - 1]
+      // should use block time here, but this works for now. 1 day ago
+      [GT, currentTime - 3600 * 24]
     ) as Address,
     triggerType: TIMESTAMP_TRIGGER_TYPE,
     callee:

@@ -1,17 +1,20 @@
 import { t } from "@lingui/macro";
+import { BigNumber } from "ethers";
 import React from "react";
+import { PRICE_DECIMALS } from "../../config/tokens";
 import { Input } from "../Form/Input";
 
 export function LimitPriceInput(props: {
-  price?: number;
-  setPrice: (val: number) => void;
+  price?: BigNumber;
+  setPrice: (val: BigNumber) => void;
 }) {
   const { price, setPrice } = props;
   return (
     <div className="mt-4 space-y-3">
       {
         <Input
-          type="number"
+          type="bignumber"
+          decimals={PRICE_DECIMALS}
           name={t`Limit Price`}
           id="limitPrice"
           value={price}

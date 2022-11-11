@@ -1,11 +1,13 @@
 import { t } from "@lingui/macro";
+import { BigNumber } from "ethers";
 import React from "react";
+import { PRICE_DECIMALS } from "../../config/tokens";
 import { Input } from "../Form/Input";
 
 export function TrailingStopOptions(props: {
-  triggerPrice: number | undefined;
+  triggerPrice: BigNumber | undefined;
   trailingPercent: number | undefined;
-  setTriggerPrice: (val: number) => void;
+  setTriggerPrice: (val: BigNumber) => void;
   setTrailingPercent: (val: number) => void;
 }) {
   const { triggerPrice, setTriggerPrice, trailingPercent, setTrailingPercent } =
@@ -13,7 +15,8 @@ export function TrailingStopOptions(props: {
   return (
     <div className="mt-4 space-y-3">
       <Input
-        type="number"
+        type="bignumber"
+        decimals={PRICE_DECIMALS}
         name={t`Trigger Price`}
         id="triggerPrice"
         value={triggerPrice}
