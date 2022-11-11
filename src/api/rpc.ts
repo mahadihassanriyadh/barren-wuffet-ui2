@@ -30,6 +30,23 @@ const fundContractABI = FundContract.abi;
 
 const toSeconds = (val: Date) => BN.from(Math.round(val.getTime() / 1000));
 
+export function usePrepareRedeemAllCollateral(fundId: Address) {
+  const { config, error, isError } = usePrepareContractWrite({
+    address: fundId,
+    abi: fundContractABI,
+    functionName: "redeemRuleOutputs",
+    enabled: !!fundId,
+  });
+
+  const resp = useContractWrite(config);
+
+  return {
+    ...resp,
+    error: error || resp.error,
+    isError: isError || resp.isError,
+  };
+}
+
 export function useFundBalance(fundId: Address, tokenAddress?: Address) {
   return useBalance({
     addressOrName: !!tokenAddress ? fundId : undefined, // we dont want it to run if no tokenAddress
@@ -125,9 +142,8 @@ export function usePrepareCreateFund(values: {
 
   return {
     ...resp,
-    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
-    error,
-    isError,
+    error: error || resp.error,
+    isError: isError || resp.isError,
   };
 }
 
@@ -170,8 +186,7 @@ export function usePrepareSubscribeToFund(values: {
 
   return {
     ...resp,
-    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
-    error,
-    isError,
+    error: error || resp.error,
+    isError: isError || resp.isError,
   };
 }

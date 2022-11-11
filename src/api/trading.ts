@@ -147,9 +147,8 @@ export function usePrepareCreateSwapRule(values: {
 
   return {
     ...resp,
-    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
-    error,
-    isError,
+    error: error || resp.error,
+    isError: isError || resp.isError,
   };
 }
 
@@ -171,9 +170,8 @@ export function usePrepareAddRuleCollateral(values: {
 
   return {
     ...resp,
-    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
-    error,
-    isError,
+    error: error || resp.error,
+    isError: isError || resp.isError,
   };
 }
 
@@ -192,8 +190,7 @@ export function usePrepareActivateRule(values: {
   const resp = useContractWrite(config);
   return {
     ...resp,
-    // this will clobber the error from prepare; But it doesnt seem to be emitting anything useful
-    error,
-    isError,
+    error: error || resp.error,
+    isError: isError || resp.isError,
   };
 }

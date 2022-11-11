@@ -54,7 +54,5 @@ export function useSushiAmountOut(
     args: [amountIn, createPath(tokenIn.address, tokenOut.address, WETHAddr)],
   });
 
-  console.log(amountsOut);
-
   return amountsOut?.[1] ?? BigNumber.from("0");
 }
