@@ -1,21 +1,27 @@
+import { BigNumber } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 import React from "react";
 import { useFundBalance } from "../../api/rpc";
 import { Address } from "../../config/tokens";
 import { numberWithCommas, padDecimals } from "../../data/formatting";
 
-const AssetBox = (props: {
+const AssetBox = ({
+  asset,
+  fundId,
+}: {
   asset: {
-    img?: any;
-    name: any;
+    img?: string;
+    name: string;
     dollarValue?: any;
     down?: any;
     percentage?: any;
+    amount?: BigNumber;
     address: Address;
   };
   fundId: Address;
 }) => {
-  const { img, name, dollarValue, down, percentage, address } = props.asset;
-  const fundId = props.fundId;
+  console.log(asset);
+  const { img, name, dollarValue, down, percentage, address, amount } = asset;
 
   const { data: tokenData } = useFundBalance(fundId, address);
 
@@ -27,6 +33,9 @@ const AssetBox = (props: {
           <div className="flex justify-between items-end w-full">
             <div>
               <p className="font-medium">{name}</p>
+              <p className="text-lg font-medium">
+                $ {amount ? formatUnits(amount) : "-"}
+              </p>
               <p className="text-lg font-medium">
                 $ {numberWithCommas(dollarValue)}
               </p>

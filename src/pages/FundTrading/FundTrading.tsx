@@ -11,6 +11,7 @@ import { Action, ActionTypes } from "../../config/actions";
 import { useParams } from "react-router-dom";
 import OpenPositions from "../../components/Fund/OpenPositions";
 import OpenOrders from "../../components/Fund/OpenOrders";
+import { useFund } from "../FundManage/FundManage";
 
 const OrderList: FunctionComponent = (props) => {
   return (
@@ -44,7 +45,8 @@ const FundTrading = () => {
   }, []);
 
   const { chain } = useNetwork();
-  const { fundId } = useParams<{ fundId: Address }>();
+  const fund = useFund();
+  const fundId = fund.id;
 
   const tokens = chain ? getTokens(chain.id, fundId) : [];
 

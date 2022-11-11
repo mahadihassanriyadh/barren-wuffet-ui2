@@ -1,15 +1,22 @@
-import { t } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 import React, { useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { FundDetails } from "../../api/models";
+import Button from "../../components/Button/Button";
 import AssetBox from "../../components/Fund/AssetBox";
 import { Address, ETH_ADDRESS } from "../../config/tokens";
 import walletImg from "../../img/icons/walletIcon.svg";
+import { useFund } from "../FundManage/FundManage";
 
 export default function FundPortfolio(props: any) {
-  const [selected]: any = useOutletContext();
-  const { assetBalances, protocolBalances, wallet } = selected || {};
-
-  const { fundId } = useParams<{ fundId: Address }>();
+  const fund: FundDetails = useFund();
+  const {
+    assetBalances,
+    protocolBalances,
+    unredeemedBalances,
+    wallet,
+    id: fundId,
+  } = fund || {};
 
   useEffect(() => {
     document.title = "Barren Wuffet | Fund Portfolio";
@@ -36,17 +43,40 @@ export default function FundPortfolio(props: any) {
                 ></AssetBox>
               ))}
             </div>
-            <div className="grid grid-cols-3 gap-16 mt-12 pt-12 border-t border-gray-700">
-              {/* this is the base asset of the fund. Will changed to USDC */}
-              <AssetBox
-                fundId={fundId}
-                asset={{
-                  address: ETH_ADDRESS,
-                  name: t`Wallet`,
-                  dollarValue: wallet,
-                  img: walletImg,
-                }}
-              ></AssetBox>
+            <div className="border-t border-gray-700 gap-16 mt-12 pt-12">
+              <div>
+                <strong>
+                  <Trans>Unredeemed Balances</Trans>
+                </strong>
+              </div>
+              <div className="grid grid-cols-3 py-5">
+                {unredeemedBalances?.map((asset: any) => (
+                  <AssetBox
+                    fundId={fundId}
+                    asset={asset}
+                    key={asset.name}
+                  ></AssetBox>
+                ))}
+              </div>
+              <Button label={t`Redeem All`} />
+            </div>
+            <div className="border-t border-gray-700 gap-16 mt-12 pt-12">
+              <strong>
+                <Trans>Wallet</Trans>
+              </strong>
+              <div className="grid grid-cols-3 py-5">
+                {/* this is the base asset of the fund. Will changed to USDC */}
+
+                <AssetBox
+                  fundId={fundId}
+                  asset={{
+                    address: ETH_ADDRESS,
+                    name: t`Wallet`,
+                    dollarValue: wallet,
+                    img: walletImg,
+                  }}
+                ></AssetBox>
+              </div>
             </div>
           </div>
         </div>

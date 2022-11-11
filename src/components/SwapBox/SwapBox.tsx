@@ -82,6 +82,7 @@ export default function SwapBox({
 
   const { data: balanceFrom } = useFundBalance(fundId, fromToken?.address);
   const { data: balanceTo } = useFundBalance(fundId, toToken?.address);
+
   const amountFromAvailable = balanceFrom?.value;
   const amountToAvailable = balanceTo?.value;
 

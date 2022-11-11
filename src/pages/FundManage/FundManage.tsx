@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import FundBanner from "../../components/Fund/FundBanner";
 import { Fund, FundDetails } from "../../api/models";
 import { useQuery } from "@tanstack/react-query";
@@ -22,6 +28,7 @@ const FundManage = () => {
     return api.getFundDetails.bind(api)(fundId);
   });
 
+  console.log(fund);
   return (
     <div className="container mx-auto my-5">
       {!funds && <div>No funds available</div>}
@@ -36,11 +43,15 @@ const FundManage = () => {
             }
             dataUpdatedAt={dataUpdatedAt}
           ></FundBanner>
-          <Outlet context={[fund]} />
+          <Outlet context={fund} />
         </div>
       )}
     </div>
   );
 };
+
+export function useFund() {
+  return useOutletContext<FundDetails>();
+}
 
 export default FundManage;

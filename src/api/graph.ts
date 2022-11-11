@@ -11,7 +11,7 @@ import {
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
-import { Address } from "../config/tokens";
+import { Address, ETH_ADDRESS } from "../config/tokens";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
@@ -30,7 +30,7 @@ function parseFund(fund: Graph_Fund): Fund {
     ),
     investor_count: fund.subscriptions.length,
     subscriptions: fund.subscriptions?.map((s) => s.address),
-    rules: fund.rules?.map((r) => r.id),
+    rules: fund.rules, //?.map((r) => r.id),
     positions: fund.positions?.map((p) => p.id),
     status: FundStatus.RAISING,
     manager_fee_percentage: fund.manager_fee_percentage,
@@ -148,8 +148,18 @@ export class API {
                 id
                 callee
                 data
-                input_tokens
-                output_tokens
+                input_tokens {
+                  id
+                  address
+                  type
+                  nft_id
+                }
+                output_tokens {
+                  id
+                  address
+                  type
+                  nft_id
+                }
               }
               triggers {
                 id
@@ -178,6 +188,19 @@ export class API {
       newlyAddedMoney: 0,
       upPercentage: 0,
       wallet: 0,
+      unredeemedBalances: fund.rules
+        .filter(
+          (r) => r.execution_timestamp && !r.redemption_timestamp && r.outputs
+          // r.actions?.[-1]?.output_tokens // this is the last action
+        )
+        .map((r) => {
+          const lastAction = r.actions[-1];
+          return r.outputs?.map((val, i) => ({
+            address: lastAction?.output_tokens?.[i]?.address || ETH_ADDRESS,
+            amount: BN.from(val),
+          }));
+        })
+        .flat(),
       assetBalances: [
         {
           address: "0x124",

@@ -21,7 +21,7 @@ export interface Fund {
   close_timestamp: Date | null; // expected close. need to call it lockin
   closed_timestamp?: Date | null; // actual close. yes horrible naming
   deploy_timestamp: Date;
-  rules: string[];
+  rules: any[];
   total_collateral_raised: number;
   manager_fee_percentage: number;
   status: FundStatus;
@@ -37,8 +37,9 @@ export interface FundDetails extends Fund {
   newlyAddedMoney: number;
   upPercentage: number;
   wallet: number;
-  assetBalances: object;
-  protocolBalances: object;
+  assetBalances: object[];
+  protocolBalances: object[];
+  unredeemedBalances?: object[];
 }
 
 export enum TradeOptions {
