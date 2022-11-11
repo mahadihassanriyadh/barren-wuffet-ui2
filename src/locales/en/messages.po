@@ -126,7 +126,7 @@ msgstr "Closing Date of the Fund"
 msgid "Collateral"
 msgstr "Collateral"
 
-#: src/components/SwapBox/SwapBox.tsx:283
+#: src/components/SwapBox/SwapBox.tsx:284
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -138,7 +138,7 @@ msgstr "Confirm"
 msgid "Create Fund"
 msgstr "Create Fund"
 
-#: src/components/SwapBox/SwapBox.tsx:204
+#: src/components/SwapBox/SwapBox.tsx:205
 msgid "Current Price: {spotPrice}"
 msgstr "Current Price: {spotPrice}"
 
@@ -338,7 +338,7 @@ msgstr "Or Sell {0}"
 msgid "Order Expiry"
 msgstr "Order Expiry"
 
-#: src/pages/FundTrading/FundTrading.tsx:30
+#: src/pages/FundTrading/FundTrading.tsx:31
 #: src/pages/FundYield/FundYield.tsx:38
 msgid "Orders"
 msgstr "Orders"
@@ -368,10 +368,14 @@ msgstr "Portfolio Value"
 msgid "Position"
 msgstr "Position"
 
-#: src/pages/FundTrading/FundTrading.tsx:22
+#: src/pages/FundTrading/FundTrading.tsx:23
 #: src/pages/FundYield/FundYield.tsx:34
 msgid "Positions"
 msgstr "Positions"
+
+#: src/pages/FundPortfolio/FundPortfolio.tsx:61
+msgid "Redeem All"
+msgstr "Redeem All"
 
 #: src/components/Fund/PoolsList.tsx:23
 msgid "Rewards tAPY"
@@ -446,11 +450,11 @@ msgstr "Thank you! Your Fund ({fundId}) was created!"
 msgid "Thank you! {investmentAmount} has been invested"
 msgstr "Thank you! {investmentAmount} has been invested"
 
-#: src/components/SwapBox/SwapBox.tsx:149
+#: src/components/SwapBox/SwapBox.tsx:150
 msgid "Token In:"
 msgstr "Token In:"
 
-#: src/components/SwapBox/SwapBox.tsx:183
+#: src/components/SwapBox/SwapBox.tsx:184
 msgid "Token Out:"
 msgstr "Token Out:"
 
@@ -496,6 +500,10 @@ msgstr "Twitter"
 msgid "Twitter Username"
 msgstr "Twitter Username"
 
+#: src/pages/FundPortfolio/FundPortfolio.tsx:49
+msgid "Unredeemed Balances"
+msgstr "Unredeemed Balances"
+
 #: src/components/Fund/OpenPositions.tsx:82
 msgid "Unstake"
 msgstr "Unstake"
@@ -508,7 +516,8 @@ msgstr "Value"
 msgid "Volume"
 msgstr "Volume"
 
-#: src/pages/FundPortfolio/FundPortfolio.tsx:45
+#: src/pages/FundPortfolio/FundPortfolio.tsx:65
+#: src/pages/FundPortfolio/FundPortfolio.tsx:74
 msgid "Wallet"
 msgstr "Wallet"
 
@@ -559,8 +568,8 @@ msgstr "{0} Amount"
 #~ msgid "{0} available"
 #~ msgstr "{0} available"
 
-#: src/components/SwapBox/SwapBox.tsx:159
-#: src/components/SwapBox/SwapBox.tsx:192
+#: src/components/SwapBox/SwapBox.tsx:160
+#: src/components/SwapBox/SwapBox.tsx:193
 msgid "{0} available ($ {1})"
 msgstr "{0} available ($ {1})"
 
