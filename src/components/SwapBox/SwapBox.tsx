@@ -23,8 +23,10 @@ import {
   usePrepareCreateAndActivateSwapRule,
   usePrepareCreateSwapRule,
 } from "../../api/trading";
+import { useSushiAmountOut } from "../../api/sushi";
 
 const pow = (decimals: number) => BN.from(10).pow(decimals);
+
 export function calculateAmountReceived(
   tokenToSend?: Token,
   tokenToReceive?: Token,
@@ -76,9 +78,7 @@ export default function SwapBox({
   setFromToken: (token: Token) => void;
   setToToken: (token: Token) => void;
 }) {
-  const spotPrice = 2000;
   const tokenOutPriceUSD = 1;
-  const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
 
   const { data: balanceFrom } = useFundBalance(fundId, fromToken?.address);
   const { data: balanceTo } = useFundBalance(fundId, toToken?.address);
@@ -94,9 +94,7 @@ export default function SwapBox({
   const [triggerPrice, setTriggerPrice] = useState<number | undefined>(
     undefined
   );
-  const [limitPrice, setLimitPrice] = useState<number | undefined>(
-    spotPrice * 1.05
-  );
+  const [limitPrice, setLimitPrice] = useState<number | undefined>(undefined);
   const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
     undefined
   );
@@ -108,6 +106,13 @@ export default function SwapBox({
     new Date(new Date().getTime() + 86400000 * 10)
   );
 
+  const toAmount = useSushiAmountOut(fromToken, toToken, amountToSend);
+  const spotPrice = amountToSend?.isZero()
+    ? 0
+    : toAmount.div(amountToSend).toNumber();
+
+  const tokenInPriceUSD = spotPrice / tokenOutPriceUSD;
+
   const toPrice =
     (tradeOption === TradeOptions.LIMIT_TRIGGER && limitPrice) ||
     (tradeOption === TradeOptions.LIMIT && limitPrice) ||
@@ -116,12 +121,7 @@ export default function SwapBox({
     undefined;
 
   const enableToAmount = !!toPrice;
-  const toAmount = calculateAmountReceived(
-    fromToken,
-    toToken,
-    amountToSend,
-    toPrice
-  );
+
   const [isSaving, setIsSaving] = useState(false);
 
   const { isLoading, error, isSuccess, write } =
@@ -129,7 +129,7 @@ export default function SwapBox({
       fundId,
       fromToken: fromToken,
       toToken: toToken,
-      limitPrice: toTokenVal(toPrice || spotPrice),
+      limitPrice: toTokenVal(limitPrice || toPrice || spotPrice),
       collateral: amountToSend,
       fees: BN.from(0),
     });
@@ -236,7 +236,7 @@ export default function SwapBox({
           tradeOption
         ) && (
           <LimitPriceInput
-            price={limitPrice}
+            price={limitPrice || toPrice || spotPrice}
             setPrice={(val) => setLimitPrice(val)}
           />
         )}

@@ -25,6 +25,7 @@ const CONTRACTS: Record<number, Record<string, Address>> = {
     SushiRemoveLiquidity: "0xdb3E60189101b016D5239B4C11126aD8B6E6a1b5",
     TimestampTrigger: "0x9C17d6CdAa4A73dc4872613E6E6C29F147605903",
     PriceTrigger: "0xA0f79d5995312d8ceD07aF8Aa44eb3DcFb3846cf",
+    SushiSwapRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
   },
   31337: {
     BarrenWuffet: "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",

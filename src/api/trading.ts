@@ -23,30 +23,7 @@ import { AmountToSendInput } from "../components/SwapBox/AmountToSendInput";
 import { useEffect, useState } from "react";
 import { useConnectAndWrite } from "./rpc";
 import { write } from "fs";
-
-function createSushiSwapAction(
-  callee: Address,
-  tokenIn: Token,
-  tokenOut: Token,
-  minAmountOfOutPerIn: BigNumber,
-  WETHAddr: Address
-) {
-  return {
-    callee: callee,
-    data: utils.defaultAbiCoder.encode(
-      ["address[]", "uint256"],
-      [
-        [
-          tokenIn.address === ETH_ADDRESS ? WETHAddr : tokenIn.address,
-          tokenOut.address === ETH_ADDRESS ? WETHAddr : tokenOut.address,
-        ],
-        minAmountOfOutPerIn,
-      ]
-    ) as Address,
-    inputTokens: [toContractToken(tokenIn)],
-    outputTokens: [toContractToken(tokenOut)],
-  };
-}
+import { createSushiSwapAction } from "./sushi";
 
 export function usePrepareCreateAndActivateSwapRule(values: {
   fundId: Address;
