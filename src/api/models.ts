@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { Address } from "../config/tokens";
 
 export interface Pool {
@@ -17,7 +18,8 @@ export interface Fund {
   name: string;
   manager: string;
   creation_timestamp: Date;
-  close_timestamp?: Date | null;
+  close_timestamp: Date | null; // expected close. need to call it lockin
+  closed_timestamp?: Date | null; // actual close. yes horrible naming
   deploy_timestamp: Date;
   rules: string[];
   total_collateral_raised: number;
@@ -100,3 +102,35 @@ export const GT = 0;
 export const LT = 1;
 export const PRICE_TRIGGER_TYPE = 1;
 export const TIMESTAMP_TRIGGER_TYPE = 2;
+
+export function getFundStatus(
+  isClosed: boolean,
+  deadline: Date,
+  lockin: Date,
+  totalCollateral: BigNumber,
+  minCollateral: BigNumber,
+  hasPendingPositions: boolean
+) {
+  const currTime = new Date().getTime();
+  if (isClosed) {
+    return FundStatus.CLOSED;
+  }
+  // not closed yet
+  if (currTime < deadline.getTime()) {
+    return FundStatus.RAISING;
+  }
+  // reached raising deadline
+  if (totalCollateral.lt(minCollateral)) {
+    return FundStatus.CLOSABLE;
+  }
+  // raised enough to deploy
+  if (currTime < lockin.getTime()) {
+    return FundStatus.DEPLOYED;
+  }
+  // lockin exceeded
+  if (!hasPendingPositions) {
+    return FundStatus.CLOSABLE;
+  }
+  // positions still open
+  return FundStatus.DEPLOYED;
+}

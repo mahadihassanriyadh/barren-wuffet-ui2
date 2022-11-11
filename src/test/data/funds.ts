@@ -9,7 +9,7 @@ export const funds: Fund[] = [
     manager_fee_percentage: 0.0,
     status: FundStatus.RAISING,
     deploy_timestamp: new Date(2022, 11, 1),
-    close_timestamp: undefined,
+    close_timestamp: new Date(2026, 2, 1),
     creation_timestamp: new Date(2022, 10, 1),
     subscriptions: ["abc"],
     rules: ["abc"],
