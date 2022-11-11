@@ -22,6 +22,7 @@ import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 import {
   usePrepareCreateAndActivateSwapRule,
   usePrepareCreateSwapRule,
+  usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
 import { useSushiAmountOut } from "../../api/sushi";
 
@@ -101,7 +102,7 @@ export default function SwapBox({
   );
 
   const [batchSize, setBatchSize] = useState(1);
-  const [intervalSeconds, setIntervalSeconds] = useState(0); // 1 hour
+  const [intervalSeconds, setIntervalSeconds] = useState(0);
 
   const [expiryDate, setExpiryDate] = useState(
     new Date(new Date().getTime() + 86400000 * 10)
@@ -125,15 +126,14 @@ export default function SwapBox({
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const { isLoading, error, isSuccess, write } =
-    usePrepareCreateAndActivateSwapRule({
-      fundId,
-      fromToken: fromToken,
-      toToken: toToken,
-      limitPrice: toTokenVal(limitPrice || toPrice || spotPrice),
-      collateral: amountToSend,
-      fees: BN.from(0),
-    });
+  const { isLoading, error, isSuccess, write } = usePrepareSushiSwapTakeAction({
+    fundId,
+    fromToken: fromToken,
+    toToken: toToken,
+    limitPrice: toTokenVal(limitPrice || toPrice || spotPrice),
+    collateral: amountToSend,
+    fees: BN.from(0),
+  });
 
   useConnectAndWrite(isSaving, setIsSaving, write);
 

@@ -5,25 +5,92 @@ import {
   useContractEvent,
   useContractRead,
 } from "wagmi";
-import { BigNumber, BigNumber as BN, utils } from "ethers";
+import { BigNumber as BN, utils } from "ethers";
 
 import FundContract from "../contracts/types/Fund";
 import RoboCopContract from "../contracts/types/RoboCop";
 
 import { getContract } from "../config/addresses";
-import {
-  Address,
-  ETH_ADDRESS,
-  getWethToken,
-  toContractToken,
-  Token,
-} from "../config/tokens";
+import { Address, getWethToken, Token } from "../config/tokens";
 import { GT, TIMESTAMP_TRIGGER_TYPE } from "./models";
-import { AmountToSendInput } from "../components/SwapBox/AmountToSendInput";
 import { useEffect, useState } from "react";
-import { useConnectAndWrite } from "./rpc";
-import { write } from "fs";
 import { createSushiSwapAction } from "./sushi";
+
+function getTrueTrigger(currentTime: number, chainId?: number) {
+  return {
+    createTimeParams: utils.defaultAbiCoder.encode(
+      ["uint8", "uint256"],
+      [GT, currentTime - 1]
+    ) as Address,
+    triggerType: TIMESTAMP_TRIGGER_TYPE,
+    callee:
+      chainId !== undefined ? getContract(chainId, "TimestampTrigger") : "0x",
+  };
+}
+
+export function usePrepareSushiSwapTakeAction(values: {
+  fundId: Address;
+  fromToken: Token;
+  toToken: Token;
+  limitPrice: BN;
+  collateral: BN;
+  fees: BN;
+}) {
+  const { fundId, fromToken, toToken, limitPrice, collateral, fees } = values;
+  const { chain } = useNetwork();
+  const sushiSwapExactXForY =
+    chain && getContract(chain.id, "SushiSwapExactXForY");
+
+  const sushiSwapAction = createSushiSwapAction(
+    sushiSwapExactXForY ?? "0x",
+    fromToken,
+    toToken,
+    limitPrice,
+    getWethToken(chain?.id)?.address ?? "0x"
+  );
+
+  return usePrepareTakeImmediateAction({
+    fundId,
+    action: sushiSwapAction,
+    collateral,
+    fees,
+    enabled: !limitPrice.isZero(),
+  });
+}
+
+export function usePrepareTakeImmediateAction(values: {
+  fundId: Address;
+  action: any;
+  collateral: BN;
+  fees: BN;
+  enabled: boolean;
+}) {
+  const { fundId, collateral, fees, action, enabled } = values;
+  const { chain } = useNetwork();
+  // need to get block time.
+  const currentTime = Math.round(new Date().getTime() / 1000);
+
+  const { config, error, isError } = usePrepareContractWrite({
+    address: fundId,
+    abi: FundContract.abi,
+    functionName: "takeAction",
+    args: [
+      getTrueTrigger(currentTime, chain?.id),
+      action,
+      [collateral ?? BN.from(0)],
+      [fees ?? BN.from(0)],
+    ],
+    enabled: !!chain && enabled,
+  });
+
+  const resp = useContractWrite(config);
+
+  return {
+    ...resp,
+    error: error || resp.error,
+    isError: isError || resp.isError,
+  };
+}
 
 export function usePrepareCreateAndActivateSwapRule(values: {
   fundId: Address;
