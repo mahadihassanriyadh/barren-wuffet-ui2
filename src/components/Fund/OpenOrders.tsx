@@ -7,6 +7,7 @@ import Table from "../Table/Table";
 import { Order, TwapOrder } from "../../api/models";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../../config/env";
+import Error from "../ui/Error";
 import Tabs from "../Tabs/Tabs";
 
 //formatAmount(a, USD_DECIMALS, 2, true, "0.0");
@@ -116,36 +117,37 @@ const OpenOrders = (props: {}) => {
 
   const singleOrders = data ? data.filter((o) => !o.twap_orders?.length) : [];
   const twapOrders = data ? data.filter((o) => o.twap_orders?.length) : [];
-
   return (
     <div>
       <CancelOrderButton cancelOrderIdList={[]} />
-      <Tabs
-        options={[
-          {
-            label: t`Trigger Orders`,
-            content: (
-              <Table
-                columns={commonColumns.concat(actionColumns)}
-                data={singleOrders}
-                error={error}
-              />
-            ),
-          },
-          {
-            label: t`Twap Orders`,
-            content: (
-              <Table
-                columns={commonColumns
-                  .concat(twapColumns)
-                  .concat(actionColumns)}
-                data={twapOrders}
-                error={error}
-              />
-            ),
-          },
-        ]}
-      />
+      {data && (
+        <Tabs
+          options={[
+            {
+              label: t`Trigger Orders`,
+              content: (
+                <Table
+                  columns={commonColumns.concat(actionColumns)}
+                  data={singleOrders}
+                  error={error}
+                />
+              ),
+            },
+            {
+              label: t`Twap Orders`,
+              content: (
+                <Table
+                  columns={commonColumns
+                    .concat(twapColumns)
+                    .concat(actionColumns)}
+                  data={twapOrders}
+                  error={error}
+                />
+              ),
+            },
+          ]}
+        />
+      )}
     </div>
   );
 };

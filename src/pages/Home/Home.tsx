@@ -5,6 +5,8 @@ import FundsList from "../../components/Fund/FundsList";
 import Button from "../../components/Button/Button";
 import FAQ from "../../components/FAQ/FAQ";
 import faqs from "../../config/faqs";
+import InfoPanel from "../../components/Fund/Yield/InfoPanel";
+import Payments from "../../components/Fund/Yield/Action";
 
 export default function Home() {
   return (

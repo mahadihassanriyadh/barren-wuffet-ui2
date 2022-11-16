@@ -2,32 +2,32 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
-import { Address, getTokens } from "../../config/tokens";
+import { getTokens } from "../../config/tokens";
 
-import SwapBox from "../../components/SwapBox/SwapBox";
 import ActionSelector from "../../components/Fund/ActionSelector";
 import Tabs from "../../components/Tabs/Tabs";
 
 import { Action, ActionTypes } from "../../config/actions";
-import PoolsList from "../../components/Fund/PoolsList";
-import { useParams } from "react-router-dom";
+import Yield from "../../components/Fund/Yield/";
 import OpenOrders from "../../components/Fund/OpenOrders";
+import { useFund } from "../FundManage/FundManage";
 
 const FundYield = () => {
+  const [actionToPerform, setActionToPerform] = useState<Action>();
   useEffect(() => {
     document.title = "Barren Wuffet | Fund Yield";
   }, []);
 
   const { chain } = useNetwork();
-  const { fundId } = useParams<{ fundId: Address }>();
-  const [actionToPerform, setActionToPerform] = useState<Action>();
+  const fund = useFund();
+  const fundId = fund?.id;
 
-  const tokens = chain ? getTokens(chain.id) : [];
+  // const tokens = chain ? getTokens(chain.id, fundId) : [];
 
   const OrderList: FunctionComponent = () => {
     return (
       <div>
-        <div className="Exchange-list-tab-container">
+        <div>
           <Tabs
             options={[
               {
@@ -47,38 +47,27 @@ const FundYield = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="mx-5 mb-10 rounded-xl px-8 py-12 bg-gray-dark text-white">
-        <div className="Exchange-left">
-          <div className="ExchangeChart-top App-box App-box-border">
-            <div className="ExchangeChart-top-inner">
-              <div>
-                <div className="ExchangeChart-title">
-                  {chain && (
-                    <ActionSelector
-                      chainId={chain.id}
-                      selectedAction={actionToPerform}
-                      onSelectAction={(action: Action) =>
-                        setActionToPerform(action)
-                      }
-                      actionType={ActionTypes.Yield}
-                    />
-                  )}
-                </div>
-              </div>
-              <div>
-                <div className="ExchangeChart-title">
-                  Amount Deposited: 1000
-                </div>
-              </div>
-            </div>
+      <div className="flex flex-row ">
+        <div className="md:basis-3/4">
+          <div className="bg-gray-dark mx-5 mb-2 rounded-xl px-5 py-5">
+            {chain && (
+              <ActionSelector
+                chainId={chain.id}
+                selectedAction={actionToPerform}
+                onSelectAction={setActionToPerform}
+                actionType={ActionTypes.Trading}
+              />
+            )}
           </div>
-          <div className="Exchange-lists large">
-            <PoolsList />
+          <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
+            <OrderList />
           </div>
         </div>
-        <div className="Exchange-right">Side bar</div>
-        <div className="Exchange-lists small">
-          <OrderList />
+        <div className="md:basis-1/4">
+          <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
+            <Yield.InfoPanel />
+            <Yield.Action />
+          </div>
         </div>
       </div>
     </div>

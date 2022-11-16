@@ -46,7 +46,7 @@ const FundTrading = () => {
 
   const { chain } = useNetwork();
   const fund = useFund();
-  const fundId = fund.id;
+  const fundId = fund?.id;
 
   const tokens = chain ? getTokens(chain.id, fundId) : [];
 

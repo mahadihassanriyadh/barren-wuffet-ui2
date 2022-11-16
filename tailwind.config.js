@@ -30,6 +30,7 @@ module.exports = {
     fontFamily: {
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
+      ubuntu: ["Ubuntu", "sans-serif"],
     },
     extend: {
       spacing: {
@@ -38,6 +39,16 @@ module.exports = {
       },
       borderRadius: {
         "4xl": "2rem",
+      },
+      colors: {
+        card: "#1C1C25",
+        white: "#FFFFFF",
+        banner: "#282835",
+        dtext: "#9191A7",
+        black: "#000000",
+        otext: "#FB9B20",
+        bcolor: "#282835",
+        stab: "#FED519"
       },
     },
   },
