@@ -9,11 +9,13 @@ const FundSelector = (props: {
   const { funds, selected, setSelected } = props;
 
   return (
-    <Selector
-      items={funds.map((info: any) => ({ ...info, icon: info?.logo }))}
-      selectedItem={{ ...selected, icon: selected?.logo }}
-      setSelectedItem={setSelected}
-    />
+    <div className="text-xl">
+      <Selector
+        items={funds.map((info: any) => ({ ...info, icon: info?.logo }))}
+        selectedItem={{ ...selected, icon: selected?.logo }}
+        setSelectedItem={setSelected}
+      />
+    </div>
   );
 };
 

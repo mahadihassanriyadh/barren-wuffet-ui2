@@ -17,11 +17,11 @@ export default function Selector<
     <div className="relative">
       <Listbox value={selectedItem} onChange={setSelectedItem}>
         <div className="mt-1">
-          <Listbox.Button className="w-3/5 rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-orange-100">
+          <Listbox.Button className="w-3/5 rounded-2xl bg-black px-4 py-2.5 font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-orange-100">
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
                 {selectedItem?.icon && <img src={selectedItem?.icon} alt="" />}
-                <p className="text-2xl font-bold">
+                <p className="font-bold">
                   {selectedItem?.name || buttonLabel || t`Select`}
                 </p>
               </div>
@@ -35,7 +35,7 @@ export default function Selector<
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-3/5 overflow-auto rounded-md bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-3/5 overflow-auto rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {items.map((item) => (
                 <Listbox.Option
                   key={item.id || item.name}
@@ -48,7 +48,7 @@ export default function Selector<
                 >
                   {({ selected }) => (
                     <div
-                      className={`truncate flex items-center text-lg space-x-3 ${
+                      className={`truncate flex items-center space-x-3 ${
                         selected ? "font-bold" : "font-normal"
                       }`}
                     >
