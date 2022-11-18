@@ -20,17 +20,17 @@ import { LimitPriceInput } from "./LimitPriceInput";
 import { MinAmountInput } from "./MinAmountInput";
 import { AmountToSendInput } from "./AmountToSendInput";
 import { TwapOptions } from "./TwapOptions";
-import Error from "../ui/Error";
+import ErrorDisplay from "../ui/Error";
 import { useConnectAndWrite, useFundBalance } from "../../api/rpc";
 import { BigNumber as BN, BigNumberish } from "ethers";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 import {
   usePrepareCreateAndActivateSwapRule,
-  usePrepareCreateSwapRule,
   usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
 import { useSushiAmountOut } from "../../api/sushi";
 import { getRelativePrice, invertPrice, mulPrice, pow } from "../../data/math";
+import { setDefaultResultOrder } from "dns";
 
 export function calculateAmountReceived(
   tokenToSend?: Token,
@@ -68,6 +68,57 @@ export function calculateAmountToSend(
     ?.mul(pow(tokenToSend.decimals))
     .div(pow(tokenToReceive.decimals))
     .div(price);
+}
+
+function SubmitLimit(props: {
+  fundId: Address;
+  fromToken: Token;
+  toToken: Token;
+  limitPrice: BN;
+  amountToSend: BN;
+  isSaving: boolean;
+  setIsSaving: (isSaving: boolean) => void;
+  setError: (error: Error | null) => void;
+  setIsLoading?: (isLoading: boolean) => void;
+  setIsSuccess?: (isSuccess: boolean) => void;
+}) {
+  const {
+    fundId,
+    fromToken,
+    toToken,
+    limitPrice,
+    amountToSend,
+    isSaving,
+    setIsSaving,
+    setError,
+    setIsSuccess,
+    setIsLoading,
+  } = props;
+
+  const { isLoading, error, isSuccess, write } = usePrepareSushiSwapTakeAction({
+    fundId,
+    fromToken,
+    toToken,
+    limitPrice,
+    collateral: amountToSend,
+    fees: BN.from(0),
+  });
+
+  useEffect(() => {
+    setError(error);
+  }, [error, setError]);
+
+  useConnectAndWrite(isSaving, setIsSaving, write);
+
+  useEffect(() => {
+    setIsSuccess?.(isSuccess);
+  }, [isSuccess, setIsSuccess]);
+
+  useEffect(() => {
+    setIsLoading?.(isLoading);
+  }, [isLoading, setIsLoading]);
+
+  return <Button type="submit" label={t`Submit Limit Order `} />;
 }
 
 export default function SwapBox({
@@ -129,18 +180,7 @@ export default function SwapBox({
   const enableToAmount = !!toPrice;
 
   const [isSaving, setIsSaving] = useState(false);
-
-  const { isLoading, error, isSuccess, write } = usePrepareSushiSwapTakeAction({
-    fundId,
-    fromToken: fromToken,
-    toToken: toToken,
-    limitPrice: limitPrice || toPrice || spotPrice,
-    collateral: amountToSend,
-    fees: BN.from(0),
-  });
-
-  useConnectAndWrite(isSaving, setIsSaving, write);
-
+  const [error, setError] = useState<Error | null>(null);
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsSaving(true);
@@ -150,7 +190,7 @@ export default function SwapBox({
     <div>
       <form onSubmit={handleFormSubmit}>
         <div className="mt-4 space-y-3">
-          {error && <Error error={error.message} />}
+          {error && <ErrorDisplay error={error.message} />}
           <Trans>Token In:</Trans>
 
           <TokenSelector
@@ -285,7 +325,16 @@ export default function SwapBox({
           />
         )}
         <div className="flex justify-center mt-10">
-          <Button type="submit" label={t`Confirm`} />
+          <SubmitLimit
+            fundId={fundId}
+            fromToken={fromToken}
+            toToken={toToken}
+            limitPrice={limitPrice || toPrice || spotPrice}
+            amountToSend={amountToSend}
+            isSaving={isSaving}
+            setIsSaving={setIsSaving}
+            setError={setError}
+          />
         </div>
       </form>
     </div>
