@@ -19,12 +19,12 @@ const CONTRACTS: Record<number, Record<string, Address>> = {
   },
   5: {
     // eth goerli
-    BarrenWuffet: "0x15733B508E25FD5EA53404e391BC3cDA9DBd5F7E",
-    SushiSwapExactXForY: "0xdacdf9a4B94E37fD3E775268EBe736fFFd08220F",
-    SushiAddLiquidity: "0xb17EfEd80d8785BAd09cfB5db97B1b91AA4bfaad",
-    SushiRemoveLiquidity: "0xdb3E60189101b016D5239B4C11126aD8B6E6a1b5",
-    TimestampTrigger: "0x9C17d6CdAa4A73dc4872613E6E6C29F147605903",
-    PriceTrigger: "0xA0f79d5995312d8ceD07aF8Aa44eb3DcFb3846cf",
+    BarrenWuffet: "0x47BaB3bAfB689ED02eE85cf8f061c47e00758006",
+    SushiSwapExactXForY: "0xCB2421F6d62a46a8d0491CA3b1478607BFC04278",
+    SushiAddLiquidity: "0x5DF40A3f0377e61E20A6bDCe923660e1d7c68aB7",
+    SushiRemoveLiquidity: "0x2992C455587585260bf33dA6bd1b380bDE7Da2aD",
+    TimestampTrigger: "0x54c5260B5fc62fB12cA95F0960349A7F52581c5a",
+    PriceTrigger: "0x33F053EBD198beE2cCe84a2b393302Bf34373eC2",
     SushiSwapRouter: "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
   },
   31337: {
