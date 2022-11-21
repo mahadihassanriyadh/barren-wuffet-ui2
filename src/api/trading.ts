@@ -12,23 +12,10 @@ import RoboCopContract from "../contracts/types/RoboCop";
 
 import { getContract } from "../config/addresses";
 import { Address, getWethToken, Token } from "../config/tokens";
-import { GT, TIMESTAMP_TRIGGER_TYPE } from "./models";
 import { useEffect, useState } from "react";
 import { createSushiSwapAction } from "./sushi";
-import { ActionData, TriggerData } from "./rpc";
-
-function getTrueTrigger(currentTime: number, chainId?: number): TriggerData {
-  return {
-    createTimeParams: utils.defaultAbiCoder.encode(
-      ["uint8", "uint256"],
-      // should use block time here, but this works for now. 1 day ago
-      [GT, currentTime - 3600 * 24]
-    ) as Address,
-    triggerType: TIMESTAMP_TRIGGER_TYPE,
-    callee:
-      chainId !== undefined ? getContract(chainId, "TimestampTrigger") : "0x",
-  };
-}
+import { ActionData } from "./rpc";
+import { getPriceTrigger, getTrueTrigger } from "./triggers";
 
 export function usePrepareSushiSwapTakeAction(values: {
   fundId: Address;
@@ -77,7 +64,7 @@ export function usePrepareTakeImmediateAction(values: {
     abi: FundContract.abi,
     functionName: "takeAction",
     args: [
-      getTrueTrigger(currentTime, chain?.id),
+      getTrueTrigger({ currentTime, chainId: chain?.id }),
       action,
       [collateral ?? BN.from(0)],
       [fees ?? BN.from(0)],
@@ -101,6 +88,7 @@ export function usePrepareCreateAndActivateSwapRule(values: {
   limitPrice: BN;
   collateral: BN;
   fees: BN;
+  triggerPrice: BN;
 }) {
   const { fundId, collateral, fees } = values;
   const [ruleId, setRuleId] = useState<Address | undefined>(undefined);
@@ -158,9 +146,17 @@ export function usePrepareCreateSwapRule(values: {
   fromToken: Token;
   toToken: Token;
   limitPrice: BN;
+  triggerPrice: BN;
   eventCallback?: (params: { ruleHash: Address }) => void;
 }) {
-  const { fundId, fromToken, toToken, limitPrice, eventCallback } = values;
+  const {
+    fundId,
+    fromToken,
+    toToken,
+    limitPrice,
+    triggerPrice,
+    eventCallback,
+  } = values;
   const { chain } = useNetwork();
 
   const { data: roboCopId } = useContractRead({
@@ -169,17 +165,12 @@ export function usePrepareCreateSwapRule(values: {
     functionName: "roboCop",
   });
 
-  // need to get block time.
-  const currentTime = Math.round(new Date().getTime() / 1000);
-
-  const trueTrigger = {
-    createTimeParams: utils.defaultAbiCoder.encode(
-      ["uint8", "uint256"],
-      [GT, currentTime - 1]
-    ) as Address,
-    triggerType: TIMESTAMP_TRIGGER_TYPE,
-    callee: chain ? getContract(chain.id, "TimestampTrigger") : "0x",
-  };
+  const priceTrigger = getPriceTrigger({
+    fromToken,
+    toToken,
+    triggerPrice,
+    chainId: chain?.id,
+  });
 
   const sushiSwapExactXForY =
     chain && getContract(chain.id, "SushiSwapExactXForY");
@@ -189,7 +180,7 @@ export function usePrepareCreateSwapRule(values: {
     abi: FundContract.abi,
     functionName: "createRule",
     args: [
-      [trueTrigger],
+      [priceTrigger],
       [
         createSushiSwapAction(
           sushiSwapExactXForY ?? "0x",
@@ -200,7 +191,8 @@ export function usePrepareCreateSwapRule(values: {
         ),
       ],
     ],
-    enabled: !!chain && !limitPrice.isZero(),
+    enabled:
+      !!chain && !limitPrice.isZero() && triggerPrice && !triggerPrice.isZero(),
   });
 
   const resp = useContractWrite(config);
