@@ -15,8 +15,9 @@ import { Address, getWethToken, Token } from "../config/tokens";
 import { GT, TIMESTAMP_TRIGGER_TYPE } from "./models";
 import { useEffect, useState } from "react";
 import { createSushiSwapAction } from "./sushi";
+import { ActionData, TriggerData } from "./rpc";
 
-function getTrueTrigger(currentTime: number, chainId?: number) {
+function getTrueTrigger(currentTime: number, chainId?: number): TriggerData {
   return {
     createTimeParams: utils.defaultAbiCoder.encode(
       ["uint8", "uint256"],
@@ -61,7 +62,7 @@ export function usePrepareSushiSwapTakeAction(values: {
 
 export function usePrepareTakeImmediateAction(values: {
   fundId: Address;
-  action: any;
+  action: ActionData;
   collateral: BN;
   fees: BN;
   enabled: boolean;

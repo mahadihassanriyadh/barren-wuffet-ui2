@@ -17,6 +17,7 @@ import { getContract } from "../config/addresses";
 import { ERC20_DECIMALS } from "../config/numbers";
 import {
   Address,
+  ContractToken,
   ETH_ADDRESS,
   getEthToken,
   Token,
@@ -24,9 +25,23 @@ import {
 } from "../config/tokens";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useEffect, useState } from "react";
+import { PRICE_TRIGGER_TYPE, TIMESTAMP_TRIGGER_TYPE } from "./models";
 
 const factoryContractABI = BWContract.abi;
 const fundContractABI = FundContract.abi;
+
+export interface ActionData {
+  callee: Address;
+  data: Address;
+  inputTokens: ContractToken[];
+  outputTokens: ContractToken[];
+}
+
+export interface TriggerData {
+  createTimeParams: Address;
+  triggerType: typeof TIMESTAMP_TRIGGER_TYPE | typeof PRICE_TRIGGER_TYPE;
+  callee: Address;
+}
 
 const toSeconds = (val: Date) => BN.from(Math.round(val.getTime() / 1000));
 

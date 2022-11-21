@@ -9,6 +9,7 @@ import {
   Token,
 } from "../config/tokens";
 import IUniswapV2Router02 from "../contracts/types/IUniswapV2Router02";
+import { ActionData } from "./rpc";
 
 function createPath(tokenIn: Address, tokenOut: Address, WETHAddr: Address) {
   return [
@@ -23,7 +24,7 @@ export function createSushiSwapAction(
   tokenOut: Token,
   minAmountOfOutPerIn: BigNumber,
   WETHAddr: Address
-) {
+): ActionData {
   return {
     callee: callee,
     data: utils.defaultAbiCoder.encode(
