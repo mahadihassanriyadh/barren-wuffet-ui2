@@ -32,6 +32,41 @@ import { useSushiAmountOut } from "../../api/sushi";
 import { getRelativePrice, invertPrice, mulPrice, pow } from "../../data/math";
 import { setDefaultResultOrder } from "dns";
 
+interface WriteResponse {
+  error: Error | null;
+  isLoading: boolean;
+  isSuccess: boolean;
+  write?: () => void;
+}
+
+interface SaveEffects {
+  isSaving: boolean;
+  setIsSaving: (isSaving: boolean) => void;
+  setError: (error: Error | null) => void;
+  setIsLoading?: (isLoading: boolean) => void;
+  setIsSuccess?: (isSuccess: boolean) => void;
+}
+
+interface SubmitBaseProps extends SaveEffects {
+  fundId: Address;
+  fromToken: Token;
+  toToken: Token;
+  tradeOption: TradeOptions;
+}
+
+interface SubmitLimitProps extends SubmitBaseProps {
+  tradeOption: TradeOptions.LIMIT;
+  limitPrice: BN;
+  amountToSend: BN;
+}
+
+interface SubmitLimitTriggerProps extends SubmitBaseProps {
+  tradeOption: TradeOptions.LIMIT_TRIGGER;
+  triggerPrice: BN;
+  limitPrice: BN;
+  amountToSend: BN;
+}
+
 export function calculateAmountReceived(
   tokenToSend?: Token,
   tokenToReceive?: Token,
@@ -70,39 +105,18 @@ export function calculateAmountToSend(
     .div(price);
 }
 
-function SubmitLimit(props: {
-  fundId: Address;
-  fromToken: Token;
-  toToken: Token;
-  limitPrice: BN;
-  amountToSend: BN;
-  isSaving: boolean;
-  setIsSaving: (isSaving: boolean) => void;
-  setError: (error: Error | null) => void;
-  setIsLoading?: (isLoading: boolean) => void;
-  setIsSuccess?: (isSuccess: boolean) => void;
-}) {
+function useSaveEffects(props: SaveEffects & WriteResponse) {
   const {
-    fundId,
-    fromToken,
-    toToken,
-    limitPrice,
-    amountToSend,
+    error,
+    write,
+    isLoading,
+    isSuccess,
     isSaving,
     setIsSaving,
     setError,
-    setIsSuccess,
     setIsLoading,
+    setIsSuccess,
   } = props;
-
-  const { isLoading, error, isSuccess, write } = usePrepareSushiSwapTakeAction({
-    fundId,
-    fromToken,
-    toToken,
-    limitPrice,
-    collateral: amountToSend,
-    fees: BN.from(0),
-  });
 
   useEffect(() => {
     setError(error);
@@ -117,6 +131,83 @@ function SubmitLimit(props: {
   useEffect(() => {
     setIsLoading?.(isLoading);
   }, [isLoading, setIsLoading]);
+}
+
+function SubmitLimitTrigger(props: SubmitLimitTriggerProps) {
+  const {
+    fundId,
+    fromToken,
+    toToken,
+    triggerPrice,
+    limitPrice,
+    amountToSend,
+    isSaving,
+    setIsSaving,
+    setError,
+    setIsSuccess,
+    setIsLoading,
+  } = props;
+
+  const { isLoading, error, isSuccess, write }: WriteResponse =
+    usePrepareCreateAndActivateSwapRule({
+      fundId,
+      fromToken,
+      toToken,
+      triggerPrice,
+      limitPrice,
+      collateral: amountToSend,
+      fees: BN.from(0),
+    });
+
+  useSaveEffects({
+    error,
+    write,
+    isSaving,
+    isSuccess,
+    isLoading,
+    setError,
+    setIsSuccess,
+    setIsSaving,
+    setIsLoading,
+  });
+  return <Button type="submit" label={t`Submit Limit Order `} />;
+}
+
+function SubmitLimit(props: SubmitLimitProps) {
+  const {
+    fundId,
+    fromToken,
+    toToken,
+    limitPrice,
+    amountToSend,
+    isSaving,
+    setIsSaving,
+    setError,
+    setIsSuccess,
+    setIsLoading,
+  } = props;
+
+  const { isLoading, error, isSuccess, write }: WriteResponse =
+    usePrepareSushiSwapTakeAction({
+      fundId,
+      fromToken,
+      toToken,
+      limitPrice,
+      collateral: amountToSend,
+      fees: BN.from(0),
+    });
+
+  useSaveEffects({
+    error,
+    write,
+    isSaving,
+    isSuccess,
+    isLoading,
+    setError,
+    setIsSuccess,
+    setIsSaving,
+    setIsLoading,
+  });
 
   return <Button type="submit" label={t`Submit Limit Order `} />;
 }
@@ -184,6 +275,16 @@ export default function SwapBox({
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsSaving(true);
+  };
+
+  const submitParams: SubmitBaseProps = {
+    tradeOption,
+    fundId,
+    fromToken,
+    toToken,
+    isSaving,
+    setIsSaving,
+    setError,
   };
 
   return (
@@ -325,16 +426,25 @@ export default function SwapBox({
           />
         )}
         <div className="flex justify-center mt-10">
-          <SubmitLimit
-            fundId={fundId}
-            fromToken={fromToken}
-            toToken={toToken}
-            limitPrice={limitPrice || toPrice || spotPrice}
-            amountToSend={amountToSend}
-            isSaving={isSaving}
-            setIsSaving={setIsSaving}
-            setError={setError}
-          />
+          {tradeOption === TradeOptions.LIMIT && limitPrice && (
+            <SubmitLimit
+              {...submitParams}
+              amountToSend={amountToSend}
+              limitPrice={limitPrice}
+              tradeOption={TradeOptions.LIMIT}
+            />
+          )}
+          {tradeOption === TradeOptions.LIMIT_TRIGGER &&
+            limitPrice &&
+            triggerPrice && (
+              <SubmitLimitTrigger
+                {...submitParams}
+                amountToSend={amountToSend}
+                limitPrice={limitPrice}
+                triggerPrice={triggerPrice}
+                tradeOption={TradeOptions.LIMIT_TRIGGER}
+              />
+            )}
         </div>
       </form>
     </div>
