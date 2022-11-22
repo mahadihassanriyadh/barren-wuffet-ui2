@@ -25,12 +25,11 @@ import { useConnectAndWrite, useFundBalance } from "../../api/rpc";
 import { BigNumber as BN, BigNumberish } from "ethers";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 import {
-  usePrepareCreateAndActivateSwapRule,
+  usePrepareCreateSwapRule,
   usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
 import { useSushiAmountOut } from "../../api/sushi";
-import { getRelativePrice, invertPrice, mulPrice, pow } from "../../data/math";
-import { setDefaultResultOrder } from "dns";
+import { getRelativePrice, mulPrice, pow } from "../../data/math";
 
 interface WriteResponse {
   error: Error | null;
@@ -149,14 +148,18 @@ function SubmitLimitTrigger(props: SubmitLimitTriggerProps) {
   } = props;
 
   const { isLoading, error, isSuccess, write }: WriteResponse =
-    usePrepareCreateAndActivateSwapRule({
+    usePrepareCreateSwapRule({
       fundId,
       fromToken,
       toToken,
       triggerPrice,
       limitPrice,
       collateral: amountToSend,
-      fees: BN.from(0),
+      eventCallback: ({ ruleHash }) => {
+        // The listener will be called on prepare and might give old rules hashes.
+        // so be careful about using this as the ruleId, or setup the listener only after write
+        console.log(`Rule hash: ${ruleHash}`);
+      },
     });
 
   useSaveEffects({
@@ -194,7 +197,7 @@ function SubmitLimit(props: SubmitLimitProps) {
       toToken,
       limitPrice,
       collateral: amountToSend,
-      fees: BN.from(0),
+      fees: BN.from(0), // TODO this is wrong, we need to calculate the fees
     });
 
   useSaveEffects({
@@ -314,6 +317,7 @@ export default function SwapBox({
               </Trans>
             )}
           </span>
+          <span>Fees: TBD</span>
         </div>
         {tradeOption !== TradeOptions.OCO && (
           <AmountToSendInput

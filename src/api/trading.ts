@@ -5,7 +5,7 @@ import {
   useContractEvent,
   useContractRead,
 } from "wagmi";
-import { BigNumber as BN, utils } from "ethers";
+import { BigNumber as BN, FixedNumber, utils } from "ethers";
 
 import FundContract from "../contracts/types/Fund";
 import RoboCopContract from "../contracts/types/RoboCop";
@@ -14,8 +14,12 @@ import { getContract } from "../config/addresses";
 import { Address, getWethToken, Token } from "../config/tokens";
 import { useEffect, useState } from "react";
 import { createSushiSwapAction } from "./sushi";
-import { ActionData } from "./rpc";
-import { getPriceTrigger, getTrueTrigger } from "./triggers";
+import { ActionData, TriggerData } from "./rpc";
+import {
+  createTwapTriggerSet,
+  getPriceTrigger,
+  getTrueTrigger,
+} from "./triggers";
 
 export function usePrepareSushiSwapTakeAction(values: {
   fundId: Address;
@@ -81,72 +85,13 @@ export function usePrepareTakeImmediateAction(values: {
   };
 }
 
-export function usePrepareCreateAndActivateSwapRule(values: {
-  fundId: Address;
-  fromToken: Token;
-  toToken: Token;
-  limitPrice: BN;
-  collateral: BN;
-  fees: BN;
-  triggerPrice: BN;
-}) {
-  const { fundId, collateral, fees } = values;
-  const [ruleId, setRuleId] = useState<Address | undefined>(undefined);
-  const [isSwapInitiated, setIsSwapInitiated] = useState<boolean>(false);
-
-  const resp = usePrepareCreateSwapRule({
-    ...values,
-    eventCallback: ({ ruleHash }) => {
-      console.log(`Rule hash: ${ruleHash}`);
-      // this is not a good idea, because the listener will be called on prepare and might give old rules hashes.
-      // we need to call it after write, and make sure it only returns a new hash.
-      setRuleId(ruleHash);
-    },
-  });
-
-  const { writeAsync: writeCollateralAsync } = usePrepareAddRuleCollateral({
-    fundId,
-    ruleId,
-    collateral,
-    fees,
-  });
-
-  const { writeAsync: writeActivateAsync } = usePrepareActivateRule({
-    fundId,
-    ruleId,
-  });
-
-  useEffect(() => {
-    if (ruleId && isSwapInitiated) {
-      if (writeCollateralAsync && writeActivateAsync) {
-        writeCollateralAsync().then(() => {
-          writeActivateAsync();
-        });
-        setIsSwapInitiated(false);
-      }
-    }
-  }, [ruleId, isSwapInitiated, writeCollateralAsync, writeActivateAsync]);
-
-  const newWrite = (write: any) => () => {
-    if (write) {
-      write();
-      setRuleId(undefined);
-      setIsSwapInitiated(true);
-    }
-  };
-
-  return {
-    ...resp,
-    write: resp?.write ? newWrite(resp.write) : undefined,
-  };
-}
-
 export function usePrepareCreateSwapRule(values: {
   fundId: Address;
   fromToken: Token;
   toToken: Token;
   limitPrice: BN;
   triggerPrice: BN;
+  collateral: BN;
   eventCallback?: (params: { ruleHash: Address }) => void;
 }) {
   const {
@@ -155,6 +100,7 @@ export function usePrepareCreateSwapRule(values: {
     toToken,
     limitPrice,
     triggerPrice,
+    collateral,
     eventCallback,
   } = values;
   const { chain } = useNetwork();
@@ -175,6 +121,8 @@ export function usePrepareCreateSwapRule(values: {
   const sushiSwapExactXForY =
     chain && getContract(chain.id, "SushiSwapExactXForY");
 
+  const platformFees = usePlatformFees(fundId, [collateral]);
+
   const { config, error, isError } = usePrepareContractWrite({
     address: fundId,
     abi: FundContract.abi,
@@ -190,9 +138,17 @@ export function usePrepareCreateSwapRule(values: {
           getWethToken(chain?.id)?.address ?? "0x"
         ),
       ],
+      true,
+      [collateral],
+      platformFees,
     ],
     enabled:
-      !!chain && !limitPrice.isZero() && triggerPrice && !triggerPrice.isZero(),
+      !!chain &&
+      !limitPrice.isZero() &&
+      triggerPrice &&
+      !triggerPrice.isZero() &&
+      !collateral.isZero() &&
+      !platformFees[0].isZero(),
   });
 
   const resp = useContractWrite(config);
@@ -249,6 +205,93 @@ export function usePrepareActivateRule(values: {
     enabled: !!(ruleId && fundId),
   });
   const resp = useContractWrite(config);
+  return {
+    ...resp,
+    error: error || resp.error,
+    isError: isError || resp.isError,
+  };
+}
+
+export function usePlatformFees(fundId: Address, collaterals: BN[]) {
+  const { data: feeParams } = useContractRead({
+    address: fundId,
+    abi: FundContract.abi,
+    functionName: "feeParams",
+  });
+  return collaterals.map((collateral) =>
+    feeParams
+      ? feeParams.managerToPlatformFeePercentage.mul(collateral).div(100)
+      : BN.from(0)
+  );
+}
+
+/**
+ *
+ * @param totalCollaterals: total number of assets to be used in the action
+ * @param action
+ * @param startTime; block.timestamp where the first rule should be executed
+ * @param numIntervals: How many transactions do you want
+ * @param gapBetweenIntervals: In seconds
+ */
+export function usePrepareCreateTwapRule({
+  fundId,
+  startTime,
+  numIntervals,
+  gapBetweenIntervals,
+  totalCollaterals,
+  fromToken,
+  toToken,
+  limitPrice,
+}: {
+  fundId: Address;
+  totalCollaterals: BN[];
+  fromToken: Token;
+  toToken: Token;
+  limitPrice: BN;
+  startTime: number;
+  numIntervals: number;
+  gapBetweenIntervals: number;
+}) {
+  const { chain } = useNetwork();
+
+  const action = createSushiSwapAction(
+    (chain && getContract(chain.id, "SushiSwapExactXForY")) ?? "0x",
+    fromToken,
+    toToken,
+    limitPrice,
+    getWethToken(chain?.id)?.address ?? "0x"
+  );
+
+  const triggersSet = createTwapTriggerSet(
+    startTime,
+    numIntervals,
+    gapBetweenIntervals,
+    13, // specifying a window within which a tx may pass. Needed for inherent uncertainty of when a block is mined.
+    [],
+    chain?.id
+  );
+
+  const collateralsPerInterval = totalCollaterals.map((collateral) => {
+    return collateral.div(numIntervals);
+  });
+  const numTriggers = triggersSet.length;
+  const platformFees = usePlatformFees(fundId, collateralsPerInterval);
+
+  var actionsSet = Array(numTriggers).fill(action);
+  var activatesSet = Array(numTriggers).fill(true);
+  const collateralsSet = Array(numTriggers).fill(collateralsPerInterval);
+  var feesSet = Array(numTriggers).fill(platformFees);
+
+  const { config, error, isError } = usePrepareContractWrite({
+    address: fundId,
+    abi: FundContract.abi,
+    functionName: "createRules",
+    args: [triggersSet, actionsSet, activatesSet, collateralsSet, feesSet],
+    enabled: !!chain && !!numIntervals && !!gapBetweenIntervals,
+  });
+
+  const resp = useContractWrite(config);
+
   return {
     ...resp,
     error: error || resp.error,

@@ -1,9 +1,23 @@
 import { BigNumber as BN, utils } from "ethers";
-import { Address } from "wagmi";
 import { getContract } from "../config/addresses";
-import { Token } from "../config/tokens";
+import { Address, Token } from "../config/tokens";
 import { GT, LT, PRICE_TRIGGER_TYPE, TIMESTAMP_TRIGGER_TYPE } from "./models";
 import { TriggerData } from "./rpc";
+
+export function createTimestampTrigger(
+  timestampTriggerAddr: Address,
+  operator: typeof GT | typeof LT,
+  target: number
+): TriggerData {
+  return {
+    createTimeParams: utils.defaultAbiCoder.encode(
+      ["uint8", "uint256"],
+      [operator, target]
+    ) as Address,
+    triggerType: TIMESTAMP_TRIGGER_TYPE,
+    callee: timestampTriggerAddr,
+  };
+}
 
 export function getTrueTrigger({
   currentTime,
@@ -12,16 +26,11 @@ export function getTrueTrigger({
   currentTime: number;
   chainId?: number;
 }): TriggerData {
-  return {
-    createTimeParams: utils.defaultAbiCoder.encode(
-      ["uint8", "uint256"],
-      // should use block time here, but this works for now. 1 day ago
-      [GT, currentTime - 3600 * 24]
-    ) as Address,
-    triggerType: TIMESTAMP_TRIGGER_TYPE,
-    callee:
-      chainId !== undefined ? getContract(chainId, "TimestampTrigger") : "0x",
-  };
+  return createTimestampTrigger(
+    chainId !== undefined ? getContract(chainId, "TimestampTrigger") : "0x",
+    GT,
+    currentTime - 3600 * 24
+  );
 }
 
 export function getPriceTrigger({
@@ -47,4 +56,37 @@ export function getPriceTrigger({
     triggerType: PRICE_TRIGGER_TYPE,
     callee: chainId !== undefined ? getContract(chainId, "PriceTrigger") : "0x",
   };
+}
+
+export function createTwapTriggerSet(
+  startTime: number,
+  numIntervals: number,
+  gapBetweenIntervals: number,
+  tolerance: number = 13,
+  additionalTriggers: TriggerData[] = [],
+  chainId?: number
+) {
+  var triggersSet = [];
+
+  const timestampTriggerAddr: Address | undefined =
+    chainId !== undefined ? getContract(chainId, "TimestampTrigger") : "0x";
+
+  for (var i = 0; i < numIntervals; i++) {
+    triggersSet.push(
+      additionalTriggers.concat([
+        createTimestampTrigger(
+          timestampTriggerAddr,
+          GT,
+          startTime + i * gapBetweenIntervals
+        ),
+        createTimestampTrigger(
+          timestampTriggerAddr,
+          LT,
+          startTime + i * gapBetweenIntervals + tolerance
+        ),
+      ])
+    );
+  }
+
+  return triggersSet;
 }
