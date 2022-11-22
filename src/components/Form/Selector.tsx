@@ -4,7 +4,7 @@ import dropDownArrow from "../../img/icons/dropDownArrowGray.svg";
 import { t } from "@lingui/macro";
 
 export default function Selector<
-  T extends { name: string; icon?: string; id?: string }
+  T extends { name: string; icon?: string; id?: string | number }
 >(props: {
   items: T[];
   selectedItem?: T;
@@ -38,7 +38,7 @@ export default function Selector<
             <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-3/5 overflow-auto rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {items.map((item) => (
                 <Listbox.Option
-                  key={item.id || item.name}
+                  key={item.id?.toString() || item.name}
                   value={item}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-5 pr-4 text-white ${

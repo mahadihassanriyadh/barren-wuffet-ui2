@@ -5,81 +5,92 @@ export enum ActionTypes {
   Close,
 }
 
+export enum ActionID {
+  SushiSwapExactXForY,
+  SushiAddLiquidity,
+  SushiRemoveLiquidity,
+  UniswapAddLiquidity,
+}
+
 export type Action = {
+  id: ActionID;
   name: string;
   address: string;
   actionType: ActionTypes;
   imageUrl: string;
 };
+
 const ACTIONS: Record<number, Action[]> = {
   42161: [],
   421613: [
     {
+      id: ActionID.UniswapAddLiquidity,
       name: "Uniswap LP",
       address: getContract(421613, "Uniswap"),
       actionType: ActionTypes.Yield,
       imageUrl:
         "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     },
-    {
-      name: "Uniswap Swap",
-      address: getContract(421613, "Uniswap"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "GMX LP",
-      address: getContract(421613, "GMX"),
-      actionType: ActionTypes.Yield,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "GMX Increase",
-      address: getContract(421613, "GMX"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "GMX Decrease",
-      address: getContract(421613, "GMX"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "GMX Close",
-      address: getContract(421613, "GMX"),
-      actionType: ActionTypes.Close,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "Dopex Buy Option",
-      address: getContract(421613, "Dopex"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "Curve LP",
-      address: getContract(421613, "Curve"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
-    {
-      name: "Curve Swap",
-      address: getContract(421613, "Curve"),
-      actionType: ActionTypes.Trading,
-      imageUrl:
-        "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
-    },
+    // {
+    //   name: "Uniswap Swap",
+    //   address: getContract(421613, "Uniswap"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "GMX LP",
+    //   address: getContract(421613, "GMX"),
+    //   actionType: ActionTypes.Yield,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "GMX Increase",
+    //   address: getContract(421613, "GMX"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "GMX Decrease",
+    //   address: getContract(421613, "GMX"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "GMX Close",
+    //   address: getContract(421613, "GMX"),
+    //   actionType: ActionTypes.Close,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "Dopex Buy Option",
+    //   address: getContract(421613, "Dopex"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "Curve LP",
+    //   address: getContract(421613, "Curve"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
+    // {
+    //   name: "Curve Swap",
+    //   address: getContract(421613, "Curve"),
+    //   actionType: ActionTypes.Trading,
+    //   imageUrl:
+    //     "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
+    // },
   ],
   5: [
     {
+      id: ActionID.SushiAddLiquidity,
       name: "Sushi LP Add",
       address: getContract(5, "SushiAddLiquidity"),
       actionType: ActionTypes.Yield,
@@ -87,6 +98,7 @@ const ACTIONS: Record<number, Action[]> = {
         "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     },
     {
+      id: ActionID.SushiRemoveLiquidity,
       name: "Sushi LP Remove",
       address: getContract(5, "SushiRemoveLiquidity"),
       actionType: ActionTypes.Yield,
@@ -94,6 +106,7 @@ const ACTIONS: Record<number, Action[]> = {
         "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880",
     },
     {
+      id: ActionID.SushiSwapExactXForY,
       name: "Sushi Swap",
       address: getContract(5, "SushiSwapExactXForY"),
       actionType: ActionTypes.Trading,

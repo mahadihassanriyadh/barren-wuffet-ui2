@@ -13,7 +13,11 @@ import RoboCopContract from "../contracts/types/RoboCop";
 
 import { getContract } from "../config/addresses";
 import { Address, getWethToken, Token } from "../config/tokens";
-import { createSushiSwapAction } from "./sushi";
+import {
+  createSushiSwapAction,
+  extractSushiAmountOutData,
+  prepareSushiAmountOutArgs,
+} from "./sushi";
 import { ActionData } from "./rpc";
 import {
   createTwapTriggerSet,
@@ -23,6 +27,28 @@ import {
 } from "./triggers";
 import { percentOf } from "../data/math";
 import { UsePrepareContractWriteConfig } from "wagmi/dist/declarations/src/hooks/contracts/usePrepareContractWrite";
+import { Action, ActionID } from "../config/actions";
+
+export function useAmountOut(
+  action: Action,
+  tokenIn: Token,
+  tokenOut: Token,
+  amountIn: BN
+) {
+  const { chain } = useNetwork();
+  const readMap = {
+    [ActionID.SushiSwapExactXForY as ActionID]: prepareSushiAmountOutArgs,
+  };
+
+  const readArgs = readMap[action.id]?.(chain, tokenIn, tokenOut, amountIn);
+
+  const { data: amountsOut } = useContractRead(readArgs);
+
+  const extractMap = {
+    [ActionID.SushiSwapExactXForY as ActionID]: extractSushiAmountOutData,
+  };
+  return extractMap[action.id]?.(amountsOut) || BN.from("0");
+}
 
 export function usePrepareSushiSwapTakeAction(values: {
   fundId: Address;

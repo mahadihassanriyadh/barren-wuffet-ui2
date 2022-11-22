@@ -88,8 +88,9 @@ const FundTrading = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
-            {fundId && tokens?.length > 0 && (
+            {fundId && tokens?.length > 0 && actionToPerform && (
               <SwapBox
+                action={actionToPerform}
                 tokens={tokens}
                 fundId={fundId}
                 fromToken={fromToken || tokens[0]}

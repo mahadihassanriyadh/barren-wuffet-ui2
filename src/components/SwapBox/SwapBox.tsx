@@ -29,9 +29,10 @@ import {
   usePrepareCreateSwapRule,
   usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
-import { useSushiAmountOut } from "../../api/sushi";
+import { useAmountOut } from "../../api/trading";
 import { getRelativePrice, mulPrice, percentOf, pow } from "../../data/math";
 import { TwapRange } from "../../api/triggers";
+import { Action } from "../../config/actions";
 
 interface WriteResponse {
   error: Error | null;
@@ -225,6 +226,7 @@ function SubmitLimit(props: SubmitLimitProps) {
 }
 
 export default function SwapBox({
+  action,
   tokens,
   fundId,
   fromToken,
@@ -232,6 +234,7 @@ export default function SwapBox({
   setFromToken,
   setToToken,
 }: {
+  action: Action;
   tokens: Token[];
   fundId: Address;
   fromToken: Token;
@@ -266,7 +269,7 @@ export default function SwapBox({
     new Date(new Date().getTime() + 86400000 * 10)
   );
 
-  const toAmount = useSushiAmountOut(fromToken, toToken, amountToSend);
+  const toAmount = useAmountOut(action, fromToken, toToken, amountToSend);
   const spotPrice = amountToSend?.isZero()
     ? BN.from(0)
     : getRelativePrice(toAmount, toToken, amountToSend, fromToken);
