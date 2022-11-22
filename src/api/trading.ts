@@ -6,23 +6,21 @@ import {
   useContractRead,
   Chain,
 } from "wagmi";
-import { BigNumber as BN, FixedNumber, utils } from "ethers";
+import { BigNumber as BN } from "ethers";
 
 import FundContract from "../contracts/types/Fund";
 import RoboCopContract from "../contracts/types/RoboCop";
 
 import { getContract } from "../config/addresses";
 import { Address, getWethToken, Token } from "../config/tokens";
-import { useEffect, useState } from "react";
 import { createSushiSwapAction } from "./sushi";
-import { ActionData, TriggerData } from "./rpc";
+import { ActionData } from "./rpc";
 import {
   createTwapTriggerSet,
   getPriceTrigger,
   getTrueTrigger,
   TwapRange,
 } from "./triggers";
-import { TwapOptions } from "../components/SwapBox/TwapOptions";
 import { percentOf } from "../data/math";
 import { UsePrepareContractWriteConfig } from "wagmi/dist/declarations/src/hooks/contracts/usePrepareContractWrite";
 

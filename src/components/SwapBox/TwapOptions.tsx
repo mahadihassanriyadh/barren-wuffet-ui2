@@ -26,14 +26,15 @@ function calculateIntervalValue(
 }
 
 export function TwapOptions(props: {
-  batchSize: number;
+  numIntervals: number;
   intervalSeconds: number;
-  setBatchSize: (val: number) => void;
+  setNumIntervals: (val: number) => void;
   setIntervalSeconds: (val: number) => void;
 }) {
-  const { batchSize, intervalSeconds, setBatchSize, setIntervalSeconds } =
+  const { numIntervals, intervalSeconds, setNumIntervals, setIntervalSeconds } =
     props;
   const [interval, setInterval] = useState(TwapIntervals.DAY);
+  const batchSize = 100 / numIntervals;
 
   const intervalValue = calculateIntervalValue(interval, intervalSeconds);
   return (
@@ -44,7 +45,7 @@ export function TwapOptions(props: {
         id="batchSize"
         value={batchSize * 100}
         placeholder={t`Batch Size`}
-        onChange={(value) => setBatchSize(value / 100)}
+        onChange={(batchSize) => setNumIntervals(100 / batchSize)}
         required
       />
       %

@@ -25,11 +25,13 @@ import { useConnectAndWrite, useFundBalance } from "../../api/rpc";
 import { BigNumber as BN, BigNumberish } from "ethers";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
 import {
+  useFundFees,
   usePrepareCreateSwapRule,
   usePrepareSushiSwapTakeAction,
 } from "../../api/trading";
 import { useSushiAmountOut } from "../../api/sushi";
-import { getRelativePrice, mulPrice, pow } from "../../data/math";
+import { getRelativePrice, mulPrice, percentOf, pow } from "../../data/math";
+import { TwapRange } from "../../api/triggers";
 
 interface WriteResponse {
   error: Error | null;
@@ -64,6 +66,7 @@ interface SubmitLimitTriggerProps extends SubmitBaseProps {
   triggerPrice: BN;
   limitPrice: BN;
   amountToSend: BN;
+  twapRange?: TwapRange;
 }
 
 export function calculateAmountReceived(
@@ -141,6 +144,7 @@ function SubmitLimitTrigger(props: SubmitLimitTriggerProps) {
     limitPrice,
     amountToSend,
     isSaving,
+    twapRange,
     setIsSaving,
     setError,
     setIsSuccess,
@@ -155,6 +159,7 @@ function SubmitLimitTrigger(props: SubmitLimitTriggerProps) {
       triggerPrice,
       limitPrice,
       collateral: amountToSend,
+      twapRange,
       eventCallback: ({ ruleHash }) => {
         // The listener will be called on prepare and might give old rules hashes.
         // so be careful about using this as the ruleId, or setup the listener only after write
@@ -190,6 +195,10 @@ function SubmitLimit(props: SubmitLimitProps) {
     setIsLoading,
   } = props;
 
+  const { data: platformFees } = useFundFees(fundId);
+  const managerToPlatformFeePercentage =
+    platformFees?.managerToPlatformFeePercentage || BN.from(0);
+
   const { isLoading, error, isSuccess, write }: WriteResponse =
     usePrepareSushiSwapTakeAction({
       fundId,
@@ -197,7 +206,7 @@ function SubmitLimit(props: SubmitLimitProps) {
       toToken,
       limitPrice,
       collateral: amountToSend,
-      fees: BN.from(0), // TODO this is wrong, we need to calculate the fees
+      fees: percentOf(amountToSend, managerToPlatformFeePercentage),
     });
 
   useSaveEffects({
@@ -250,7 +259,7 @@ export default function SwapBox({
     undefined
   );
 
-  const [batchSize, setBatchSize] = useState(1);
+  const [numIntervals, setNumIntervals] = useState(1);
   const [intervalSeconds, setIntervalSeconds] = useState(0);
 
   const [expiryDate, setExpiryDate] = useState(
@@ -288,6 +297,14 @@ export default function SwapBox({
     isSaving,
     setIsSaving,
     setError,
+  };
+
+  const twapRange = {
+    // TODO is this a good idea? how long of a buffer do we need?
+    // should the first trade be set as a limit order?
+    startTime: new Date().getTime(),
+    numIntervals,
+    gapBetweenIntervals: intervalSeconds,
   };
 
   return (
@@ -422,22 +439,33 @@ export default function SwapBox({
         {useTwap && (
           <TwapOptions
             {...{
-              batchSize,
-              setBatchSize,
+              numIntervals,
+              setNumIntervals,
               intervalSeconds,
               setIntervalSeconds,
             }}
           />
         )}
         <div className="flex justify-center mt-10">
-          {tradeOption === TradeOptions.LIMIT && limitPrice && (
-            <SubmitLimit
-              {...submitParams}
-              amountToSend={amountToSend}
-              limitPrice={limitPrice}
-              tradeOption={TradeOptions.LIMIT}
-            />
-          )}
+          {tradeOption === TradeOptions.LIMIT &&
+            limitPrice &&
+            (useTwap ? (
+              <SubmitLimitTrigger
+                {...submitParams}
+                amountToSend={amountToSend}
+                limitPrice={limitPrice}
+                triggerPrice={limitPrice}
+                tradeOption={TradeOptions.LIMIT_TRIGGER}
+                twapRange={twapRange}
+              />
+            ) : (
+              <SubmitLimit
+                {...submitParams}
+                amountToSend={amountToSend}
+                limitPrice={limitPrice}
+                tradeOption={TradeOptions.LIMIT}
+              />
+            ))}
           {tradeOption === TradeOptions.LIMIT_TRIGGER &&
             limitPrice &&
             triggerPrice && (
@@ -447,6 +475,7 @@ export default function SwapBox({
                 limitPrice={limitPrice}
                 triggerPrice={triggerPrice}
                 tradeOption={TradeOptions.LIMIT_TRIGGER}
+                twapRange={useTwap ? twapRange : undefined}
               />
             )}
         </div>
