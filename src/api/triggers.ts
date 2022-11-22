@@ -4,6 +4,12 @@ import { Address, Token } from "../config/tokens";
 import { GT, LT, PRICE_TRIGGER_TYPE, TIMESTAMP_TRIGGER_TYPE } from "./models";
 import { TriggerData } from "./rpc";
 
+export interface TwapRange {
+  startTime: number;
+  numIntervals: number;
+  gapBetweenIntervals: number;
+}
+
 export function createTimestampTrigger(
   timestampTriggerAddr: Address,
   operator: typeof GT | typeof LT,

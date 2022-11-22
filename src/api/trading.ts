@@ -4,6 +4,7 @@ import {
   usePrepareContractWrite,
   useContractEvent,
   useContractRead,
+  Chain,
 } from "wagmi";
 import { BigNumber as BN, FixedNumber, utils } from "ethers";
 
@@ -19,7 +20,11 @@ import {
   createTwapTriggerSet,
   getPriceTrigger,
   getTrueTrigger,
+  TwapRange,
 } from "./triggers";
+import { TwapOptions } from "../components/SwapBox/TwapOptions";
+import { percentOf } from "../data/math";
+import { UsePrepareContractWriteConfig } from "wagmi/dist/declarations/src/hooks/contracts/usePrepareContractWrite";
 
 export function usePrepareSushiSwapTakeAction(values: {
   fundId: Address;
@@ -30,6 +35,7 @@ export function usePrepareSushiSwapTakeAction(values: {
   fees: BN;
 }) {
   const { fundId, fromToken, toToken, limitPrice, collateral, fees } = values;
+
   const { chain } = useNetwork();
   const sushiSwapExactXForY =
     chain && getContract(chain.id, "SushiSwapExactXForY");
@@ -92,6 +98,7 @@ export function usePrepareCreateSwapRule(values: {
   limitPrice: BN;
   triggerPrice: BN;
   collateral: BN;
+  twapRange?: TwapRange;
   eventCallback?: (params: { ruleHash: Address }) => void;
 }) {
   const {
@@ -101,6 +108,7 @@ export function usePrepareCreateSwapRule(values: {
     limitPrice,
     triggerPrice,
     collateral,
+    twapRange,
     eventCallback,
   } = values;
   const { chain } = useNetwork();
@@ -121,34 +129,53 @@ export function usePrepareCreateSwapRule(values: {
   const sushiSwapExactXForY =
     chain && getContract(chain.id, "SushiSwapExactXForY");
 
-  const platformFees = usePlatformFees(fundId, [collateral]);
+  const { data: platformFees } = useFundFees(fundId);
+  const managerToPlatformFeePercentage =
+    platformFees?.managerToPlatformFeePercentage || BN.from(0);
+  const action = createSushiSwapAction(
+    sushiSwapExactXForY ?? "0x",
+    fromToken,
+    toToken,
+    limitPrice,
+    getWethToken(chain?.id)?.address ?? "0x"
+  );
+
+  const twapArgs = twapRange
+    ? getTwapArgs({
+        chain,
+        action,
+        totalCollaterals: [collateral],
+        twapRange,
+        managerToPlatformFeePercentage,
+      })
+    : undefined;
+
+  const oneOffArgs: UsePrepareContractWriteConfig<
+    typeof FundContract.abi,
+    "createRule"
+  > = {
+    functionName: "createRule",
+    args: [
+      [priceTrigger],
+      [action],
+      true,
+      [collateral],
+      [percentOf(collateral, managerToPlatformFeePercentage)],
+    ],
+  };
 
   const { config, error, isError } = usePrepareContractWrite({
     address: fundId,
     abi: FundContract.abi,
-    functionName: "createRule",
-    args: [
-      [priceTrigger],
-      [
-        createSushiSwapAction(
-          sushiSwapExactXForY ?? "0x",
-          fromToken,
-          toToken,
-          limitPrice,
-          getWethToken(chain?.id)?.address ?? "0x"
-        ),
-      ],
-      true,
-      [collateral],
-      platformFees,
-    ],
+    ...(twapArgs ?? oneOffArgs),
     enabled:
       !!chain &&
       !limitPrice.isZero() &&
       triggerPrice &&
       !triggerPrice.isZero() &&
       !collateral.isZero() &&
-      !platformFees[0].isZero(),
+      !managerToPlatformFeePercentage.isZero() &&
+      (!twapRange || twapArgs?.enabled),
   });
 
   const resp = useContractWrite(config);
@@ -212,17 +239,12 @@ export function usePrepareActivateRule(values: {
   };
 }
 
-export function usePlatformFees(fundId: Address, collaterals: BN[]) {
-  const { data: feeParams } = useContractRead({
+export function useFundFees(fundId: Address) {
+  return useContractRead({
     address: fundId,
     abi: FundContract.abi,
     functionName: "feeParams",
   });
-  return collaterals.map((collateral) =>
-    feeParams
-      ? feeParams.managerToPlatformFeePercentage.mul(collateral).div(100)
-      : BN.from(0)
-  );
 }
 
 /**
@@ -233,35 +255,20 @@ export function usePlatformFees(fundId: Address, collaterals: BN[]) {
  * @param numIntervals: How many transactions do you want
  * @param gapBetweenIntervals: In seconds
  */
-export function usePrepareCreateTwapRule({
-  fundId,
-  startTime,
-  numIntervals,
-  gapBetweenIntervals,
+export function getTwapArgs({
+  chain,
+  action,
   totalCollaterals,
-  fromToken,
-  toToken,
-  limitPrice,
+  twapRange,
+  managerToPlatformFeePercentage,
 }: {
-  fundId: Address;
+  chain?: Chain;
+  action: ActionData;
   totalCollaterals: BN[];
-  fromToken: Token;
-  toToken: Token;
-  limitPrice: BN;
-  startTime: number;
-  numIntervals: number;
-  gapBetweenIntervals: number;
-}) {
-  const { chain } = useNetwork();
-
-  const action = createSushiSwapAction(
-    (chain && getContract(chain.id, "SushiSwapExactXForY")) ?? "0x",
-    fromToken,
-    toToken,
-    limitPrice,
-    getWethToken(chain?.id)?.address ?? "0x"
-  );
-
+  twapRange: TwapRange;
+  managerToPlatformFeePercentage: BN;
+}): UsePrepareContractWriteConfig<typeof FundContract.abi, "createRules"> {
+  const { startTime, numIntervals, gapBetweenIntervals } = twapRange;
   const triggersSet = createTwapTriggerSet(
     startTime,
     numIntervals,
@@ -271,30 +278,23 @@ export function usePrepareCreateTwapRule({
     chain?.id
   );
 
-  const collateralsPerInterval = totalCollaterals.map((collateral) => {
-    return collateral.div(numIntervals);
-  });
+  const collateralsPerInterval = totalCollaterals.map((collateral) =>
+    collateral.div(numIntervals)
+  );
   const numTriggers = triggersSet.length;
-  const platformFees = usePlatformFees(fundId, collateralsPerInterval);
-
-  var actionsSet = Array(numTriggers).fill(action);
-  var activatesSet = Array(numTriggers).fill(true);
-  const collateralsSet = Array(numTriggers).fill(collateralsPerInterval);
-  var feesSet = Array(numTriggers).fill(platformFees);
-
-  const { config, error, isError } = usePrepareContractWrite({
-    address: fundId,
-    abi: FundContract.abi,
-    functionName: "createRules",
-    args: [triggersSet, actionsSet, activatesSet, collateralsSet, feesSet],
-    enabled: !!chain && !!numIntervals && !!gapBetweenIntervals,
-  });
-
-  const resp = useContractWrite(config);
+  const platformFees = collateralsPerInterval.map((collateral) =>
+    percentOf(collateral, managerToPlatformFeePercentage)
+  );
 
   return {
-    ...resp,
-    error: error || resp.error,
-    isError: isError || resp.isError,
+    functionName: "createRules",
+    args: [
+      triggersSet,
+      Array(numTriggers).fill([action]),
+      Array(numTriggers).fill(true),
+      Array(numTriggers).fill(collateralsPerInterval),
+      Array(numTriggers).fill(platformFees),
+    ],
+    enabled: !!chain && !!numIntervals && !!gapBetweenIntervals,
   };
 }

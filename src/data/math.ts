@@ -32,3 +32,7 @@ export function getRelativePrice(
 
   return _step2.div(token2Amount);
 }
+
+export function percentOf(amount: BN, basisPoints: BN): BN {
+  return amount.mul(basisPoints).div(100);
+}
