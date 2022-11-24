@@ -86,7 +86,6 @@ export function OCOOptions(props: {
           <MinAmountInput
             token={fromToken}
             amount={toBuyAmount}
-            price={limitBuyPrice}
             tokenOutPriceUSD={tokenOutPriceUSD}
             isEnabled={true}
             onChange={(value: BN) => {
@@ -134,7 +133,6 @@ export function OCOOptions(props: {
         <MinAmountInput
           token={toToken}
           amount={toSellAmount}
-          price={limitSellPrice}
           tokenOutPriceUSD={tokenInPriceUSD}
           isEnabled={true}
           onChange={(value: BN) => {

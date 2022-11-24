@@ -254,10 +254,12 @@ export default function SwapBox({
     amountFromAvailable || BN.from(0)
   );
 
-  const [useTwap, setUseTwap] = useState(false);
+  const [isTwapEnabled, setIsTwapEnabled] = useState(false);
   const [tradeOption, setTradeOption] = useState(TradeOptions.LIMIT);
   const [triggerPrice, setTriggerPrice] = useState<BN | undefined>(undefined);
-  const [limitPrice, setLimitPrice] = useState<BN | undefined>(undefined);
+  const [limitPriceOverride, setLimitPriceOverride] = useState<BN | undefined>(
+    undefined
+  );
   const [trailingPercent, setTrailingPercent] = useState<number | undefined>(
     undefined
   );
@@ -277,13 +279,16 @@ export default function SwapBox({
   const tokenInPriceUSD = spotPrice.div(tokenOutPriceUSD);
 
   const toPrice =
-    (tradeOption === TradeOptions.LIMIT_TRIGGER ? limitPrice : undefined) ||
-    (tradeOption === TradeOptions.LIMIT ? limitPrice : undefined) ||
+    (tradeOption === TradeOptions.LIMIT_TRIGGER
+      ? limitPriceOverride
+      : undefined) ||
+    (tradeOption === TradeOptions.LIMIT ? limitPriceOverride : undefined) ||
     (tradeOption === TradeOptions.TRAILING_STOP
-      ? limitPrice?.mul(1 - (trailingPercent || 0) / 100)
+      ? limitPriceOverride?.mul(1 - (trailingPercent || 0) / 100)
       : undefined);
 
   const enableToAmount = !!toPrice;
+  const limitPrice = limitPriceOverride || toPrice || spotPrice;
 
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -406,15 +411,14 @@ export default function SwapBox({
           tradeOption
         ) && (
           <LimitPriceInput
-            price={limitPrice || toPrice || spotPrice}
-            setPrice={(val) => setLimitPrice(val)}
+            price={limitPrice}
+            setPrice={(val) => setLimitPriceOverride(val)}
           />
         )}
         {tradeOption !== TradeOptions.OCO && (
           <MinAmountInput
             token={toToken}
             amount={toAmount}
-            price={toPrice}
             tokenOutPriceUSD={tokenOutPriceUSD}
             isEnabled={enableToAmount}
             onChange={(value: BN) => {
@@ -435,11 +439,11 @@ export default function SwapBox({
         />
 
         <Checkbox
-          isChecked={useTwap}
+          isChecked={isTwapEnabled}
           label={"Enable TWAP"}
-          setIsChecked={setUseTwap}
+          setIsChecked={setIsTwapEnabled}
         />
-        {useTwap && (
+        {isTwapEnabled && (
           <TwapOptions
             {...{
               numIntervals,
@@ -452,7 +456,7 @@ export default function SwapBox({
         <div className="flex justify-center mt-10">
           {tradeOption === TradeOptions.LIMIT &&
             limitPrice &&
-            (useTwap ? (
+            (isTwapEnabled ? (
               <SubmitLimitTrigger
                 {...submitParams}
                 amountToSend={amountToSend}
@@ -478,7 +482,7 @@ export default function SwapBox({
                 limitPrice={limitPrice}
                 triggerPrice={triggerPrice}
                 tradeOption={TradeOptions.LIMIT_TRIGGER}
-                twapRange={useTwap ? twapRange : undefined}
+                twapRange={isTwapEnabled ? twapRange : undefined}
               />
             )}
         </div>
