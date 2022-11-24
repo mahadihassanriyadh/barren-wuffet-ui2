@@ -23,7 +23,7 @@ msgid "About This Fund"
 msgstr "About This Fund"
 
 #: src/components/Fund/FundsList.tsx:90
-#: src/components/Fund/OpenOrders.tsx:84
+#: src/components/Fund/OpenOrders.tsx:85
 #: src/components/Fund/OpenPositions.tsx:63
 #: src/components/Fund/OpenPositions.tsx:80
 msgid "Action"
@@ -57,7 +57,7 @@ msgstr "Amount to send"
 msgid "Amounts being raised $"
 msgstr "Amounts being raised $"
 
-#: src/pages/Home/Home.tsx:17
+#: src/pages/Home/Home.tsx:19
 msgid "Anybody who thinks they are a good trader can set up a defi fund that does not require KYC"
 msgstr "Anybody who thinks they are a good trader can set up a defi fund that does not require KYC"
 
@@ -69,7 +69,7 @@ msgstr "Asset"
 msgid "Asset Prices"
 msgstr "Asset Prices"
 
-#: src/components/Fund/OpenOrders.tsx:68
+#: src/components/Fund/OpenOrders.tsx:69
 msgid "Avg Fill Price"
 msgstr "Avg Fill Price"
 
@@ -77,9 +77,9 @@ msgstr "Avg Fill Price"
 msgid "Base vAPY"
 msgstr "Base vAPY"
 
-#: src/components/Fund/OpenOrders.tsx:60
-#: src/components/SwapBox/TwapOptions.tsx:43
-#: src/components/SwapBox/TwapOptions.tsx:46
+#: src/components/Fund/OpenOrders.tsx:61
+#: src/components/SwapBox/TwapOptions.tsx:44
+#: src/components/SwapBox/TwapOptions.tsx:47
 msgid "Batch Size"
 msgstr "Batch Size"
 
@@ -92,15 +92,15 @@ msgstr "Blog"
 #~ msgid "Buy"
 #~ msgstr "Buy"
 
-#: src/components/SwapBox/OCOOptions.tsx:52
+#: src/components/SwapBox/OCOOptions.tsx:58
 msgid "Buy {0}"
 msgstr "Buy {0}"
 
-#: src/components/Fund/OpenOrders.tsx:88
+#: src/components/Fund/OpenOrders.tsx:89
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/components/Fund/OpenOrders.tsx:106
+#: src/components/Fund/OpenOrders.tsx:107
 msgid "Cancel {0} {orderText}"
 msgstr "Cancel {0} {orderText}"
 
@@ -121,12 +121,15 @@ msgstr "Close"
 msgid "Closing Date of the Fund"
 msgstr "Closing Date of the Fund"
 
-#: src/components/Fund/OpenOrders.tsx:30
+#: src/components/Fund/OpenOrders.tsx:31
 #: src/components/Fund/OpenPositions.tsx:26
 msgid "Collateral"
 msgstr "Collateral"
 
-#: src/components/SwapBox/SwapBox.tsx:284
+#: src/components/Fund/Yield/Deposit.tsx:64
+#: src/components/Fund/Yield/Deposit.tsx:88
+#: src/components/Fund/Yield/Deposit.tsx:116
+#: src/components/Fund/Yield/Withdraw.tsx:28
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -134,26 +137,38 @@ msgstr "Confirm"
 #: src/components/Header/Header.tsx:92
 #: src/pages/CreateFund/CreateFund.tsx:14
 #: src/pages/Home/About.tsx:63
-#: src/pages/Home/Home.tsx:28
+#: src/pages/Home/Home.tsx:30
 msgid "Create Fund"
 msgstr "Create Fund"
 
+#: src/components/SwapBox/SwapBox.tsx:379
+msgid "Current Price: {0}"
+msgstr "Current Price: {0}"
+
 #: src/components/SwapBox/SwapBox.tsx:205
-msgid "Current Price: {spotPrice}"
-msgstr "Current Price: {spotPrice}"
+#~ msgid "Current Price: {spotPrice}"
+#~ msgstr "Current Price: {spotPrice}"
+
+#: src/components/Fund/Yield/Action.tsx:13
+msgid "DEPOSIT"
+msgstr "DEPOSIT"
 
 #: src/components/Fund/FundBanner.tsx:82
 #~ msgid "Data updated: {dataUpdated} ago"
 #~ msgstr "Data updated: {dataUpdated} ago"
 
-#: src/components/Fund/OpenOrders.tsx:38
+#: src/components/Fund/OpenOrders.tsx:39
 #: src/components/Fund/OpenPositions.tsx:49
 msgid "Date Created"
 msgstr "Date Created"
 
-#: src/pages/Home/Home.tsx:14
+#: src/pages/Home/Home.tsx:16
 msgid "Decentralized Fund Management Platform"
 msgstr "Decentralized Fund Management Platform"
+
+#: src/components/Fund/Yield/Deposit.tsx:128
+msgid "Deposit"
+msgstr "Deposit"
 
 #: src/components/CreateFund/CreateFundForm.tsx:174
 #: src/components/CreateFund/CreateFundForm.tsx:176
@@ -168,7 +183,7 @@ msgstr "Duration of raise"
 #~ msgid "Estimated Completion: {0} minutes"
 #~ msgstr "Estimated Completion: {0} minutes"
 
-#: src/components/SwapBox/TwapOptions.tsx:67
+#: src/components/SwapBox/TwapOptions.tsx:68
 msgid "Estimated Completion: {0} {interval}"
 msgstr "Estimated Completion: {0} {interval}"
 
@@ -176,7 +191,7 @@ msgstr "Estimated Completion: {0} {interval}"
 msgid "Expires On:"
 msgstr "Expires On:"
 
-#: src/components/Fund/OpenOrders.tsx:42
+#: src/components/Fund/OpenOrders.tsx:43
 msgid "Expiry Date"
 msgstr "Expiry Date"
 
@@ -188,7 +203,7 @@ msgstr "Expiry Date"
 msgid "Fees"
 msgstr "Fees"
 
-#: src/components/Fund/OpenOrders.tsx:49
+#: src/components/Fund/OpenOrders.tsx:50
 msgid "Filled/ Order Size"
 msgstr "Filled/ Order Size"
 
@@ -240,8 +255,8 @@ msgstr "If you are a trader, raise capital easily and scale up your investment a
 msgid "Information about your fund"
 msgstr "Information about your fund"
 
-#: src/components/SwapBox/TwapOptions.tsx:58
-#: src/components/SwapBox/TwapOptions.tsx:61
+#: src/components/SwapBox/TwapOptions.tsx:59
+#: src/components/SwapBox/TwapOptions.tsx:62
 msgid "Interval"
 msgstr "Interval"
 
@@ -285,19 +300,19 @@ msgstr "Join our discord and come talk to us~"
 msgid "LP"
 msgstr "LP"
 
-#: src/components/SwapBox/OCOOptions.tsx:74
+#: src/components/SwapBox/OCOOptions.tsx:82
 msgid "Limit Buy Price"
 msgstr "Limit Buy Price"
 
-#: src/components/Fund/OpenOrders.tsx:34
-#: src/components/SwapBox/LimitPriceInput.tsx:15
+#: src/components/Fund/OpenOrders.tsx:35
 #: src/components/SwapBox/LimitPriceInput.tsx:18
-#: src/components/SwapBox/OCOOptions.tsx:71
-#: src/components/SwapBox/OCOOptions.tsx:116
+#: src/components/SwapBox/LimitPriceInput.tsx:21
+#: src/components/SwapBox/OCOOptions.tsx:79
+#: src/components/SwapBox/OCOOptions.tsx:125
 msgid "Limit Price"
 msgstr "Limit Price"
 
-#: src/components/SwapBox/OCOOptions.tsx:119
+#: src/components/SwapBox/OCOOptions.tsx:129
 msgid "Limit Sell Price"
 msgstr "Limit Sell Price"
 
@@ -313,11 +328,11 @@ msgstr "Manager"
 msgid "Maturity Date"
 msgstr "Maturity Date"
 
-#: src/components/SwapBox/MinAmountInput.tsx:27
+#: src/components/SwapBox/MinAmountInput.tsx:26
 msgid "Min. Amount to receive"
 msgstr "Min. Amount to receive"
 
-#: src/components/SwapBox/MinAmountInput.tsx:24
+#: src/components/SwapBox/MinAmountInput.tsx:23
 msgid "Min. {0} Amount"
 msgstr "Min. {0} Amount"
 
@@ -329,7 +344,7 @@ msgstr "Name"
 #~ msgid "Or Sell"
 #~ msgstr "Or Sell"
 
-#: src/components/SwapBox/OCOOptions.tsx:97
+#: src/components/SwapBox/OCOOptions.tsx:105
 msgid "Or Sell {0}"
 msgstr "Or Sell {0}"
 
@@ -351,7 +366,7 @@ msgstr "PORTFOLIO"
 msgid "Perps/Swaps"
 msgstr "Perps/Swaps"
 
-#: src/components/Fund/OpenOrders.tsx:21
+#: src/components/Fund/OpenOrders.tsx:22
 #: src/components/Fund/OpenPositions.tsx:20
 msgid "Platform"
 msgstr "Platform"
@@ -364,7 +379,7 @@ msgstr "Pool"
 msgid "Portfolio Value"
 msgstr "Portfolio Value"
 
-#: src/components/Fund/OpenOrders.tsx:24
+#: src/components/Fund/OpenOrders.tsx:25
 msgid "Position"
 msgstr "Position"
 
@@ -373,7 +388,7 @@ msgstr "Position"
 msgid "Positions"
 msgstr "Positions"
 
-#: src/pages/FundPortfolio/FundPortfolio.tsx:61
+#: src/pages/FundPortfolio/FundPortfolio.tsx:43
 msgid "Redeem All"
 msgstr "Redeem All"
 
@@ -422,6 +437,11 @@ msgstr "Status"
 msgid "Strategy"
 msgstr "Strategy"
 
+#: src/components/SwapBox/SwapBox.tsx:182
+#: src/components/SwapBox/SwapBox.tsx:225
+msgid "Submit Limit Order"
+msgstr "Submit Limit Order"
+
 #: src/components/Fund/FundBanner.tsx:126
 msgid "TRADING"
 msgstr "TRADING"
@@ -450,45 +470,45 @@ msgstr "Thank you! Your Fund ({fundId}) was created!"
 msgid "Thank you! {investmentAmount} has been invested"
 msgstr "Thank you! {investmentAmount} has been invested"
 
-#: src/components/SwapBox/SwapBox.tsx:150
+#: src/components/SwapBox/SwapBox.tsx:323
 msgid "Token In:"
 msgstr "Token In:"
 
-#: src/components/SwapBox/SwapBox.tsx:184
+#: src/components/SwapBox/SwapBox.tsx:358
 msgid "Token Out:"
 msgstr "Token Out:"
 
-#: src/components/SwapBox/TrailingStopOptions.tsx:27
 #: src/components/SwapBox/TrailingStopOptions.tsx:30
+#: src/components/SwapBox/TrailingStopOptions.tsx:33
 msgid "Trailing Percent"
 msgstr "Trailing Percent"
 
-#: src/components/SwapBox/OCOOptions.tsx:65
+#: src/components/SwapBox/OCOOptions.tsx:72
 msgid "Trigger Buy Price"
 msgstr "Trigger Buy Price"
 
-#: src/components/Fund/OpenOrders.tsx:126
+#: src/components/Fund/OpenOrders.tsx:127
 msgid "Trigger Orders"
 msgstr "Trigger Orders"
 
-#: src/components/SwapBox/LimitTriggerOptions.tsx:14
 #: src/components/SwapBox/LimitTriggerOptions.tsx:17
-#: src/components/SwapBox/OCOOptions.tsx:62
-#: src/components/SwapBox/OCOOptions.tsx:107
-#: src/components/SwapBox/TrailingStopOptions.tsx:17
+#: src/components/SwapBox/LimitTriggerOptions.tsx:20
+#: src/components/SwapBox/OCOOptions.tsx:69
+#: src/components/SwapBox/OCOOptions.tsx:115
 #: src/components/SwapBox/TrailingStopOptions.tsx:20
+#: src/components/SwapBox/TrailingStopOptions.tsx:23
 msgid "Trigger Price"
 msgstr "Trigger Price"
 
-#: src/components/SwapBox/OCOOptions.tsx:110
+#: src/components/SwapBox/OCOOptions.tsx:119
 msgid "Trigger Sell Price"
 msgstr "Trigger Sell Price"
 
-#: src/components/Fund/OpenOrders.tsx:27
+#: src/components/Fund/OpenOrders.tsx:28
 msgid "Trigger Type"
 msgstr "Trigger Type"
 
-#: src/components/Fund/OpenOrders.tsx:136
+#: src/components/Fund/OpenOrders.tsx:137
 msgid "Twap Orders"
 msgstr "Twap Orders"
 
@@ -500,7 +520,7 @@ msgstr "Twitter"
 msgid "Twitter Username"
 msgstr "Twitter Username"
 
-#: src/pages/FundPortfolio/FundPortfolio.tsx:49
+#: src/pages/FundPortfolio/FundPortfolio.tsx:35
 msgid "Unredeemed Balances"
 msgstr "Unredeemed Balances"
 
@@ -516,14 +536,22 @@ msgstr "Value"
 msgid "Volume"
 msgstr "Volume"
 
-#: src/pages/FundPortfolio/FundPortfolio.tsx:65
-#: src/pages/FundPortfolio/FundPortfolio.tsx:74
+#: src/components/Fund/Yield/Action.tsx:17
+msgid "WITHDRAW/CLAIM"
+msgstr "WITHDRAW/CLAIM"
+
+#: src/pages/FundPortfolio/FundPortfolio.tsx:92
+#: src/pages/FundPortfolio/FundPortfolio.tsx:101
 msgid "Wallet"
 msgstr "Wallet"
 
 #: src/components/CreateFund/CreateFundForm.tsx:226
 msgid "Whitelist tokens"
 msgstr "Whitelist tokens"
+
+#: src/components/Fund/Yield/Withdraw.tsx:49
+msgid "Withdraw"
+msgstr "Withdraw"
 
 #: src/components/CreateFund/CreateFundForm.tsx:198
 msgid "Withdrawal Date from the fund"
@@ -545,11 +573,11 @@ msgstr "Yield"
 msgid "Your Fund Name"
 msgstr "Your Fund Name"
 
-#: src/components/Fund/OpenOrders.tsx:99
+#: src/components/Fund/OpenOrders.tsx:100
 msgid "order"
 msgstr "order"
 
-#: src/components/Fund/OpenOrders.tsx:99
+#: src/components/Fund/OpenOrders.tsx:100
 msgid "orders"
 msgstr "orders"
 
@@ -568,8 +596,8 @@ msgstr "{0} Amount"
 #~ msgid "{0} available"
 #~ msgstr "{0} available"
 
-#: src/components/SwapBox/SwapBox.tsx:160
-#: src/components/SwapBox/SwapBox.tsx:193
+#: src/components/SwapBox/SwapBox.tsx:333
+#: src/components/SwapBox/SwapBox.tsx:367
 msgid "{0} available ($ {1})"
 msgstr "{0} available ($ {1})"
 
