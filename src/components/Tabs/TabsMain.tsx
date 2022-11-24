@@ -1,24 +1,24 @@
 import { Tab } from "@headlessui/react";
-import { Fragment, FunctionComponent, ReactElement } from "react";
-
+import { FunctionComponent, ReactElement } from "react";
+import { Fragment } from "react";
 type TabOption = {
   label: string;
   description?: string;
   content: ReactElement;
 };
 
-const Tabs: FunctionComponent<{
+const TabsMain: FunctionComponent<{
   options: TabOption[];
 }> = (props) => {
   return (
     <Tab.Group>
-      <Tab.List>
+      <Tab.List className="flex justify-around h-[47px] select-none text-[12px]">
         {props.options.map((option) => (
           <Tab as={Fragment}>
             {({ selected }) => (
               <button
-                className={`p-2 m-2 bg-black rounded-xl hover:bg-gray-700  ${
-                  selected ? `bg-white text-black` : `bg-gray-dark text-white`
+                className={`flex items-center justify-center px-[15px] rounded-t-[12px] border-x-[1px] border-t-[1px] border-bcolor ${
+                  selected ? `text-otext bg-bcolor` : `text-white`
                 }`}
               >
                 {option.label}
@@ -36,4 +36,4 @@ const Tabs: FunctionComponent<{
   );
 };
 
-export default Tabs;
+export default TabsMain;

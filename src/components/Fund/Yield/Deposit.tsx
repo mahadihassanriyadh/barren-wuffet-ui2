@@ -41,11 +41,11 @@ const DepositTab = () => {
     <div className="select-none">
       <DepositAssets />
 
-      <Checkbox
+      {/* <Checkbox
         label="Deposit Wrapped"
         isChecked={depositWrapped}
         setIsChecked={setDepositWrapped}
-      />
+      /> */}
 
       <div className="flex justify-between mt-[24px]">
         <span className="font-ubuntu text-white font-normal text-[14px]">
@@ -128,14 +128,14 @@ const Deposit = () => {
             label: t`Deposit`,
             content: <DepositTab />,
           },
-          {
-            label: t`Stake`,
-            content: <StakeTab />,
-          },
-          {
-            label: t`Deposit & Stake`,
-            content: <DepositAndStakeTab />,
-          },
+          // {
+          //   label: t`Stake`,
+          //   content: <StakeTab />,
+          // },
+          // {
+          //   label: t`Deposit & Stake`,
+          //   content: <DepositAndStakeTab />,
+          // },
         ]}
       />
     </div>

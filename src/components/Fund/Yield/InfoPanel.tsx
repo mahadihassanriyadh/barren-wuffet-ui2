@@ -3,6 +3,93 @@ import { ReactComponent as CopyIcon } from "../../../img/icons/copyIcon.svg";
 import { ReactComponent as UsdtIcon } from "../../../img/icons/usdt.svg";
 import { ReactComponent as WbtcIcon } from "../../../img/icons/wbtc.svg";
 import { ReactComponent as EthIcon } from "../../../img/icons/eth.svg";
+import { BigNumber } from "ethers";
+import { Token } from "../../../config/tokens";
+import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
+
+const CurrencyReserves = () => {
+  const reserves: {
+    token: Token;
+    amount: BigNumber;
+    amountUSD: BigNumber;
+    percent: BigNumber;
+  }[] = [
+    {
+      token: {
+        name: "Wrapped Ethereum (sushi)",
+        decimals: 18,
+        symbol: "WETH",
+        address: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
+        chainId: 5,
+        logoURI: "https://wallet-asset.matic.network/img/tokens/eth.svg",
+      },
+      amount: parseUnits("20", 18),
+      amountUSD: parseUnits("20", 18).mul(1000),
+      percent: BigNumber.from("4700"),
+    },
+    {
+      token: {
+        name: "DAI (sushi)",
+        decimals: 18,
+        symbol: "DAI",
+        address: "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",
+        chainId: 5,
+        logoURI: "https://wallet-asset.matic.network/img/tokens/dai.svg",
+      },
+      amount: parseUnits("20000", 18),
+      amountUSD: parseUnits("20000", 18).mul(9999).div(10000),
+      percent: BigNumber.from("5300"),
+    },
+  ];
+  return (
+    <div>
+      <h3 className="font-ubuntu font-medium text-[18px] text-white mt-[26px]">
+        Currency reserves
+      </h3>
+      <div className="mt-[17px] divide-y-[0.4px] divide-solid divide-[#575771]">
+        {reserves.map((r) => (
+          <div className="h-[29px] pb-[6px] flex justify-between">
+            <div className="flex flex-row items-center">
+              <img
+                className="mr-[8.5px]"
+                src={r.token.logoURI}
+                alt={r.token.name}
+              />
+              <span className="font-ubuntu font-medium text-[12px] text-white mr-[13px] w-[31px]">
+                {r.token.name}
+              </span>
+              <OpenIcon className="mr-[10px] cursor-pointer" />
+              <CopyIcon className="cursor-pointer" />
+            </div>
+            <div className="flex flex-row items-center">
+              <p className="font-ubuntu font-medium text-[12px] text-white text-right">
+                {formatUnits(r.amountUSD)}
+                <span className="ml-[3px] text-[10px] text-[#8D8D92]">
+                  ({r.percent.div(100).toString()}%)
+                </span>
+              </p>
+            </div>
+          </div>
+        ))}
+
+        <div className="h-[29px] pt-[11px] flex justify-between">
+          <span className="font-ubuntu font-normal text-[11px] text-dtext mt-[3px]">
+            USD total
+          </span>
+          <span className="font-ubuntu font-medium text-[12px] text-white text-right">
+            {formatUnits(
+              reserves.reduce(
+                (total, r) => total.add(r.amountUSD),
+                BigNumber.from(0)
+              ),
+              18
+            )}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const InfoPanel = () => {
   return (
@@ -37,76 +124,9 @@ const InfoPanel = () => {
         </div>
       </div>
 
-      <h3 className="font-ubuntu font-medium text-[18px] text-white mt-[26px]">
-        Currency reserves
-      </h3>
-      <div className="mt-[17px] divide-y-[0.4px] divide-solid divide-[#575771]">
-        <div className="h-[29px] pb-[6px] flex justify-between">
-          <div className="flex flex-row items-center">
-            <UsdtIcon className="mr-[8.5px]" />
-            <span className="font-ubuntu font-medium text-[12px] text-white mr-[13px] w-[31px]">
-              USDT
-            </span>
-            <OpenIcon className="mr-[10px] cursor-pointer" />
-            <CopyIcon className="cursor-pointer" />
-          </div>
-          <div className="flex flex-row items-center">
-            <p className="font-ubuntu font-medium text-[12px] text-white text-right">
-              6,421,803{" "}
-              <span className="ml-[3px] text-[10px] text-[#8D8D92]">
-                (33.45%)
-              </span>
-            </p>
-          </div>
-        </div>
-        <div className="h-[29px] pt-[6px] mb-[6px] flex justify-between">
-          <div className="flex flex-row items-center">
-            <WbtcIcon className="mr-[8.5px]" />
-            <span className="font-ubuntu font-medium text-[12px] text-white mr-[13px] w-[31px]">
-              WBTC
-            </span>
-            <OpenIcon className="mr-[10px] cursor-pointer" />
-            <CopyIcon className="cursor-pointer" />
-          </div>
-          <div className="flex flex-row items-center">
-            <p className="font-ubuntu font-medium text-[12px] text-white text-right">
-              296{" "}
-              <span className="ml-[3px] text-[10px] text-[#8D8D92]">
-                (33.33%)
-              </span>
-            </p>
-          </div>
-        </div>
-        <div className="h-[29px] pt-[6px] mb-[6px] flex justify-between">
-          <div className="flex flex-row items-center">
-            <EthIcon className="mr-[8.5px]" />
-            <span className="font-ubuntu font-medium text-[12px] text-white mr-[13px] w-[31px]">
-              ETH
-            </span>
-            <OpenIcon className="mr-[10px] cursor-pointer" />
-            <CopyIcon className="cursor-pointer" />
-          </div>
-          <div className="flex flex-row items-center">
-            <p className="font-ubuntu font-medium text-[12px] text-white text-right">
-              3,602{" "}
-              <span className="ml-[3px] text-[10px] text-[#8D8D92]">
-                (33.15%)
-              </span>
-            </p>
-          </div>
-        </div>
+      <CurrencyReserves />
 
-        <div className="h-[29px] pt-[11px] flex justify-between">
-          <span className="font-ubuntu font-normal text-[11px] text-dtext mt-[3px]">
-            USD total
-          </span>
-          <span className="font-ubuntu font-medium text-[12px] text-white text-right">
-            $19,189,246
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-[10px] bg-banner px-[20px] pt-[13px] pb-[18px] rounded-[10px]">
+      {/* <div className="mt-[10px] bg-banner px-[20px] pt-[13px] pb-[18px] rounded-[10px]">
         <div className="flex justify-between">
           <span className="font-ubuntu font-normal text-[12px] text-dtext">
             Fee
@@ -170,7 +190,7 @@ const InfoPanel = () => {
       </h3>
       <div className="mt-[10px]">
         <p className="font-ubuntu font-normal text-[10px] text-dtext">
-          Variable APY based on today’s trading activity.
+          Variable APY based on todays trading activity.
         </p>
         <p className="font-ubuntu font-normal text-[10px] text-[#FED519] underline cursor-pointer">
           Click here to learn more about Base vAPY.
@@ -215,7 +235,7 @@ const InfoPanel = () => {
         <span className="font-ubuntu font-normal text-[12px] text-white">
           5.05% CRV
         </span>
-      </div>
+      </div>*/}
     </div>
   );
 };
