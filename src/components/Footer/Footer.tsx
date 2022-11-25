@@ -9,18 +9,18 @@ import githubIcon from "../../img/ic_github.svg";
 // import mediumIcon from "../../img/ic_medium.svg";
 import { Link } from "react-router-dom";
 
-const appLinks = [
+const appLinks: {text: string, link: string, external: boolean }[] = [
   // { text: t`Terms & conditions`, link: "/terms-and-conditions" },
   // { text: t`About`, link: "/about" },
   // { text: t`Referral Terms`, link: "/referral-terms" },
-  { text: t`Blog`, link: "https://www.jezer0x.com/", external: true },
+  // { text: t`Blog`, link: "https://www.jezer0x.com/", external: true },
 ];
 
 const socialLinks = [
   { link: "https://twitter.com/jezer0x", name: "Twitter", icon: twitterIcon },
   { link: "https://github.com/jezer0x", name: "Github", icon: githubIcon },
   // { link: "https://t.me/GMX_IO", name: "Telegram", icon: telegramIcon },
-  { link: "https://discord.gg/jkBF9mpQ6w", name: "Discord", icon: discordIcon },
+  { link: "https://discord.gg/7Qr73T32DP", name: "Discord", icon: discordIcon },
 ];
 
 export default function Footer() {
@@ -30,7 +30,7 @@ export default function Footer() {
       <div>
         <img className="mx-auto" src={logoImg} alt="BarrenWuffet" />
       </div>
-      {/* socil links */}
+      {/* social links */}
       <div className="flex justify-center items-center space-x-28">
         {socialLinks.map((platform) => {
           return (

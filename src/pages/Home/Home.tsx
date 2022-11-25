@@ -3,8 +3,6 @@ import { t, Trans } from "@lingui/macro";
 import { NavLink } from "react-router-dom";
 import FundsList from "../../components/Fund/FundsList";
 import Button from "../../components/Button/Button";
-import FAQ from "../../components/FAQ/FAQ";
-import faqs from "../../config/faqs";
 import InfoPanel from "../../components/Fund/Yield/InfoPanel";
 import Payments from "../../components/Fund/Yield/Action";
 
@@ -30,8 +28,6 @@ export default function Home() {
           <Button label={t`Create Fund`} />
         </NavLink>
         <hr className="py-5" />
-        <h2 className="font-sans text-4xl font-bold">FAQs 🤔</h2>
-        <FAQ faqs={faqs} />
       </div>
     </div>
   );
