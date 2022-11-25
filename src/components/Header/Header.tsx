@@ -68,9 +68,7 @@ export default function Header() {
                   md:space-y-0"
             >
               <li>
-                <NavLink className="block hover:text-orange-400" to="/about">
-                  <Trans>About</Trans>
-                </NavLink>
+                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://barren-wuffet.gitbook.io/barren-wuffet/" target="_blank">Docs</a>
               </li>
               <li>
                 <NavLink className="block hover:text-orange-400" to="/blog">

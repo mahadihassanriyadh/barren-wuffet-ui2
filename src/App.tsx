@@ -14,7 +14,6 @@ import {
 } from "@tanstack/react-query";
 
 import Home from "./pages/Home/Home";
-import About from "./pages/Home/About";
 import FundTrading from "./pages/FundTrading/FundTrading";
 import FundPortfolio from "./pages/FundPortfolio/FundPortfolio";
 import FundYield from "./pages/FundYield/FundYield";
@@ -58,7 +57,6 @@ function App() {
                     <QueryClientProvider client={queryClient}>
                       <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
                         <Route path="/create-fund" element={<CreateFund />} />
                         <Route path="/invest" element={<Invest />}>
                           <Route path=":fundId" element={<Invest />} />
