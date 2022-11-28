@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import logo from "../../img/logo.svg";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { t, Trans } from "@lingui/macro";
 import Button from "../Button/Button";
 
@@ -12,6 +12,18 @@ export default function Header() {
   const handleMobileMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
+  const [shouldDisplayConnect, setShouldDisplayConnect] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname.startsWith("/fund") || pathname.startsWith("/invest") || pathname.startsWith("/create-fund")) { 
+      setShouldDisplayConnect(true);
+    }
+    else {
+      setShouldDisplayConnect(false);
+    }
+    console.log(shouldDisplayConnect)
+  }, [pathname, shouldDisplayConnect])
   return (
     <>
       <header className="container mx-auto">
@@ -68,13 +80,12 @@ export default function Header() {
                   md:space-y-0"
             >
               <li>
-                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://github.com/jezer0x" target="_blank">Protocol</a>
-              </li>
-              <li>
-                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://discord.gg/7Qr73T32DP" target="_blank">Community</a>
-              </li>
-              <li>
                 <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://barren-wuffet.gitbook.io/barren-wuffet/" target="_blank">Docs</a>
+              </li>
+              <li>
+                <NavLink className="block hover:text-orange-400" to="/blog">
+                  <Trans>Blog</Trans>
+                </NavLink>
               </li>
               <li>
                 <NavLink className="block" to="/fund/portfolio">
@@ -92,7 +103,9 @@ export default function Header() {
                 </NavLink>
               </li>
               <li>
-                <ConnectButton />
+                {
+                  shouldDisplayConnect && <ConnectButton />
+                }
               </li>
             </ul>
           </div>
