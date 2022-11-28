@@ -7,6 +7,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { t, Trans } from "@lingui/macro";
 import Button from "../Button/Button";
 import { LaunchButtons } from "../../api/models";
+import LaunchModal from "./LaunchModal";
 
 export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -15,6 +16,7 @@ export default function Header() {
   };
   const [shouldDisplayConnect, setShouldDisplayConnect] = useState(false);
   const { pathname } = useLocation();
+  const [launch, setLaunch] = useState(false);
   const LaunchButtons: LaunchButtons[] = [
     {
       id: 0,
@@ -104,17 +106,23 @@ export default function Header() {
                   <Trans>Blog</Trans>
                 </NavLink>
               </li>
-              {
-                LaunchButtons.map(btn => {
-                  return (
-                    <li key={btn.id}>
-                      <NavLink className="block" to={btn.url}>
-                        <Button label={btn.name} />
-                      </NavLink>
-                    </li>
-                  )
-                })
-              }
+              <li>
+                <LaunchModal
+                  launch={launch}
+                  setLaunch={setLaunch}
+                  launchButtons={
+                    LaunchButtons.map(btn => {
+                      return (
+                        <li key={btn.id}>
+                          <NavLink onClick={()=>setLaunch(false)} className="block" to={btn.url}>
+                            <Button label={btn.name} />
+                          </NavLink>
+                        </li>
+                      )
+                      })
+                    }
+                />
+              </li>
               <li>
                 {
                   shouldDisplayConnect && <ConnectButton />
