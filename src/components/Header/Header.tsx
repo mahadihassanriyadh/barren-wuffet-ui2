@@ -4,10 +4,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../../img/logo.svg";
 
 import { NavLink, useLocation } from "react-router-dom";
-import { t, Trans } from "@lingui/macro";
-import Button from "../Button/Button";
-import { LaunchButtons } from "../../api/models";
-import LaunchModal from "./LaunchModal";
+import { Trans } from "@lingui/macro";
+import LaunchAppButton from "../Button/LaunchAppButton";
 
 export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -16,24 +14,7 @@ export default function Header() {
   };
   const [shouldDisplayConnect, setShouldDisplayConnect] = useState(false);
   const { pathname } = useLocation();
-  const [launch, setLaunch] = useState(false);
-  const LaunchButtons: LaunchButtons[] = [
-    {
-      id: 0,
-      name: t`Manage Fund`,
-      url: "/fund/portfolio",
-    },
-    {
-      id: 1,
-      name: t`Invest`,
-      url: "/invest",
-    },
-    { 
-      id: 2,
-      name: t`Create Fund`,
-      url: "/create-fund",
-    }
-  ]
+
   useEffect(() => {
     if (pathname.startsWith("/fund") || pathname.startsWith("/invest") || pathname.startsWith("/create-fund")) { 
       setShouldDisplayConnect(true);
@@ -107,21 +88,7 @@ export default function Header() {
                 </NavLink>
               </li>
               <li>
-                <LaunchModal
-                  launch={launch}
-                  setLaunch={setLaunch}
-                  launchButtons={
-                    LaunchButtons.map(btn => {
-                      return (
-                        <li key={btn.id}>
-                          <NavLink onClick={()=>setLaunch(false)} className="block" to={btn.url}>
-                            <Button label={btn.name} />
-                          </NavLink>
-                        </li>
-                      )
-                      })
-                    }
-                />
+                <LaunchAppButton />
               </li>
               <li>
                 {
