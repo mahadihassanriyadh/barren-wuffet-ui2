@@ -31,6 +31,12 @@ export interface Fund {
   investor_count?: number;
 }
 
+export interface LaunchButtons {
+  id: number,
+  name: string;
+  url: string;
+}
+
 export interface FundDetails extends Fund {
   logo?: string;
   portfolioValue: number;

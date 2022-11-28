@@ -6,6 +6,7 @@ import logo from "../../img/logo.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { t, Trans } from "@lingui/macro";
 import Button from "../Button/Button";
+import { LaunchButtons } from "../../api/models";
 
 export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -14,7 +15,23 @@ export default function Header() {
   };
   const [shouldDisplayConnect, setShouldDisplayConnect] = useState(false);
   const { pathname } = useLocation();
-
+  const LaunchButtons: LaunchButtons[] = [
+    {
+      id: 0,
+      name: t`Manage Fund`,
+      url: "/fund/portfolio",
+    },
+    {
+      id: 1,
+      name: t`Invest`,
+      url: "/invest",
+    },
+    { 
+      id: 2,
+      name: t`Create Fund`,
+      url: "/create-fund",
+    }
+  ]
   useEffect(() => {
     if (pathname.startsWith("/fund") || pathname.startsWith("/invest") || pathname.startsWith("/create-fund")) { 
       setShouldDisplayConnect(true);
@@ -87,21 +104,17 @@ export default function Header() {
                   <Trans>Blog</Trans>
                 </NavLink>
               </li>
-              <li>
-                <NavLink className="block" to="/fund/portfolio">
-                  <Button label={t`Manage Fund`} />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="block" to="/invest">
-                  <Button label={t`Invest`} />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="block" to="/create-fund">
-                  <Button label={t`Create Fund`} />
-                </NavLink>
-              </li>
+              {
+                LaunchButtons.map(btn => {
+                  return (
+                    <li key={btn.id}>
+                      <NavLink className="block" to={btn.url}>
+                        <Button label={btn.name} />
+                      </NavLink>
+                    </li>
+                  )
+                })
+              }
               <li>
                 {
                   shouldDisplayConnect && <ConnectButton />
