@@ -43,7 +43,10 @@ const columns: ColumnDef<Pool, any>[] = [
 const closePool = (pool: Pool) => {};
 
 export default function PoolsList() {
-  const { data, error } = useQuery<Pool[], string>(["/user/123"], api.getPools);
+  const { data, error } = useQuery<Pool[] | undefined, string>(
+    ["pools"],
+    api.getPools.bind(api)
+  );
 
   return (
     <div className="p-2">

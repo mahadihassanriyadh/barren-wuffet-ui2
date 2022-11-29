@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, FixedNumber } from "ethers";
 import { Address } from "../config/tokens";
 
 export interface Pool {
@@ -6,11 +6,10 @@ export interface Pool {
   indexToken: {
     symbol: string;
   };
-  hasPendingChanges: boolean;
-  vAPY: number;
-  tAPY: number;
-  volume: number;
-  tvl: number;
+  vAPY: BigNumber;
+  tAPY: BigNumber;
+  volume: BigNumber;
+  tvl: BigNumber;
 }
 
 export interface Fund {

@@ -4,5 +4,13 @@ sources:
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/psyf/bw-goerli-v1-0
+  - name: sushiswap
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap-subgraphs/sushiswap-arbitrum
+  - name: uniswap
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-gorli
 # documents:
 #   - ./src/example-query.graphql

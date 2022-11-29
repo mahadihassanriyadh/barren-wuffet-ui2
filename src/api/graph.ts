@@ -1,3 +1,5 @@
+import { chain as chainConfig } from "wagmi";
+
 import {
   Fund,
   FundStatus,
@@ -12,6 +14,7 @@ import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
 import { Address, ETH_ADDRESS } from "../config/tokens";
+import { getSushiPools } from "./sushi";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
@@ -64,8 +67,9 @@ export class API {
     this.graphUrl = config.graphUrl;
   }
 
-  getPools(): Promise<Pool[]> {
-    throw new Error("Not implemented");
+  async getPools(): Promise<Pool[] | undefined> {
+    console.log("Getting pools");
+    return getSushiPools(chainConfig.arbitrum);
   }
 
   async getFunds(): Promise<Fund[] | undefined> {

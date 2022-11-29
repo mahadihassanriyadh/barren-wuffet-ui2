@@ -11,6 +11,7 @@ import { Action, ActionTypes } from "../../config/actions";
 import Yield from "../../components/Fund/Yield/";
 import OpenOrders from "../../components/Fund/OpenOrders";
 import { useFund } from "../FundManage/FundManage";
+import PoolsList from "../../components/Fund/PoolsList";
 
 const FundYield = () => {
   const [actionToPerform, setActionToPerform] = useState<Action>();
@@ -58,6 +59,9 @@ const FundYield = () => {
                 actionType={ActionTypes.Trading}
               />
             )}
+          </div>
+          <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
+            <PoolsList />
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             <OrderList />

@@ -1,5 +1,12 @@
-import { BigNumber, utils } from "ethers";
-import { Chain, useContractRead, useNetwork } from "wagmi";
+import { BigNumber, FixedNumber, utils } from "ethers";
+import { parseFixed } from "@ethersproject/bignumber";
+
+import {
+  Chain,
+  chain as chainConfig,
+  useContractRead,
+  useNetwork,
+} from "wagmi";
 import { UseContractReadConfig } from "wagmi/dist/declarations/src/hooks/contracts/useContractRead";
 import { getContract } from "../config/addresses";
 import {
@@ -7,6 +14,7 @@ import {
   ContractToken,
   ETH_ADDRESS,
   getWethToken,
+  PRICE_DECIMALS,
   toContractToken,
   Token,
   TOKEN_TYPE,
@@ -15,7 +23,12 @@ import IUniswapV2Router02 from "../contracts/types/IUniswapV2Router02";
 import IUniswapV2Factory from "../contracts/types/IUniswapV2Factory";
 import IUniswapV2Pair from "../contracts/types/IUniswapV2Pair";
 
+import { Pair as SushiPair } from "../../.graphclient";
+
 import { ActionData } from "./rpc";
+import request, { gql } from "graphql-request";
+import { Pool } from "./models";
+import { bn } from "date-fns/locale";
 
 function createPath(
   tokenIn: Address,
@@ -204,5 +217,62 @@ export function useSLPFromTokens(
       addr: slpAddr,
       id: BigNumber.from(0),
     }
+  );
+}
+
+export async function getSushiPools(chain: Chain) {
+  // Schema: https://github.com/sushiswap/subgraphs/blob/master/subgraphs/sushiswap/schema.graphql
+  const graphUrls = {
+    [chainConfig.arbitrum.id]:
+      "https://api.thegraph.com/subgraphs/name/sushiswap-subgraphs/sushiswap-arbitrum",
+
+    // Goerli:Not found....
+  };
+
+  const data = await request<{ pairs: SushiPair[] }>(
+    graphUrls[chain.id],
+    // can add a where: {name_contains_nocase: <whatever people type in filter box>}
+    // Can openNewTab to https://www.sushi.com/earn/arb1:<id> for more info
+    gql`
+      {
+        pairs(orderBy: liquidityUSD, orderDirection: desc, skip: 0, first: 10) {
+          id
+          swapFee
+          type
+          name
+          liquidityUSD
+          # sum the following up for 24H vol/fee
+          daySnapshots(orderBy: date, orderDirection: desc, first: 24) {
+            volumeUSD
+            feesUSD
+          }
+          # apr = feesUSD
+        }
+      }
+    `
+  );
+
+  const ftoBN = (f: string) => {
+    // Unclear how many decimals these vals can have
+    // 48 seems enough?
+    return parseFixed(
+      FixedNumber.from(f, 48).round(PRICE_DECIMALS).toString(),
+      PRICE_DECIMALS
+    );
+  };
+
+  return Promise.resolve(
+    data.pairs.map(
+      (pair: SushiPair): Pool => ({
+        key: pair.id,
+        indexToken: {
+          symbol: pair.name,
+        },
+        vAPY: ftoBN(pair.daySnapshots[0].feesUSD),
+        tAPY: ftoBN("12"),
+        volume: ftoBN(pair.daySnapshots[0].volumeUSD),
+        tvl: ftoBN(pair.liquidityUSD),
+      })
+    )
   );
 }
