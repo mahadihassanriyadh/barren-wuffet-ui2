@@ -4,7 +4,7 @@ import Button from './Button';
 const LaunchModal = ({ launchButtons, launch, setLaunch }: any) => {
     return (
         <div>
-            <Button onClick={() => setLaunch(true)} label={"Launch App"} />
+            <Button onClick={() => setLaunch(true)} label={"App"} />
             {
                 launch
 

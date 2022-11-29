@@ -10,19 +10,19 @@ const LaunchAppButton = () => {
     const LaunchButtons: LaunchButtons[] = [
         {
           id: 0,
-          name: t`Manage Fund`,
+          name: t`Trader: Manage Fund`,
           url: "/fund/portfolio",
-        },
-        {
-          id: 1,
-          name: t`Invest`,
-          url: "/invest",
         },
         { 
           id: 2,
-          name: t`Create Fund`,
+          name: t`Trader: Create Fund`,
           url: "/create-fund",
-        }
+        }, 
+        {
+          id: 1,
+          name: t`Investor`,
+          url: "/invest",
+        },
     ]
     return (
         <LaunchModal

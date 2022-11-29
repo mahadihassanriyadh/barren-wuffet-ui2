@@ -80,12 +80,13 @@ export default function Header() {
                   md:space-y-0"
             >
               <li>
-                <a className="block text-xl hover:text-orange-400" rel="noopener noreferrer" href="https://barren-wuffet.gitbook.io/barren-wuffet/" target="_blank">Docs</a>
+                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://github.com/jezer0x" target="_blank">Protocol</a>
               </li>
               <li>
-                <NavLink className="block text-xl hover:text-orange-400" to="/blog">
-                  <Trans>Blog</Trans>
-                </NavLink>
+                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://discord.gg/7Qr73T32DP" target="_blank">Community</a>
+              </li>
+              <li>
+                <a className="block hover:text-orange-400" rel="noopener noreferrer" href="https://barren-wuffet.gitbook.io/barren-wuffet/" target="_blank">Docs</a>
               </li>
               <li>
                 <LaunchAppButton />
