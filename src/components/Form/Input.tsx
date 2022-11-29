@@ -1,3 +1,5 @@
+import { format as datefnFormat } from "date-fns";
+
 import { BigNumber } from "ethers";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 import debounce from "lodash.debounce";
@@ -11,6 +13,7 @@ type InputType =
   | "password"
   | "email"
   | "date"
+  | "datetime-local"
   | "bignumber";
 
 interface InputPropsTemplate<T>
@@ -39,7 +42,7 @@ interface BigNumberInputProps extends InputPropsTemplate<BigNumber> {
 }
 
 interface DateInputProps extends InputPropsTemplate<Date> {
-  type: "date";
+  type: "date" | "datetime-local";
 }
 
 type InputProps =
@@ -65,7 +68,9 @@ export const Input: FunctionComponent<InputProps> = (props) => {
             alt={name}
           />
         )}
-        {props.type === "date" && <DateInput {...props} />}
+        {(props.type === "date" || props.type === "datetime-local") && (
+          <DateInput {...props} />
+        )}
         {props.type === "bignumber" && <BigNumberInput {...props} />}
         {props.type === "number" && <NumberInput {...props} />}
         {["text", "password", "email", undefined].includes(props.type) && (
@@ -128,12 +133,18 @@ const BigNumberInput: FunctionComponent<BigNumberInputProps> = (props) => {
 };
 
 const DateInput: FunctionComponent<DateInputProps> = (props) => {
-  const formatDate = (dt: Date) =>
-    isNaN(dt as unknown as number) ? "" : dt?.toISOString()?.split("T")[0];
+  const formatStr =
+    props.type === "date" ? "yyyy-MM-dd" : "yyyy-MM-dd'T'hh:mm:ss";
+
+  const format = (dt: Date) =>
+    isNaN(dt as unknown as number) ? "" : datefnFormat(dt, formatStr);
+
+  const value = props.value ? format(props.value) : props.placeholder;
+
   return (
     <DefaultInput
       {...props}
-      value={props.value ? formatDate(props.value) : props.placeholder}
+      value={value}
       onChange={(value) => {
         props.onChange(new Date(value));
       }}

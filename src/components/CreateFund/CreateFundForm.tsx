@@ -193,7 +193,7 @@ const CreateFundForm: FunctionComponent = () => {
             />
             <div className="flex justify-between space-x-8">
               <Input
-                type="date"
+                type="datetime-local"
                 value={lockin}
                 name={t`Withdrawal Date from the fund`}
                 id="lockin"
@@ -202,7 +202,7 @@ const CreateFundForm: FunctionComponent = () => {
                 required
               />
               <Input
-                type="date"
+                type="datetime-local"
                 value={closeDate}
                 name={t`Closing Date of the Fund`}
                 id="durationOfRaise"
