@@ -1,20 +1,27 @@
 import { BigNumber, utils } from "ethers";
-import { AbiCoder } from "ethers/lib/utils";
 import { Chain, useContractRead, useNetwork } from "wagmi";
 import { UseContractReadConfig } from "wagmi/dist/declarations/src/hooks/contracts/useContractRead";
-import { Action, ActionID } from "../config/actions";
 import { getContract } from "../config/addresses";
 import {
   Address,
+  ContractToken,
   ETH_ADDRESS,
   getWethToken,
   toContractToken,
   Token,
+  TOKEN_TYPE,
 } from "../config/tokens";
 import IUniswapV2Router02 from "../contracts/types/IUniswapV2Router02";
+import IUniswapV2Factory from "../contracts/types/IUniswapV2Factory";
+import IUniswapV2Pair from "../contracts/types/IUniswapV2Pair";
+
 import { ActionData } from "./rpc";
 
-function createPath(tokenIn: Address, tokenOut: Address, WETHAddr: Address) {
+function createPath(
+  tokenIn: Address,
+  tokenOut: Address,
+  WETHAddr: Address
+): [Address, Address] {
   return [
     tokenIn === ETH_ADDRESS ? WETHAddr : tokenIn,
     tokenOut === ETH_ADDRESS ? WETHAddr : tokenOut,
@@ -79,4 +86,123 @@ export function useSushiAmountOut(
   );
 
   return extractSushiAmountOutData(amountsOut);
+}
+
+export function createSushiAddLiquidityAction(
+  callee: Address,
+  tokenA: ContractToken,
+  tokenB: ContractToken,
+  minAmountOfAPerB: BigNumber,
+  minAmountOfBPerA: BigNumber
+): ActionData {
+  return {
+    callee: callee,
+    data: utils.defaultAbiCoder.encode(
+      ["uint256", "uint256"],
+      [minAmountOfAPerB, minAmountOfBPerA]
+    ) as Address,
+    inputTokens: [tokenA, tokenB],
+    outputTokens: [tokenA, tokenB],
+  };
+}
+
+export function createSushiRemoveLiquidityAction(
+  callee: Address,
+  tokenSLP: ContractToken,
+  tokenA?: ContractToken,
+  tokenB?: ContractToken,
+  minAmountOfAPerSLP?: BigNumber,
+  minAmountOfBPerSLP?: BigNumber
+): ActionData {
+  return {
+    callee: callee,
+    data: utils.defaultAbiCoder.encode(
+      ["uint256", "uint256"],
+      [minAmountOfAPerSLP, minAmountOfBPerSLP]
+    ) as Address,
+    inputTokens: [tokenSLP],
+    outputTokens: tokenA && tokenB ? [tokenA, tokenB] : [],
+  };
+}
+
+export function useSushiRemoveLiquidityAction(
+  callee: Address,
+  tokenSLP: Token,
+  minAmountOfAPerSLP: BigNumber,
+  minAmountOfBPerSLP: BigNumber
+) {
+  const { tokenA, tokenB } = useTokensFromSLP(toContractToken(tokenSLP));
+  return createSushiRemoveLiquidityAction(
+    callee,
+    toContractToken(tokenSLP),
+    tokenA,
+    tokenB,
+    minAmountOfAPerSLP,
+    minAmountOfBPerSLP
+  );
+}
+
+function prepareSushiTokenToSLPArgs(
+  chain: Chain | undefined,
+  tokenIn: Token,
+  tokenOut: Token
+): UseContractReadConfig<typeof IUniswapV2Factory.abi, "getPair"> {
+  const swap_router_address = chain && getContract(chain.id, "SushiSwapRouter");
+  const WETHAddr = getWethToken(chain?.id)?.address ?? "0x";
+
+  return {
+    address: swap_router_address,
+    abi: IUniswapV2Factory.abi,
+    functionName: "getPair",
+    args: createPath(tokenIn.address, tokenOut.address, WETHAddr),
+  };
+}
+
+export function useTokensFromSLP(tokenSLP: ContractToken): {
+  tokenA: ContractToken | undefined;
+  tokenB: ContractToken | undefined;
+} {
+  const { data: token0Addr } = useContractRead({
+    address: tokenSLP.addr,
+    abi: IUniswapV2Pair.abi,
+    functionName: "token0",
+  });
+
+  const { data: token1Addr } = useContractRead({
+    address: tokenSLP.addr,
+    abi: IUniswapV2Pair.abi,
+    functionName: "token1",
+  });
+
+  return {
+    tokenA: token0Addr && {
+      t: TOKEN_TYPE.ERC20,
+      addr: token0Addr,
+      id: BigNumber.from(0),
+    },
+    tokenB: token1Addr && {
+      t: TOKEN_TYPE.ERC20,
+      addr: token1Addr,
+      id: BigNumber.from(0),
+    },
+  };
+}
+
+export function useSLPFromTokens(
+  tokenIn: Token,
+  tokenOut: Token
+): ContractToken | undefined {
+  const { chain } = useNetwork();
+
+  const { data: slpAddr } = useContractRead(
+    prepareSushiTokenToSLPArgs(chain, tokenIn, tokenOut)
+  );
+
+  return (
+    slpAddr && {
+      t: TOKEN_TYPE.ERC20,
+      addr: slpAddr,
+      id: BigNumber.from(0),
+    }
+  );
 }
