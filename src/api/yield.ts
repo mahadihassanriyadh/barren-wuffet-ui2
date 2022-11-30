@@ -16,7 +16,6 @@ export function usePrepareAddLPRule(values: {
   tokenB: Token;
   minAmountOfBPerA: BN;
   minAmountOfAPerB: BN;
-  triggerPrice: BN;
   collaterals: BN[];
   fees: BN[];
 }) {
@@ -66,7 +65,6 @@ export function usePrepareRemoveLPRule(values: {
   tokenSLP: Token;
   minAmountOfBPerA: BN;
   minAmountOfAPerB: BN;
-  triggerPrice: BN;
   collaterals: BN[];
   fees: BN[];
 }) {
