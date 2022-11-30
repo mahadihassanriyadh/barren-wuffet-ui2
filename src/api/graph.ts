@@ -107,7 +107,8 @@ export class API {
   }
 
   async getPoolDetails(poolId?: string): Promise<PoolDetails | undefined> {
-    return poolId ? getSushiPool(poolId, chainConfig.arbitrum) : undefined;
+    if (poolId) return getSushiPool(poolId, chainConfig.arbitrum);
+    else throw Error("poolId is undefined");
   }
 
   async getFunds(): Promise<Fund[] | undefined> {

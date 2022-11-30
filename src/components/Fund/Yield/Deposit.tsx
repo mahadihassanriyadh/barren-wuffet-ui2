@@ -49,7 +49,9 @@ const DepositTab = ({
   depositAndStake: boolean;
 }) => {
   const [depositWrapped, setDepositWrapped] = useState(false);
-  const [tokenValues, setTokenValues] = useState<BigNumber[]>([]);
+  const [tokenValues, setTokenValues] = useState<BigNumber[]>(
+    Array(pool.tokens.length).fill(BigNumber.from("0"))
+  );
   const fund = useFund();
   const [isSaving, setIsSaving] = useState(false);
   const fees = tokenValues.map((t) => BigNumber.from("0"));

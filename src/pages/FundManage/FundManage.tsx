@@ -24,8 +24,12 @@ const FundManage = () => {
     data: fund,
     isError,
     dataUpdatedAt,
-  } = useQuery<FundDetails | undefined, string>(["fundDetails", fundId], () => {
-    return api.getFundDetails.bind(api)(fundId);
+  } = useQuery<FundDetails | undefined, string>({
+    queryKey: ["fundDetails", fundId],
+    queryFn: () => {
+      return api.getFundDetails.bind(api)(fundId);
+    },
+    enabled: !!fundId,
   });
 
   return (

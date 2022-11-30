@@ -30,8 +30,12 @@ const FundYield = () => {
     data: selectedPool,
     isError,
     dataUpdatedAt,
-  } = useQuery<PoolDetails | undefined, string>(["poolDetails", poolId], () => {
-    return api.getPoolDetails.bind(api)(poolId);
+  } = useQuery<PoolDetails | undefined, string>({
+    queryKey: ["poolDetails", poolId],
+    queryFn: () => {
+      return api.getPoolDetails.bind(api)(poolId);
+    },
+    enabled: !!poolId,
   });
 
   const OrderList: FunctionComponent = () => {
