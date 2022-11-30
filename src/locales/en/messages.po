@@ -13,8 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/Fund/PoolsList.tsx:33
+msgid "APR %"
+msgstr "APR %"
+
 #: src/components/CreateFund/CreateFundForm.tsx:134
-#: src/components/Header/Header.tsx:72
 msgid "About"
 msgstr "About"
 
@@ -74,8 +77,8 @@ msgid "Avg Fill Price"
 msgstr "Avg Fill Price"
 
 #: src/components/Fund/PoolsList.tsx:20
-msgid "Base vAPY"
-msgstr "Base vAPY"
+#~ msgid "Base vAPY"
+#~ msgstr "Base vAPY"
 
 #: src/components/Fund/OpenOrders.tsx:61
 #: src/components/SwapBox/TwapOptions.tsx:44
@@ -84,7 +87,7 @@ msgid "Batch Size"
 msgstr "Batch Size"
 
 #: src/components/Footer/Footer.tsx:16
-#: src/components/Header/Header.tsx:77
+#: src/components/Header/Header.tsx:75
 msgid "Blog"
 msgstr "Blog"
 
@@ -113,7 +116,6 @@ msgid "Choose Action"
 msgstr "Choose Action"
 
 #: src/components/Fund/OpenPositions.tsx:67
-#: src/components/Fund/PoolsList.tsx:37
 msgid "Close"
 msgstr "Close"
 
@@ -134,9 +136,8 @@ msgid "Confirm"
 msgstr "Confirm"
 
 #: src/components/CreateFund/CreateFundForm.tsx:240
-#: src/components/Header/Header.tsx:92
+#: src/components/Header/Header.tsx:90
 #: src/pages/CreateFund/CreateFund.tsx:14
-#: src/pages/Home/About.tsx:63
 #: src/pages/Home/Home.tsx:30
 msgid "Create Fund"
 msgstr "Create Fund"
@@ -198,6 +199,10 @@ msgstr "Expiry Date"
 #: src/components/Fund/FundBanner.tsx:41
 #~ msgid "Expiry in:"
 #~ msgstr "Expiry in:"
+
+#: src/components/Fund/PoolsList.tsx:21
+msgid "Fee %"
+msgstr "Fee %"
 
 #: src/components/CreateFund/CreateFundForm.tsx:219
 msgid "Fees"
@@ -261,7 +266,7 @@ msgid "Interval"
 msgstr "Interval"
 
 #: src/components/Fund/FundsList.tsx:96
-#: src/components/Header/Header.tsx:87
+#: src/components/Header/Header.tsx:85
 #: src/components/Invest/InvestForm.tsx:71
 msgid "Invest"
 msgstr "Invest"
@@ -316,7 +321,7 @@ msgstr "Limit Price"
 msgid "Limit Sell Price"
 msgstr "Limit Sell Price"
 
-#: src/components/Header/Header.tsx:82
+#: src/components/Header/Header.tsx:80
 msgid "Manage Fund"
 msgstr "Manage Fund"
 
@@ -354,7 +359,7 @@ msgid "Order Expiry"
 msgstr "Order Expiry"
 
 #: src/pages/FundTrading/FundTrading.tsx:31
-#: src/pages/FundYield/FundYield.tsx:38
+#: src/pages/FundYield/FundYield.tsx:40
 msgid "Orders"
 msgstr "Orders"
 
@@ -371,7 +376,7 @@ msgstr "Perps/Swaps"
 msgid "Platform"
 msgstr "Platform"
 
-#: src/components/Fund/PoolsList.tsx:17
+#: src/components/Fund/PoolsList.tsx:18
 msgid "Pool"
 msgstr "Pool"
 
@@ -384,7 +389,7 @@ msgid "Position"
 msgstr "Position"
 
 #: src/pages/FundTrading/FundTrading.tsx:23
-#: src/pages/FundYield/FundYield.tsx:34
+#: src/pages/FundYield/FundYield.tsx:36
 msgid "Positions"
 msgstr "Positions"
 
@@ -393,8 +398,8 @@ msgid "Redeem All"
 msgstr "Redeem All"
 
 #: src/components/Fund/PoolsList.tsx:23
-msgid "Rewards tAPY"
-msgstr "Rewards tAPY"
+#~ msgid "Rewards tAPY"
+#~ msgstr "Rewards tAPY"
 
 #: src/components/CreateFund/CreateFundForm.tsx:260
 msgid "START TRADING"
@@ -406,6 +411,7 @@ msgstr "See Investment"
 
 #: src/components/Form/Selector.tsx:25
 #: src/components/Fund/FundsList.tsx:136
+#: src/components/Fund/PoolsList.tsx:50
 msgid "Select"
 msgstr "Select"
 
@@ -533,8 +539,12 @@ msgid "Value"
 msgstr "Value"
 
 #: src/components/Fund/PoolsList.tsx:26
-msgid "Volume"
-msgstr "Volume"
+#~ msgid "Volume"
+#~ msgstr "Volume"
+
+#: src/components/Fund/PoolsList.tsx:25
+msgid "Volume (24h)"
+msgstr "Volume (24h)"
 
 #: src/components/Fund/Yield/Action.tsx:17
 msgid "WITHDRAW/CLAIM"
@@ -558,8 +568,8 @@ msgid "Withdrawal Date from the fund"
 msgstr "Withdrawal Date from the fund"
 
 #: src/components/Fund/PoolsList.tsx:34
-msgid "X"
-msgstr "X"
+#~ msgid "X"
+#~ msgstr "X"
 
 #: src/components/Fund/FundBanner.tsx:134
 msgid "YIELD"
