@@ -2,8 +2,6 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { t } from "@lingui/macro";
 import { useNetwork } from "wagmi";
 
-import { getTokens } from "../../config/tokens";
-
 import ActionSelector from "../../components/Fund/ActionSelector";
 import Tabs from "../../components/Tabs/Tabs";
 
@@ -12,9 +10,15 @@ import Yield from "../../components/Fund/Yield/";
 import OpenOrders from "../../components/Fund/OpenOrders";
 import { useFund } from "../FundManage/FundManage";
 import SelectPoolsList from "../../components/Fund/PoolsList";
-import { Pool } from "../../api/models";
+import { Pool, PoolDetails } from "../../api/models";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../../config/env";
 
 const FundYield = () => {
+  const { poolId, fundId } = useParams();
+  const navigate = useNavigate();
+
   const [actionToPerform, setActionToPerform] = useState<Action>();
   useEffect(() => {
     document.title = "Barren Wuffet | Fund Yield";
@@ -22,9 +26,13 @@ const FundYield = () => {
 
   const { chain } = useNetwork();
 
-  const [selectedPool, setSelectedPool] = useState<Pool | undefined>(undefined);
-
-  // const tokens = chain ? getTokens(chain.id, fundId) : [];
+  const {
+    data: selectedPool,
+    isError,
+    dataUpdatedAt,
+  } = useQuery<PoolDetails | undefined, string>(["poolDetails", poolId], () => {
+    return api.getPoolDetails.bind(api)(poolId);
+  });
 
   const OrderList: FunctionComponent = () => {
     return (
@@ -64,7 +72,9 @@ const FundYield = () => {
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             <SelectPoolsList
               selectedPool={selectedPool}
-              setSelectedPool={setSelectedPool}
+              setSelectedPool={(pool?: Pool) =>
+                navigate(`/fund/${fundId}/yield/${pool?.id || ""}`)
+              }
             />
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">

@@ -29,6 +29,77 @@ import { ActionData } from "./rpc";
 import request, { gql } from "graphql-request";
 import { Pool } from "./models";
 
+// Schema: https://github.com/sushiswap/subgraphs/blob/master/subgraphs/sushiswap/schema.graphql
+const sushiGraphUrls = {
+  [chainConfig.arbitrum.id]:
+    "https://api.thegraph.com/subgraphs/name/sushiswap-subgraphs/sushiswap-arbitrum",
+
+  // Goerli:Not found....
+};
+
+// Takes s, truncates everything after the ".", returns BN
+const strToRoundedBN = (
+  s: string,
+  origin_decimals: number = 0,
+  wanted_decimals: number = 0
+) => {
+  // Unclear how many decimals these vals can have
+  // 48 seems enough?
+  const roundedBN = parseFixed(FixedNumber.from(s, 48).round(0).toString());
+  return roundedBN.mul(
+    BigNumber.from(10).pow(wanted_decimals - origin_decimals)
+  );
+};
+
+function get24hVolumeUSD(daySnapshots: PairHourSnapshot[]) {
+  return daySnapshots.reduce(
+    (acc, cur) => acc.add(strToRoundedBN(cur.volumeUSD, 0, USD_DECIMALS)),
+    BigNumber.from(0)
+  );
+}
+
+function getAprPCT(daySnapshots: PairHourSnapshot[], liquidityUSD: any) {
+  return daySnapshots
+    .reduce(
+      (acc, cur) => acc.add(strToRoundedBN(cur.feesUSD, 0, USD_DECIMALS)),
+      BigNumber.from(0)
+    )
+    .mul(365)
+    .mul(100)
+    .mul(BigNumber.from(10).pow(PCT_DECIMALS))
+    .div(strToRoundedBN(liquidityUSD, 0, USD_DECIMALS));
+}
+
+function parsePair(pair: SushiPair, chainId: number): Pool {
+  return {
+    id: pair.id as Address,
+    indexToken: {
+      symbol: pair.name,
+    },
+    tokens: [
+      {
+        chainId: chainId,
+        name: pair.token0.name,
+        symbol: pair.token0.symbol,
+        decimals: pair.token0.decimals,
+        address: pair.token0.id as Address,
+      },
+      {
+        chainId: chainId,
+        name: pair.token1.name,
+        symbol: pair.token1.symbol,
+        decimals: pair.token1.decimals,
+        address: pair.token1.id as Address,
+      },
+    ],
+    reserves: [BigNumber.from(pair.reserve0), BigNumber.from(pair.reserve1)],
+    apr: getAprPCT(pair.hourSnapshots, pair.liquidityUSD),
+    volume: get24hVolumeUSD(pair.hourSnapshots),
+    tvl: strToRoundedBN(pair.liquidityUSD, 0, USD_DECIMALS),
+    fee: strToRoundedBN(pair.swapFee, 2, PCT_DECIMALS),
+  };
+}
+
 function createPath(
   tokenIn: Address,
   tokenOut: Address,
@@ -219,17 +290,49 @@ export function useSLPFromTokens(
   );
 }
 
+export async function getSushiPool(poolId: string, chain: Chain) {
+  const data = await request<{ pair: SushiPair }>(
+    sushiGraphUrls[chain.id],
+    // can add a where: {name_contains_nocase: <whatever people type in filter box>}
+    // Can openNewTab to https://www.sushi.com/earn/arb1:<id> for more info
+    gql`
+      {
+        pair(id: "${poolId}") {        
+          id
+          swapFee
+          type
+          name
+          liquidityUSD
+          # sum the following up for 24H vol/fee
+          hourSnapshots(orderBy: date, orderDirection: desc, first: 24) {
+            volumeUSD
+            feesUSD
+          }
+          token0 {
+            id
+            name
+            decimals
+            symbol
+          }
+          token1 {
+            id
+            name
+            decimals
+            symbol
+          }
+          reserve0
+          reserve1
+        }
+      }
+    `
+  );
+
+  return Promise.resolve(parsePair(data.pair, chain.id));
+}
+
 export async function getSushiPools(chain: Chain) {
-  // Schema: https://github.com/sushiswap/subgraphs/blob/master/subgraphs/sushiswap/schema.graphql
-  const graphUrls = {
-    [chainConfig.arbitrum.id]:
-      "https://api.thegraph.com/subgraphs/name/sushiswap-subgraphs/sushiswap-arbitrum",
-
-    // Goerli:Not found....
-  };
-
   const data = await request<{ pairs: SushiPair[] }>(
-    graphUrls[chain.id],
+    sushiGraphUrls[chain.id],
     // can add a where: {name_contains_nocase: <whatever people type in filter box>}
     // Can openNewTab to https://www.sushi.com/earn/arb1:<id> for more info
     gql`
@@ -264,71 +367,7 @@ export async function getSushiPools(chain: Chain) {
     `
   );
 
-  // Takes s, truncates everything after the ".", returns BN
-  const strToRoundedBN = (
-    s: string,
-    origin_decimals: number = 0,
-    wanted_decimals: number = 0
-  ) => {
-    // Unclear how many decimals these vals can have
-    // 48 seems enough?
-    const roundedBN = parseFixed(FixedNumber.from(s, 48).round(0).toString());
-    return roundedBN.mul(
-      BigNumber.from(10).pow(wanted_decimals - origin_decimals)
-    );
-  };
-
-  function get24hVolumeUSD(daySnapshots: PairHourSnapshot[]) {
-    return daySnapshots.reduce(
-      (acc, cur) => acc.add(strToRoundedBN(cur.volumeUSD, 0, USD_DECIMALS)),
-      BigNumber.from(0)
-    );
-  }
-
-  function getAprPCT(daySnapshots: PairHourSnapshot[], liquidityUSD: any) {
-    return daySnapshots
-      .reduce(
-        (acc, cur) => acc.add(strToRoundedBN(cur.feesUSD, 0, USD_DECIMALS)),
-        BigNumber.from(0)
-      )
-      .mul(365)
-      .mul(100)
-      .mul(BigNumber.from(10).pow(PCT_DECIMALS))
-      .div(strToRoundedBN(liquidityUSD, 0, USD_DECIMALS));
-  }
-
   return Promise.resolve(
-    data.pairs.map(
-      (pair: SushiPair): Pool => ({
-        id: pair.id as Address,
-        indexToken: {
-          symbol: pair.name,
-        },
-        tokens: [
-          {
-            chainId: chain.id,
-            name: pair.token0.name,
-            symbol: pair.token0.symbol,
-            decimals: pair.token0.decimals,
-            address: pair.token0.id as Address,
-          },
-          {
-            chainId: chain.id,
-            name: pair.token1.name,
-            symbol: pair.token1.symbol,
-            decimals: pair.token1.decimals,
-            address: pair.token1.id as Address,
-          },
-        ],
-        reserves: [
-          BigNumber.from(pair.reserve0),
-          BigNumber.from(pair.reserve1),
-        ],
-        apr: getAprPCT(pair.hourSnapshots, pair.liquidityUSD),
-        volume: get24hVolumeUSD(pair.hourSnapshots),
-        tvl: strToRoundedBN(pair.liquidityUSD, 0, USD_DECIMALS),
-        fee: strToRoundedBN(pair.swapFee, 2, PCT_DECIMALS),
-      })
-    )
+    data.pairs.map((pair: SushiPair): Pool => parsePair(pair, chain.id))
   );
 }

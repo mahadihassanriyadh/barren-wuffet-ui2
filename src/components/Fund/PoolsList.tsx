@@ -19,19 +19,19 @@ const columns: ColumnDef<Pool, any>[] = [
   }),
   columnHelper.accessor("fee", {
     header: t`Fee %`,
-    cell: (info) => formatPCT(info.getValue()), 
+    cell: (info) => formatPCT(info.getValue()),
   }),
   columnHelper.accessor("volume", {
     header: t`Volume (24h)`,
-    cell: (info) => formatUSD(info.getValue()), 
+    cell: (info) => formatUSD(info.getValue()),
   }),
   columnHelper.accessor("tvl", {
     header: t`TVL`,
-    cell: (info) => formatUSD(info.getValue()), 
+    cell: (info) => formatUSD(info.getValue()),
   }),
   columnHelper.accessor("apr", {
     header: t`APR %`,
-    cell: (info) => formatUSD(info.getValue()), 
+    cell: (info) => formatUSD(info.getValue()),
   }),
 ];
 

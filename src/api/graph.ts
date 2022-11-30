@@ -10,12 +10,15 @@ import {
   Position,
   PricePoint,
   getFundStatus,
+  PoolDetails,
   PriceFeed,
   PriceFeeds,
 } from "./models";
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
+import { Address, ETH_ADDRESS } from "../config/tokens";
+import { getSushiPool, getSushiPools } from "./sushi";
 import { Address, ETH_ADDRESS, USD_ADDRESS } from "../config/tokens";
 import { getSushiPools } from "./sushi";
 import { UTCTimestamp } from "lightweight-charts";
@@ -104,8 +107,11 @@ export class API {
   }
 
   async getPools(): Promise<Pool[] | undefined> {
-    console.log("Getting pools");
     return getSushiPools(chainConfig.arbitrum);
+  }
+
+  async getPoolDetails(poolId?: string): Promise<PoolDetails | undefined> {
+    return poolId ? getSushiPool(poolId, chainConfig.arbitrum) : undefined;
   }
 
   async getFunds(): Promise<Fund[] | undefined> {
