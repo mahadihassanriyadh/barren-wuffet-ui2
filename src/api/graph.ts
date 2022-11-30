@@ -27,9 +27,9 @@ const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
 
 function getArbiTokenAddrToIdMap() {
-  const arbiCoins = coins.filter((coin) => {
-    return coin["platforms"]["arbitrum-one"] != undefined;
-  });
+  const arbiCoins = coins.filter(
+    (coin) => coin["platforms"]["arbitrum-one"] !== undefined
+  );
 
   const addrToIdMap = new Map<Address, string>();
 
@@ -42,8 +42,8 @@ function getArbiTokenAddrToIdMap() {
 
 function getIdFromTokenAddr(addr: Address) {
   // TODO: make this case insensitive
-  if (addr == ETH_ADDRESS) return "ethereum";
-  else if (addr == USD_ADDRESS) return "usd";
+  if (addr === ETH_ADDRESS) return "ethereum";
+  else if (addr === USD_ADDRESS) return "usd";
   else {
     const addrToIdMap = getArbiTokenAddrToIdMap();
     console.log(addrToIdMap);
