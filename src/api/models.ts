@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { Time } from "lightweight-charts";
 import { Address, Token } from "../config/tokens";
 
 export interface Pool {
@@ -92,13 +93,12 @@ export enum FundStatus {
   CLOSED = 3, // deposits not possible, withdraws possible (outputTokens), manager can take out managementFee but not move funds
 }
 
-export interface PriceFeed {
-  time: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
+export interface PricePoint {
+  time: Time;
+  value: number;
 }
+
+export type PriceFeed = PricePoint[];
 
 export const GT = 0;
 export const LT = 1;

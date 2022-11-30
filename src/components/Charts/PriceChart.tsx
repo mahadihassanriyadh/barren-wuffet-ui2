@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
-import { createChart, LineStyle, CrosshairMode } from "lightweight-charts";
+import { createChart, LineStyle, CrosshairMode, Time } from "lightweight-charts";
 import { api } from "../../config/env";
 import { useQuery } from "@tanstack/react-query";
 
@@ -7,7 +7,7 @@ const PriceChart: FunctionComponent<{
   title: string;
   fromToken: string;
   toToken: string;
-  priceFeed: () => { value: number; time: number }[];
+  priceFeed: () => { value: number; time: Time }[];
 }> = (props) => {
   const backgroundColor = "#222";
   const lineColor = "#2962FF";
@@ -52,7 +52,7 @@ const PriceChart: FunctionComponent<{
         },
       },
       localization: {
-        priceFormatter: (amt: number) => `${amt} eth`,
+        priceFormatter: (amt: number) => `${amt}`,
       },
     });
     chart.priceScale().applyOptions({
@@ -63,7 +63,7 @@ const PriceChart: FunctionComponent<{
     });
     chart.timeScale().fitContent();
 
-    const newSeries = chart.addCandlestickSeries();
+    const newSeries = chart.addLineSeries();
 
     newSeries.setData(priceFeedData || []);
 

@@ -75,12 +75,12 @@ const FundTrading = () => {
             )}
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-5 py-1">
-            {/* <PriceChart
+            <PriceChart
               title={"USD/ETH"}
               priceFeed={() => []}
               fromToken={fromToken?.address}
               toToken={toToken?.address}
-            /> */}
+            />
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             <OrderList />

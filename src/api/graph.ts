@@ -1,4 +1,5 @@
 import { chain as chainConfig } from "wagmi";
+import axios from "axios";
 
 import {
   Fund,
@@ -7,14 +8,16 @@ import {
   Order,
   Pool,
   Position,
-  PriceFeed,
+  PricePoint,
   getFundStatus,
+  PriceFeed,
 } from "./models";
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
 import { Address, ETH_ADDRESS } from "../config/tokens";
 import { getSushiPools } from "./sushi";
+import { UTCTimestamp } from "lightweight-charts";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
@@ -106,8 +109,26 @@ export class API {
     );
   }
 
-  getPriceFeed(): Promise<PriceFeed[]> {
-    throw new Error("Not implemented");
+  /* need to add the following as params
+    start_time: number | undefined = undefined,
+    end_time: number | undefined = undefined,
+    currency: string,
+    vs_currency: string
+  */
+  async getPriceFeed(): Promise<PriceFeed> {
+    const end_timestamp = Math.floor(Date.now() / 1000);
+    const start_timestamp = end_timestamp - 60 * 60 * 24;
+    const vs = "usd";
+    const id = "ethereum";
+    const resp = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=${vs}&from=${start_timestamp}&to=${end_timestamp}`
+    );
+    const prices = resp.data.prices;
+    return Promise.resolve(
+      prices.map((point: any) => {
+        return { time: (point[0] / 1000) as UTCTimestamp, value: point[1] };
+      })
+    );
   }
 
   async getOpenOrders(): Promise<Order[]> {
