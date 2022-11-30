@@ -27,6 +27,14 @@ const PriceChart: FunctionComponent<{
     };
 
     const chart = createChart(chartContainerRef.current, {
+      watermark: {
+        text: 'Powered by Coingecko',
+        fontSize: 12, 
+        visible: true, 
+        horzAlign: 'center',
+        vertAlign: 'center',
+        color: 'rgba(171, 71, 188, 0.5)',
+      }, 
       layout: {
         background: { color: backgroundColor },
         textColor: textColor,
