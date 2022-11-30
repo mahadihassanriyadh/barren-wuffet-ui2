@@ -11,7 +11,8 @@ import { Action, ActionTypes } from "../../config/actions";
 import Yield from "../../components/Fund/Yield/";
 import OpenOrders from "../../components/Fund/OpenOrders";
 import { useFund } from "../FundManage/FundManage";
-import PoolsList from "../../components/Fund/PoolsList";
+import SelectPoolsList from "../../components/Fund/PoolsList";
+import { Pool } from "../../api/models";
 
 const FundYield = () => {
   const [actionToPerform, setActionToPerform] = useState<Action>();
@@ -20,8 +21,8 @@ const FundYield = () => {
   }, []);
 
   const { chain } = useNetwork();
-  const fund = useFund();
-  const fundId = fund?.id;
+
+  const [selectedPool, setSelectedPool] = useState<Pool | undefined>(undefined);
 
   // const tokens = chain ? getTokens(chain.id, fundId) : [];
 
@@ -61,7 +62,10 @@ const FundYield = () => {
             )}
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
-            <PoolsList />
+            <SelectPoolsList
+              selectedPool={selectedPool}
+              setSelectedPool={setSelectedPool}
+            />
           </div>
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             <OrderList />
@@ -69,8 +73,8 @@ const FundYield = () => {
         </div>
         <div className="md:basis-1/4">
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
-            <Yield.InfoPanel />
-            <Yield.Action />
+            {selectedPool && <Yield.InfoPanel pool={selectedPool} />}
+            {selectedPool && <Yield.Action />}
           </div>
         </div>
       </div>

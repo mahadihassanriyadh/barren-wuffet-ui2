@@ -4,6 +4,7 @@ import { parseFixed } from "@ethersproject/bignumber";
 import {
   Chain,
   chain as chainConfig,
+  chainId,
   useContractRead,
   useNetwork,
 } from "wagmi";
@@ -29,6 +30,7 @@ import { ActionData } from "./rpc";
 import request, { gql } from "graphql-request";
 import { Pool } from "./models";
 import { bn } from "date-fns/locale";
+import { parseISO } from "date-fns";
 
 function createPath(
   tokenIn: Address,
@@ -246,6 +248,20 @@ export async function getSushiPools(chain: Chain) {
             volumeUSD
             feesUSD
           }
+          token0 {
+            id
+            name
+            decimals
+            symbol
+          }
+          token1 {
+            id
+            name
+            decimals
+            symbol
+          }
+          reserve0
+          reserve1
           # apr = feesUSD
         }
       }
@@ -264,10 +280,30 @@ export async function getSushiPools(chain: Chain) {
   return Promise.resolve(
     data.pairs.map(
       (pair: SushiPair): Pool => ({
-        key: pair.id,
+        id: pair.id as Address,
         indexToken: {
           symbol: pair.name,
         },
+        tokens: [
+          {
+            chainId: chain.id,
+            name: pair.token0.name,
+            symbol: pair.token0.symbol,
+            decimals: pair.token0.decimals,
+            address: pair.token0.id as Address,
+          },
+          {
+            chainId: chain.id,
+            name: pair.token1.name,
+            symbol: pair.token1.symbol,
+            decimals: pair.token1.decimals,
+            address: pair.token1.id as Address,
+          },
+        ],
+        reserves: [
+          BigNumber.from(pair.reserve0),
+          BigNumber.from(pair.reserve1),
+        ],
         vAPY: ftoBN(pair.daySnapshots[0].feesUSD),
         tAPY: ftoBN("12"),
         volume: ftoBN(pair.daySnapshots[0].volumeUSD),

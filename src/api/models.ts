@@ -1,11 +1,13 @@
-import { BigNumber, FixedNumber } from "ethers";
-import { Address } from "../config/tokens";
+import { BigNumber } from "ethers";
+import { Address, Token } from "../config/tokens";
 
 export interface Pool {
-  key: string;
+  id: Address;
   indexToken: {
     symbol: string;
   };
+  tokens: Token[];
+  reserves: BigNumber[];
   vAPY: BigNumber;
   tAPY: BigNumber;
   volume: BigNumber;

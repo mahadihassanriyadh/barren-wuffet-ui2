@@ -1,53 +1,36 @@
 import { ReactComponent as OpenIcon } from "../../../img/icons/openIcon.svg";
 import { ReactComponent as CopyIcon } from "../../../img/icons/copyIcon.svg";
-import { ReactComponent as UsdtIcon } from "../../../img/icons/usdt.svg";
-import { ReactComponent as WbtcIcon } from "../../../img/icons/wbtc.svg";
-import { ReactComponent as EthIcon } from "../../../img/icons/eth.svg";
 import { BigNumber } from "ethers";
 import { Token } from "../../../config/tokens";
 import { formatUnits, parseEther, parseUnits } from "ethers/lib/utils";
+import { Pool } from "../../../api/models";
 
-const CurrencyReserves = () => {
-  const reserves: {
+const CurrencyReserves = ({
+  tokens,
+  reserves,
+}: {
+  tokens: Token[];
+  reserves: BigNumber[];
+}) => {
+  const reservesData: {
     token: Token;
     amount: BigNumber;
     amountUSD: BigNumber;
     percent: BigNumber;
-  }[] = [
-    {
-      token: {
-        name: "Wrapped Ethereum (sushi)",
-        decimals: 18,
-        symbol: "WETH",
-        address: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
-        chainId: 5,
-        logoURI: "https://wallet-asset.matic.network/img/tokens/eth.svg",
-      },
-      amount: parseUnits("20", 18),
-      amountUSD: parseUnits("20", 18).mul(1000),
-      percent: BigNumber.from("4700"),
-    },
-    {
-      token: {
-        name: "DAI (sushi)",
-        decimals: 18,
-        symbol: "DAI",
-        address: "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",
-        chainId: 5,
-        logoURI: "https://wallet-asset.matic.network/img/tokens/dai.svg",
-      },
-      amount: parseUnits("20000", 18),
-      amountUSD: parseUnits("20000", 18).mul(9999).div(10000),
-      percent: BigNumber.from("5300"),
-    },
-  ];
+  }[] = tokens.map((t, i) => ({
+    token: t,
+    amount: reserves[i],
+    amountUSD: parseUnits("20", 18).mul(1000),
+    percent: BigNumber.from("4700"),
+  }));
+
   return (
     <div>
       <h3 className="font-ubuntu font-medium text-[18px] text-white mt-[26px]">
         Currency reserves
       </h3>
       <div className="mt-[17px] divide-y-[0.4px] divide-solid divide-[#575771]">
-        {reserves.map((r) => (
+        {reservesData.map((r) => (
           <div className="h-[29px] pb-[6px] flex justify-between">
             <div className="flex flex-row items-center">
               <img
@@ -78,7 +61,7 @@ const CurrencyReserves = () => {
           </span>
           <span className="font-ubuntu font-medium text-[12px] text-white text-right">
             {formatUnits(
-              reserves.reduce(
+              reservesData.reduce(
                 (total, r) => total.add(r.amountUSD),
                 BigNumber.from(0)
               ),
@@ -91,7 +74,7 @@ const CurrencyReserves = () => {
   );
 };
 
-const InfoPanel = () => {
+const InfoPanel = ({ pool }: { pool: Pool }) => {
   return (
     <div className="container mx-auto w-[350px] rounded-[15px] px-[23px] pt-[29px] pb-[26px] bg-card">
       <h2 className="font-ubuntu font-medium text-[20px] text-white">
@@ -104,13 +87,13 @@ const InfoPanel = () => {
           </div>
           <div className="flex flex-row">
             <span className="font-ubuntu font-medium text-[12px] text-white underline mr-[13px]">
-              0x96...5590
+              {pool.id}
             </span>
             <OpenIcon className="mr-[10px] cursor-pointer" />
             <CopyIcon className="cursor-pointer" />
           </div>
         </div>
-        <div className="h-[29px] pt-[6px] flex items-center justify-between">
+        {/* <div className="h-[29px] pt-[6px] flex items-center justify-between">
           <div className="font-ubuntu font-medium text-[12px] text-white">
             Token
           </div>
@@ -121,10 +104,10 @@ const InfoPanel = () => {
             <OpenIcon className="mr-[10px] cursor-pointer" />
             <CopyIcon className="cursor-pointer" />
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <CurrencyReserves />
+      <CurrencyReserves tokens={pool.tokens} reserves={pool.reserves} />
 
       {/* <div className="mt-[10px] bg-banner px-[20px] pt-[13px] pb-[18px] rounded-[10px]">
         <div className="flex justify-between">
