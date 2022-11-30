@@ -9,16 +9,17 @@ import { useNetwork } from "wagmi";
 import { Input } from "../../Form/Input";
 import { BigNumber } from "ethers";
 import Button from "../../Button/Button";
+import { Pool } from "../../../api/models";
 
-const DepositAssets = () => {
+const DepositAssets = ({ pool }: { pool: Pool }) => {
   const [tokenValues, setTokenValues] = useState<BigNumber[]>([]);
   const { chain } = useNetwork();
-  const assets = getTokens(5).slice(0, 3);
+  console.log(pool);
   return (
     <div className="mb-[13px]">
-      {assets.map((a, i) => (
+      {pool.tokens.map((a, i) => (
         <Input
-          label={a.name}
+          label={a.symbol}
           value={tokenValues?.[i] || 0}
           onChange={(val) =>
             setTokenValues(tokenValues.map((v, j) => (j === i ? val : v)))
@@ -31,15 +32,14 @@ const DepositAssets = () => {
     </div>
   );
 };
-const DepositTab = () => {
+const DepositTab = ({ pool }: { pool: Pool }) => {
   const [depositWrapped, setDepositWrapped] = useState(false);
   const [tokenValues, setTokenValues] = useState<BigNumber[]>([]);
   const { chain } = useNetwork();
-  const assets = chain ? getTokens(chain.id).slice(0, 3) : [];
 
   return (
     <div className="select-none">
-      <DepositAssets />
+      <DepositAssets pool={pool} />
 
       {/* <Checkbox
         label="Deposit Wrapped"
@@ -91,10 +91,10 @@ const StakeTab = () => {
   );
 };
 
-const DepositAndStakeTab = (props: {}) => {
+const DepositAndStakeTab = ({ pool }: { pool: Pool }) => {
   return (
     <div className="select-none">
-      <DepositAssets />
+      <DepositAssets pool={pool} />
 
       <div className="flex justify-between">
         <span className="font-ubuntu text-white font-normal text-[14px]">
@@ -119,14 +119,14 @@ const DepositAndStakeTab = (props: {}) => {
   );
 };
 
-const Deposit = () => {
+const Deposit = ({ pool }: { pool: Pool }) => {
   return (
     <div className="mt-[23px] mb-[9px]">
       <Tabs
         options={[
           {
             label: t`Deposit`,
-            content: <DepositTab />,
+            content: <DepositTab pool={pool} />,
           },
           // {
           //   label: t`Stake`,
