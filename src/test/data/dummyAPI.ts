@@ -1,5 +1,11 @@
 import { API, APIConfig } from "../../api/graph";
-import { Fund, FundDetails, Order, Position } from "../../api/models";
+import {
+  Fund,
+  FundDetails,
+  Order,
+  PoolDetails,
+  Position,
+} from "../../api/models";
 import { funds } from "./funds";
 import { fundDetails } from "./fundDetails";
 import { pools } from "./pools";
@@ -15,6 +21,16 @@ export class DummyAPI implements API {
   }
 
   getPools = () => Promise.resolve(pools);
+  getPoolDetails: (poolId?: string) => Promise<PoolDetails> = async (
+    poolId
+  ) => {
+    if (!poolId) {
+      return Promise.reject("No poolId provided");
+    }
+    const pool = pools.find((f) => f.id === poolId);
+    return pool ? Promise.resolve(pool) : Promise.reject("Pool not found");
+  };
+
   getFunds: () => Promise<Fund[]> = async () => Promise.resolve(funds);
   getFundDetails: (fundId?: string) => Promise<FundDetails> = async (
     fundId

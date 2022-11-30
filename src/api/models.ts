@@ -14,6 +14,8 @@ export interface Pool {
   apr: BigNumber;
 }
 
+export interface PoolDetails extends Pool {}
+
 export interface Fund {
   id: Address;
   name: string;

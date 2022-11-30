@@ -9,12 +9,13 @@ import {
   Position,
   PriceFeed,
   getFundStatus,
+  PoolDetails,
 } from "./models";
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
 import { Address, ETH_ADDRESS } from "../config/tokens";
-import { getSushiPools } from "./sushi";
+import { getSushiPool, getSushiPools } from "./sushi";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
@@ -68,8 +69,11 @@ export class API {
   }
 
   async getPools(): Promise<Pool[] | undefined> {
-    console.log("Getting pools");
     return getSushiPools(chainConfig.arbitrum);
+  }
+
+  async getPoolDetails(poolId?: string): Promise<PoolDetails | undefined> {
+    return poolId ? getSushiPool(poolId, chainConfig.arbitrum) : undefined;
   }
 
   async getFunds(): Promise<Fund[] | undefined> {

@@ -69,7 +69,9 @@ function App() {
                         <Route path="fund/:fundId" element={<FundManage />}>
                           <Route path="portfolio" element={<FundPortfolio />} />
                           <Route path="trading" element={<FundTrading />} />
-                          <Route path="yield" element={<FundYield />} />
+                          <Route path="yield" element={<FundYield />}>
+                            <Route path=":poolId" />
+                          </Route>
                         </Route>
                       </Routes>
                     </QueryClientProvider>
