@@ -84,7 +84,7 @@ const FundYield = () => {
         <div className="md:basis-1/4">
           <div className="bg-gray-dark mx-5 mb-10 rounded-xl px-8 py-1">
             {selectedPool && <Yield.InfoPanel pool={selectedPool} />}
-            {selectedPool && <Yield.Action />}
+            {selectedPool && <Yield.Action pool={selectedPool} />}
           </div>
         </div>
       </div>

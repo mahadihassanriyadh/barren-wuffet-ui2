@@ -52,13 +52,12 @@ type InputProps =
   | BigNumberInputProps;
 
 export const Input: FunctionComponent<InputProps> = (props) => {
-  const { id, name } = props || {};
+  const { id, name, label } = props || {};
   const icon = props.icon || (props.type === "date" ? calendarIcon : "");
-
   return (
     <div className="w-full space-y-1">
       <label className="text-sm" htmlFor={id}>
-        {name}
+        {label || name}
       </label>
       <div className="relative">
         {icon && (
