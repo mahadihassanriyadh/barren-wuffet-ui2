@@ -17,10 +17,8 @@ import {
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
-import { Address, ETH_ADDRESS } from "../config/tokens";
 import { getSushiPool, getSushiPools } from "./sushi";
 import { Address, ETH_ADDRESS, USD_ADDRESS } from "../config/tokens";
-import { getSushiPools } from "./sushi";
 import { UTCTimestamp } from "lightweight-charts";
 import { supported_vs } from "./coingecko_supported_vs_currency_cache_20221130";
 import coins from "./coingecko_coin_list_cache_20221130.json";
