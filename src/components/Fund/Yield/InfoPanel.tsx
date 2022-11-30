@@ -20,8 +20,8 @@ const CurrencyReserves = ({
   }[] = tokens.map((t, i) => ({
     token: t,
     amount: reserves[i],
-    amountUSD: parseUnits("20", 18).mul(1000),
-    percent: BigNumber.from("4700"),
+    amountUSD: parseUnits("0", 18).mul(1000),
+    percent: BigNumber.from("0"),
   }));
 
   return (
@@ -46,7 +46,7 @@ const CurrencyReserves = ({
             </div>
             <div className="flex flex-row items-center">
               <p className="font-ubuntu font-medium text-[12px] text-white text-right">
-                {formatUnits(r.amountUSD)}
+                {formatUnits(r.amount, r.token.decimals)}
                 <span className="ml-[3px] text-[10px] text-[#8D8D92]">
                   ({r.percent.div(100).toString()}%)
                 </span>
