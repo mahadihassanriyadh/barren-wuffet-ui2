@@ -157,7 +157,7 @@ export class API {
     const vs = getIdFromTokenAddr(vs_token_addr);
 
     console.log(id, vs);
-    if (id == undefined || vs == undefined) {
+    if (id === undefined || vs === undefined) {
       return Promise.resolve([]);
     }
 
