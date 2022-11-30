@@ -1,4 +1,4 @@
-[
+export const supported_vs = [
   "btc",
   "eth",
   "ltc",
@@ -59,5 +59,5 @@
   "xag",
   "xau",
   "bits",
-  "sats"
-]
+  "sats",
+];

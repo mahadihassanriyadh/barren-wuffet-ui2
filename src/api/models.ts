@@ -99,6 +99,10 @@ export interface PricePoint {
 }
 
 export type PriceFeed = PricePoint[];
+export type PriceFeeds = {
+  title: string;
+  feed: PriceFeed;
+}[];
 
 export const GT = 0;
 export const LT = 1;

@@ -11,16 +11,49 @@ import {
   PricePoint,
   getFundStatus,
   PriceFeed,
+  PriceFeeds,
 } from "./models";
 import { request, gql } from "graphql-request";
 import { Fund as Graph_Fund } from "../../.graphclient";
 import { BigNumber as BN, ethers } from "ethers";
-import { Address, ETH_ADDRESS } from "../config/tokens";
+import { Address, ETH_ADDRESS, USD_ADDRESS } from "../config/tokens";
 import { getSushiPools } from "./sushi";
 import { UTCTimestamp } from "lightweight-charts";
+import { supported_vs } from "./coingecko_supported_vs_currency_cache_20221130";
+import coins from "./coingecko_coin_list_cache_20221130.json";
 
 const toDate = (ts: BigInt): Date | null =>
   ts ? new Date(BN.from(ts).toNumber() * 1000) : null;
+
+function getArbiTokenAddrToIdMap() {
+  const arbiCoins = coins.filter((coin) => {
+    return coin["platforms"]["arbitrum-one"] != undefined;
+  });
+
+  const addrToIdMap = new Map<Address, string>();
+
+  arbiCoins.forEach((coin) => {
+    addrToIdMap.set(coin["platforms"]["arbitrum-one"], coin["id"]);
+  });
+
+  return addrToIdMap;
+}
+
+function getIdFromTokenAddr(addr: Address) {
+  // TODO: make this case insensitive
+  if (addr == ETH_ADDRESS) return "ethereum";
+  else if (addr == USD_ADDRESS) return "usd";
+  else {
+    const addrToIdMap = getArbiTokenAddrToIdMap();
+    console.log(addrToIdMap);
+    console.log(addr);
+    return addrToIdMap.get(addr);
+  }
+}
+
+function isSupportedVs(vs: string) {
+  return supported_vs.includes(vs);
+}
 
 function parseFund(fund: Graph_Fund): Fund {
   const _fund: Fund = {
@@ -109,26 +142,58 @@ export class API {
     );
   }
 
-  /* need to add the following as params
-    start_time: number | undefined = undefined,
-    end_time: number | undefined = undefined,
-    currency: string,
-    vs_currency: string
-  */
-  async getPriceFeed(): Promise<PriceFeed> {
-    const end_timestamp = Math.floor(Date.now() / 1000);
-    const start_timestamp = end_timestamp - 60 * 60 * 24;
-    const vs = "usd";
-    const id = "ethereum";
-    const resp = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=${vs}&from=${start_timestamp}&to=${end_timestamp}`
-    );
-    const prices = resp.data.prices;
-    return Promise.resolve(
-      prices.map((point: any) => {
-        return { time: (point[0] / 1000) as UTCTimestamp, value: point[1] };
-      })
-    );
+  // May return 2 priceFeeds if vs_token_addr is not supported as a vs_currency
+  async getPriceFeed(
+    start_time: number,
+    end_time: number,
+    token_addr: Address,
+    vs_token_addr: Address = USD_ADDRESS
+  ): Promise<PriceFeeds> {
+    const id = getIdFromTokenAddr(token_addr);
+    const vs = getIdFromTokenAddr(vs_token_addr);
+
+    console.log(id, vs);
+    if (id == undefined || vs == undefined) {
+      return Promise.resolve([]);
+    }
+
+    if (isSupportedVs(vs)) {
+      const resp = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=${vs}&from=${start_time}&to=${end_time}`
+      );
+      const prices = resp.data.prices;
+      return Promise.resolve([
+        {
+          title: `${id}/${vs}`,
+          feed: prices.map((point: any) => {
+            return { time: (point[0] / 1000) as UTCTimestamp, value: point[1] };
+          }),
+        },
+      ]);
+    } else {
+      const respA = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=usd&from=${start_time}&to=${end_time}`
+      );
+      const respB = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${vs}/market_chart/range?vs_currency=usd&from=${start_time}&to=${end_time}`
+      );
+      const pricesA = respA.data.prices;
+      const pricesB = respB.data.prices;
+      return Promise.resolve([
+        {
+          title: `${id}/usd`,
+          feed: pricesA.map((point: any) => {
+            return { time: (point[0] / 1000) as UTCTimestamp, value: point[1] };
+          }),
+        },
+        {
+          title: `${vs}/usd`,
+          feed: pricesB.map((point: any) => {
+            return { time: (point[0] / 1000) as UTCTimestamp, value: point[1] };
+          }),
+        },
+      ]);
+    }
   }
 
   async getOpenOrders(): Promise<Order[]> {

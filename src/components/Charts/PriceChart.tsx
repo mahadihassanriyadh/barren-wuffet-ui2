@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useRef } from "react";
 import { createChart, LineStyle, CrosshairMode, Time } from "lightweight-charts";
 import { api } from "../../config/env";
 import { useQuery } from "@tanstack/react-query";
+import { ETH_ADDRESS, USD_ADDRESS } from "../../config/tokens";
 
 const PriceChart: FunctionComponent<{
   title: string;
@@ -16,7 +17,9 @@ const PriceChart: FunctionComponent<{
   const gridColor = "#444";
   const borderColor = "#71649C";
   const chartContainerRef = useRef({} as HTMLDivElement);
-  const { data: priceFeedData } = useQuery(["priceFeed"], api.getPriceFeed);
+  const default_end_time = Math.floor(Date.now() / 1000); 
+  const default_start_time = default_end_time - 60*60*24; 
+  const { data: priceFeedsData } = useQuery(["priceFeed"], () => api.getPriceFeed(default_start_time, default_end_time, ETH_ADDRESS, "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a"));
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,7 +36,7 @@ const PriceChart: FunctionComponent<{
         horzLines: { color: gridColor },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height: 500,
       crosshair: {
         // Change mode from default 'magnet' to 'normal'.
         // Allows the crosshair to move freely without snapping to datapoints
@@ -63,9 +66,18 @@ const PriceChart: FunctionComponent<{
     });
     chart.timeScale().fitContent();
 
-    const newSeries = chart.addLineSeries();
+    // If there are 2, make the second line red, and use a second scale on the chart on the left
+    const numCharts = priceFeedsData?.length == undefined ? 0 : priceFeedsData?.length; 
+    if (numCharts == 2) {
+      chart.priceScale("left").applyOptions({visible: true})
+    }
+    const colors = ["#17B5E5", "#E51717"]; 
+    const priceScaleIds = ["right","left"]
+    priceFeedsData?.forEach(({title, feed}, idx) => {
+      const newSeries = chart.addLineSeries({title: title, priceScaleId: priceScaleIds[idx], color: colors[idx]});
+      newSeries.setData(feed || []);
+    }); 
 
-    newSeries.setData(priceFeedData || []);
 
     window.addEventListener("resize", handleResize);
 
@@ -81,10 +93,11 @@ const PriceChart: FunctionComponent<{
     gridColor,
     crossHairColor,
     borderColor,
-    priceFeedData,
+    priceFeedsData,
   ]);
 
   return <div ref={chartContainerRef} />;
 };
 
 export default PriceChart;
+
