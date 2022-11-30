@@ -46,8 +46,6 @@ function getIdFromTokenAddr(addr: Address) {
   else if (addr === USD_ADDRESS) return "usd";
   else {
     const addrToIdMap = getArbiTokenAddrToIdMap();
-    console.log(addrToIdMap);
-    console.log(addr);
     return addrToIdMap.get(addr);
   }
 }
@@ -156,7 +154,6 @@ export class API {
     const id = getIdFromTokenAddr(token_addr);
     const vs = getIdFromTokenAddr(vs_token_addr);
 
-    console.log(id, vs);
     if (id === undefined || vs === undefined) {
       return Promise.resolve([]);
     }

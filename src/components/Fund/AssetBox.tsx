@@ -20,7 +20,6 @@ const AssetBox = ({
   };
   fundId: Address;
 }) => {
-  console.log(asset);
   const { img, name, dollarValue, down, percentage, address, amount } = asset;
 
   const { data: tokenData } = useFundBalance(fundId, address);
