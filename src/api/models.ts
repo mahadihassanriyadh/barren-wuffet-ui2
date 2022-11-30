@@ -6,12 +6,12 @@ export interface Pool {
   indexToken: {
     symbol: string;
   };
+  fee: BigNumber;
   tokens: Token[];
   reserves: BigNumber[];
-  vAPY: BigNumber;
-  tAPY: BigNumber;
   volume: BigNumber;
   tvl: BigNumber;
+  apr: BigNumber;
 }
 
 export interface Fund {

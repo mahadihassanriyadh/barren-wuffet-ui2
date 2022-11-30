@@ -4,7 +4,6 @@ import { parseFixed } from "@ethersproject/bignumber";
 import {
   Chain,
   chain as chainConfig,
-  chainId,
   useContractRead,
   useNetwork,
 } from "wagmi";
@@ -15,7 +14,6 @@ import {
   ContractToken,
   ETH_ADDRESS,
   getWethToken,
-  PRICE_DECIMALS,
   toContractToken,
   Token,
   TOKEN_TYPE,
@@ -24,13 +22,12 @@ import IUniswapV2Router02 from "../contracts/types/IUniswapV2Router02";
 import IUniswapV2Factory from "../contracts/types/IUniswapV2Factory";
 import IUniswapV2Pair from "../contracts/types/IUniswapV2Pair";
 
-import { Pair as SushiPair } from "../../.graphclient";
+import { Pair as SushiPair, PairHourSnapshot } from "../../.graphclient";
+import { USD_DECIMALS, PCT_DECIMALS } from "../data/formatting";
 
 import { ActionData } from "./rpc";
 import request, { gql } from "graphql-request";
 import { Pool } from "./models";
-import { bn } from "date-fns/locale";
-import { parseISO } from "date-fns";
 
 function createPath(
   tokenIn: Address,
@@ -244,7 +241,7 @@ export async function getSushiPools(chain: Chain) {
           name
           liquidityUSD
           # sum the following up for 24H vol/fee
-          daySnapshots(orderBy: date, orderDirection: desc, first: 24) {
+          hourSnapshots(orderBy: date, orderDirection: desc, first: 24) {
             volumeUSD
             feesUSD
           }
@@ -262,20 +259,43 @@ export async function getSushiPools(chain: Chain) {
           }
           reserve0
           reserve1
-          # apr = feesUSD
         }
       }
     `
   );
 
-  const ftoBN = (f: string) => {
+  // Takes s, truncates everything after the ".", returns BN
+  const strToRoundedBN = (
+    s: string,
+    origin_decimals: number = 0,
+    wanted_decimals: number = 0
+  ) => {
     // Unclear how many decimals these vals can have
     // 48 seems enough?
-    return parseFixed(
-      FixedNumber.from(f, 48).round(PRICE_DECIMALS).toString(),
-      PRICE_DECIMALS
+    const roundedBN = parseFixed(FixedNumber.from(s, 48).round(0).toString());
+    return roundedBN.mul(
+      BigNumber.from(10).pow(wanted_decimals - origin_decimals)
     );
   };
+
+  function get24hVolumeUSD(daySnapshots: PairHourSnapshot[]) {
+    return daySnapshots.reduce(
+      (acc, cur) => acc.add(strToRoundedBN(cur.volumeUSD, 0, USD_DECIMALS)),
+      BigNumber.from(0)
+    );
+  }
+
+  function getAprPCT(daySnapshots: PairHourSnapshot[], liquidityUSD: any) {
+    return daySnapshots
+      .reduce(
+        (acc, cur) => acc.add(strToRoundedBN(cur.feesUSD, 0, USD_DECIMALS)),
+        BigNumber.from(0)
+      )
+      .mul(365)
+      .mul(100)
+      .mul(BigNumber.from(10).pow(PCT_DECIMALS))
+      .div(strToRoundedBN(liquidityUSD, 0, USD_DECIMALS));
+  }
 
   return Promise.resolve(
     data.pairs.map(
@@ -304,10 +324,10 @@ export async function getSushiPools(chain: Chain) {
           BigNumber.from(pair.reserve0),
           BigNumber.from(pair.reserve1),
         ],
-        vAPY: ftoBN(pair.daySnapshots[0].feesUSD),
-        tAPY: ftoBN("12"),
-        volume: ftoBN(pair.daySnapshots[0].volumeUSD),
-        tvl: ftoBN(pair.liquidityUSD),
+        apr: getAprPCT(pair.hourSnapshots, pair.liquidityUSD),
+        volume: get24hVolumeUSD(pair.hourSnapshots),
+        tvl: strToRoundedBN(pair.liquidityUSD, 0, USD_DECIMALS),
+        fee: strToRoundedBN(pair.swapFee, 2, PCT_DECIMALS),
       })
     )
   );

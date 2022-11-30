@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
-const USD_DECIMALS = 30;
+export const USD_DECIMALS = 2;
+export const PCT_DECIMALS = 2;
 
 export function numberWithCommas(x: string | number | undefined) {
   if (!x) {
@@ -54,6 +55,7 @@ export const padDecimals = (amount: string, minDecimals: number) => {
 
 export const formatAmount = (
   amount: ethers.BigNumberish | undefined,
+  amtDecimals: number, // e.g. amtDecimals = 2 means "3" is sent as 300
   displayDecimals: number | undefined,
   useCommas: boolean,
   defaultValue = "..."
@@ -64,7 +66,7 @@ export const formatAmount = (
   if (displayDecimals === undefined) {
     displayDecimals = 4;
   }
-  let amountStr = ethers.utils.formatUnits(amount, USD_DECIMALS);
+  let amountStr = ethers.utils.formatUnits(amount, amtDecimals);
   amountStr = limitDecimals(amountStr, displayDecimals);
   if (displayDecimals !== 0) {
     amountStr = padDecimals(amountStr, displayDecimals);
@@ -73,6 +75,22 @@ export const formatAmount = (
     return numberWithCommas(amountStr);
   }
   return amountStr;
+};
+
+// % must be sent as decimals = PCT_DECIMALS
+export const formatPCT = (
+  amount: ethers.BigNumberish | undefined,
+  displayDecimals = 2
+) => {
+  return formatAmount(amount, PCT_DECIMALS, displayDecimals, true);
+};
+
+// USD must be sent as decimals = USD_DECIMALS
+export const formatUSD = (
+  amount: ethers.BigNumberish | undefined,
+  displayDecimals = 2
+) => {
+  return formatAmount(amount, USD_DECIMALS, displayDecimals, true);
 };
 
 export const formatDate = (dt: Date) =>
