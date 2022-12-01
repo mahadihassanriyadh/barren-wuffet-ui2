@@ -4,7 +4,6 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../../img/logo.svg";
 
 import { NavLink, useLocation } from "react-router-dom";
-import { Trans } from "@lingui/macro";
 import LaunchAppButton from "../Button/LaunchAppButton";
 
 export default function Header() {

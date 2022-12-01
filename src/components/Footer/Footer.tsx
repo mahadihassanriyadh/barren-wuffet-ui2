@@ -1,5 +1,4 @@
 import React from "react";
-import { t } from "@lingui/macro";
 
 import logoImg from "../../img/logo_bw_sq.svg";
 import twitterIcon from "../../img/ic_twitter.svg";
